@@ -14,7 +14,7 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && $_SESSI
   $firstName = $_SESSION['firstName'];
   $username = $_SESSION['username'];
   // if user is logged in, go to logout page
-  header('Location: http://'.$_SERVER['HTTP_HOST'].'/rdonnell/almanac/logout.php');
+  header('Location: http://'.$_SERVER['HTTP_HOST'].'/NHLStatsAlmanac/almanac/logout.php');
   exit();
 } else { // otherwise, go to login page
   $email = $_SESSION['user_email'] = [];
