@@ -68,6 +68,7 @@ session_start();
       playerID VARCHAR(50) NOT NULL
       PRIMARY KEY (fantasyTeamID)
       )";
+      $res = $db->query($sql_create_team);
 
       echo "<table border=\"solid\">";
       echo "<tr>";
