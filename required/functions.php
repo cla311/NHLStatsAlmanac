@@ -98,7 +98,7 @@ function require_login()
 {
   if (!is_logged_in())
   {
-    return redirect_to(url_for("/rdonnell/almanac/login.php"));
+    return redirect_to(url_for("/NHLStatsAlmanac/almanac/login.php"));
   }
 
   return;
