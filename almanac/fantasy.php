@@ -70,6 +70,9 @@ session_start();
       )";
       $res = $db->query($sql_create_team);
 
+      $sql_insert = "INSERT INTO `".$fantasyTeamID."` ";
+      $sql_insert .= "VALUES ";
+
       echo "<table border=\"solid\">";
       echo "<tr>";
       echo "<th>".$title."</th>";
