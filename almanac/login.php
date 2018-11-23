@@ -57,7 +57,7 @@ if(is_post_request()) {
         //   header('Location: http://'.$_SERVER['HTTP_HOST'].'/rdonnell/A4/addtowatchlist.php');
         //   exit();
         // } else { // otherwise, send user to model list
-          header('Location: http://'.$_SERVER['HTTP_HOST'].'/rdonnell/almanac/lookup.php');
+          header('Location: http://'.$_SERVER['HTTP_HOST'].'/NHLStatsAlmanac/almanac/lookup.php');
         //   exit();
         // }
       } else {
