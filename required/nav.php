@@ -6,10 +6,10 @@ $host = $_SERVER['HTTP_HOST']
   <nav>
     <!-- set each link to http protocol, NOT https -->
     <?php
-    echo "<a href=\"http://".$host."/rdonnell/almanac/index.php\">Home</a> ";
-    echo "<a href=\"http://".$host."/rdonnell/almanac/lookup.php\">Search</a> ";
-    echo "<a href=\"http://".$host."/rdonnell/almanac/fantasy.php\">Create a Fantasy Team</a> ";
-    echo "<a href=\"http://".$host."/rdonnell/almanac/login.php\">Login/Logout</a>";
+    echo "<a href=\"http://".$host."/NHLStatsAlmanac/almanac/index.php\">Home</a> ";
+    echo "<a href=\"http://".$host."/NHLStatsAlmanac/almanac/lookup.php\">Search</a> ";
+    echo "<a href=\"http://".$host."/NHLStatsAlmanac/almanac/fantasy.php\">Create a Fantasy Team</a> ";
+    echo "<a href=\"http://".$host."/NHLStatsAlmanac/almanac/login.php\">Login/Logout</a>";
     ?>
   </nav>
 
