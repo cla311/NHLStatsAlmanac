@@ -201,6 +201,6 @@ function insert_user($user) {
 
     function fantasy_team_page($page,$title)
     {
-      echo "$page?fantasyTeamID=$title";
+      return "\"$page?fantasyTeamID=$title\"";
     }
 ?>
