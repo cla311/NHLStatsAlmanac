@@ -197,6 +197,10 @@ function insert_user($user) {
   // function for showing each product item as link in a list
   function format_name_as_link($id,$name,$page) {
   	echo "<a href=\"$page?playerID=$id\">$name</a>";
-  	}
+    }
 
+    function fantasy_team_page($page,$title)
+    {
+      echo "$page?fantasyTeamID=$title";
+    }
 ?>

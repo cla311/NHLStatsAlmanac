@@ -7,7 +7,8 @@ session_start();
 <?php require_login(); // if not logged in, redirect to login page ?>
 
 <body>
-<form action="fantasy.php" method="post">
+<form action=<?php fantasy_team_page("userteam.php",$title) ?> method="post">
+<!-- "<a href=\"$page?playerID=$id\">$name</a>"; -->
     <table>
     <tr>
             <td>
@@ -59,6 +60,7 @@ session_start();
   {
     if (isset($_POST['team_title']))
     {
+      $_SESSION['currentFantasyTeam'] = $title;
       $title = $_POST['team_title'];
       $author = $_SESSION['username'];
       $fantasyTeamID = $title."_".$author;
@@ -69,9 +71,6 @@ session_start();
       PRIMARY KEY (fantasyTeamID)
       )";
       $res = $db->query($sql_create_team);
-
-      $sql_insert = "INSERT INTO `".$fantasyTeamID."` ";
-      $sql_insert .= "VALUES ";
 
       echo "<table border=\"solid\">";
       echo "<tr>";
