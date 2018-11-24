@@ -5,6 +5,13 @@ require('../required/functions.php');
 
 <?php
 session_start();
+
+if (!empty($_SESSION['team_title'])) {
+  $title = $_SESSION['team_title'];
+} else {
+  $title = $_SESSION['team_title'] = [];
+}
+
 $id = trim($_GET['playerID']);
 
 echo "<br /><br />";
@@ -29,6 +36,8 @@ $stmt = $db->prepare($query);
 $stmt->bind_param('s',$id);
 $stmt->execute();
 $stmt->bind_result($name1,$team_name1,$weight1,$height1,$nationality1,$age1,$position1);
+
+get_player($id,$name1);
 
 // display information in a table
 echo "<table border=\"solid\">";
@@ -158,5 +167,5 @@ switch ($player_position)
 $db->close();
 
 echo "<br /><br />";
-echo "<a href=\"fantasy.php\">Add to Fantasy Team</a>";
+echo "<a href=\"userteam.php?fantasyTeamID=$title\">Add to Fantasy Team</a>";
 ?>

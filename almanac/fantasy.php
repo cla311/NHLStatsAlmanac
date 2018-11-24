@@ -62,6 +62,7 @@ session_start();
       $_SESSION['team_title'] = $title;
       $author = $_SESSION['username'];
       $fantasyTeamID = $title."_".$author;
+      $_SESSION['fantasyTeamID'] = $fantasyTeamID;
       $sql_create_team = "CREATE TABLE IF NOT EXISTS `".$fantasyTeamID."` (
       fantasyTeamID VARCHAR(50) NOT NULL,
       team_author VARCHAR(50) NOT NULL,

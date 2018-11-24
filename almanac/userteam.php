@@ -3,10 +3,12 @@ require('../required/nav.php');
 require('../required/functions.php');
 session_start();
 
-if (!empty($_SESSION['team_title'])) {
+if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
     $title = $_SESSION['team_title'];
+    $fantasyTeamID = $_SESSION['fantasyTeamID'];
 } else {
     $title = $_SESSION['team_title'] = [];
+    $fantasyTeamID = $_SESSION['fantasyTeamID'] = [];
 }
 ?>
 
@@ -23,4 +25,6 @@ echo "<th>Players</th>";
 echo "<th>Position</th>";
 echo "</tr>";
 echo "</table>";
+
+echo "<a href=\"lookup.php\">Search Players</a>"; 
 ?>
