@@ -6,10 +6,12 @@ require('../required/functions.php');
 <?php
 session_start();
 
-if (!empty($_SESSION['team_title'])) {
+if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
   $title = $_SESSION['team_title'];
+  $fantasyTeamID = $_SESSION['fantasyTeamID'];
 } else {
   $title = $_SESSION['team_title'] = [];
+  $fantasyTeamID = $_SESSION['fantasyTeamID'] = [];
 }
 
 $id = trim($_GET['playerID']);
@@ -167,5 +169,10 @@ switch ($player_position)
 $db->close();
 
 echo "<br /><br />";
-echo "<a href=\"userteam.php?fantasyTeamID=$title\">Add to Fantasy Team</a>";
+if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
+  echo "<a href=\"userteam.php?fantasyTeamID=$fantasyTeamID\">Add to Fantasy Team</a>";
+} else {
+  echo "<a href=\"fantasy.php\">Add to Fantasy Team</a>";
+}
+
 ?>
