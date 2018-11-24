@@ -41,6 +41,7 @@ $teamID = trim($_GET['fantasyTeamID']);
 if (!empty($_SESSION['playerID']) && !empty($_SESSION['name']))
 {
     $sql_insert_player = "INSERT INTO $fantasyTeamID VALUES ($fantasyTeamID,$username,$playerID,$title)";
+    echo $sql_insert_player;
     $res = $db->query($sql_insert_player);
     
     // unset session values
