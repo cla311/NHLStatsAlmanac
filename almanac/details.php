@@ -39,8 +39,6 @@ $stmt->bind_param('s',$id);
 $stmt->execute();
 $stmt->bind_result($name1,$team_name1,$weight1,$height1,$nationality1,$age1,$position1);
 
-get_player($id,$name1);
-
 // display information in a table
 echo "<table border=\"solid\">";
 echo "<tr>";
@@ -63,6 +61,11 @@ if($stmt->fetch())
   echo "<td align=\"center\">".$age1."</td>";
   echo "<td align=\"center\">".$position1."</td>";
 }
+
+get_player($id,$name1);
+echo $id;
+echo $name1;
+
 echo "</tr>";
 echo "</table>";
 $stmt->free_result();
