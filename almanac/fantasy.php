@@ -72,7 +72,7 @@ if (isset($_POST['submit'])) { // if submit button was clicked
       team_author VARCHAR(50) NOT NULL,
       playerID VARCHAR(50) NOT NULL,
       team_title VARCHAR(50) NOT NULL,
-      PRIMARY KEY (fantasyTeamID)
+      PRIMARY KEY (playerID)
       )";
         $res = $db->query($sql_create_team);
 
@@ -88,20 +88,22 @@ if (isset($_POST['submit'])) { // if submit button was clicked
     }
 }
 
-$sql_show_teams = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME LIKE '%_".$username."'";
-$res = $db->query($sql_show_teams);
-echo "<ul>";
-while ($row = $res->fetch_row())
-{
-  $sql_show_team_name = "SELECT team_title FROM $row[0]";
-  $result = $db->query($sql_show_team_name);
-  $subRow = $result->fetch_row();
-  echo "<h3>My Fantasy Teams</h3>";
-  echo "<li>";
-  format_name_as_link($row[0], $subRow[0], "userteam.php");
-  echo "</li>";
+if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
+  $sql_show_teams = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME LIKE '%_".$username."'";
+  $res = $db->query($sql_show_teams);
+  echo "<ul>";
+  while ($row = $res->fetch_row())
+  {
+    $sql_show_team_name = "SELECT team_title FROM $row[0]";
+    $result = $db->query($sql_show_team_name);
+    $subRow = $result->fetch_row();
+    echo "<h3>My Fantasy Teams</h3>";
+    echo "<li>";
+    echo "<a href=\"userteam.php?fantasyTeamID=$row[0]\">$subRow[0]</a>";
+    echo "</li>";
+  }
+  echo "</ul>";
 }
-echo "</ul>";
 
 $db->close();
 ?>

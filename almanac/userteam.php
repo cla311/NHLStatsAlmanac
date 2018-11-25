@@ -37,23 +37,31 @@ if (!empty($_SESSION['playerID']) && !empty($_SESSION['name'])) {
 <?php
 $teamID = trim($_GET['fantasyTeamID']);
 
+$team_title = array();
+array_push($team_title,$teamID);
+$team_title = explode("_",$teamID);
+
+$_SESSION['fantasyTeamID'] = $teamID;
+$_SESSION['team_title'] = $team_title[0];
+
 // insert player into fantasy team table
-if (!empty($_SESSION['playerID']) && !empty($_SESSION['name']))
+if (!empty($_SESSION['playerID']) && !empty($_SESSION['name']) && !empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID']))
 {
-    $sql_insert_player = "INSERT INTO $fantasyTeamID VALUES ('".$fantasyTeamID."','".$username."','".$playerID."','".$title."')";
+    $sql_insert_player = "INSERT INTO $fantasyTeamID VALUES ('".$teamID."','".$username."','".$playerID."','".$title."')";
     echo $sql_insert_player;
     $res = $db->query($sql_insert_player);
     
     // unset session values
     unset($_SESSION['playerID']);
     unset($_SESSION['name']);
+    echo "<br /><br /><br /><br /> more testing";
 }
 
-$query = "SELECT $fantasyTeamID.playerID, player.name, player.position FROM $fantasyTeamID INNER JOIN player ON $fantasyTeamID.playerID = player.playerID WHERE $fantasyTeamID.playerID = player.playerID";
+$query = "SELECT $teamID.playerID, player.name, player.position FROM $teamID INNER JOIN player ON $teamID.playerID = player.playerID WHERE $teamID.playerID = player.playerID";
 echo $query;
 $res = $db->query($query);
 
-echo "<h3>".$title."</h3>";
+echo "<h3>".$team_title[0]."</h3>";
 
 echo "<table border=\"solid\">";
 echo "<tr>";
@@ -72,6 +80,6 @@ while ($row = $res->fetch_row())
     echo "</tr>";
 }
 echo "</table>";
-
+echo "<br />";
 echo "<a href=\"lookup.php\">Search Players</a>"; 
 ?>
