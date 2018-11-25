@@ -323,6 +323,59 @@ $name = "";
             echo "</ul>";
 
             $res->free_result();
+        } else {
+          $query_str .= "player.playerID, player.name FROM player INNER JOIN stats ON player.playerID = stats.playerID WHERE name LIKE '%%'";
+          if (isset($_POST['goals'])) {
+            if (empty($_POST['minGoalAmount'])) {
+                $enteredGoals = 0;
+            }
+            $query_str .= " AND stats.goals > " . $enteredGoals;
+        }
+        if (isset($_POST['assists'])) {
+            if (empty($_POST['minAssistAmount'])) {
+                $enteredAssists = 0;
+            }
+            $query_str .= " AND stats.assists > " . $enteredAssists;
+        }
+        if (isset($_POST['shots'])) {
+            if (empty($_POST['minShotAmount'])) {
+                $enteredShots = 0;
+            }
+            $query_str .= " AND stats.shots > " . $enteredShots;
+        }
+        if (isset($_POST['gameWinningGoals'])) {
+            if (empty($_POST['minGWGAmount'])) {
+                $enteredGWG = 0;
+            }
+            $query_str .= " AND stats.game_winning_goals > " . $enteredGWG;
+        }
+        if (isset($_POST['penaltyMinutes'])) {
+            if (empty($_POST['minPenaltyAmount'])) {
+                $enteredPenaltyMinutes = 0;
+            }
+            $query_str .= " AND stats.penalty_minutes > " . $enteredPenaltyMinutes;
+        }
+        if (isset($_POST['gamesPlayed'])) {
+            if (empty($_POST['minGamesAmount'])) {
+                $enteredGames = 0;
+            }
+            $query_str .= " AND stats.games_played > " . $enteredGames;
+        }
+
+        $query_str .= " ORDER BY name";
+
+        echo "<br />" . $query_str;
+        $res = $db->query($query_str);
+
+        echo "<ul>";
+        while ($row = $res->fetch_row()) {
+            echo "<li>";
+            format_name_as_link($row[0], $row[1], "details.php"); // link shows product name, but is identified by it's product code
+            echo "</li>\n";
+        };
+        echo "</ul>";
+
+        $res->free_result();
         }
     }
     ?>
@@ -660,7 +713,7 @@ $name = "";
           echo "<ul>";
           while ($row = $res->fetch_row()) {
               echo "<li>";
-              format_name_as_link($row[0], $row[1], "teamdetails.php"); // link shows product name, but is identified by it's product code
+              format_name_as_link_team($row[0], $row[1], "teamdetails.php"); // link shows product name, but is identified by it's product code
               echo "</li>\n";
           };
           echo "</ul>";
@@ -740,12 +793,89 @@ $name = "";
           echo "<ul>";
           while ($row = $res->fetch_row()) {
               echo "<li>";
-              format_name_as_link($row[0], $row[1], "teamdetails.php"); // link shows product name, but is identified by it's product code
+              format_name_as_link_team($row[0], $row[1], "teamdetails.php"); // link shows product name, but is identified by it's product code
               echo "</li>\n";
           };
           echo "</ul>";
 
           $res->free_result();
+        } else {
+          $query_str .= "teamID, team_name FROM team WHERE team_name LIKE '%%'";
+          if (isset($_POST['wins'])) {
+            if (empty($_POST['minWinAmount'])) {
+                $enteredWins = 0;
+            }
+            $query_str .= " AND wins > " . $enteredWins;
+        }
+        if (isset($_POST['losses'])) {
+            if (empty($_POST['minLossAmount'])) {
+                $enteredLosses = 0;
+            }
+            $query_str .= " AND losses > " . $enteredLosses;
+        }
+        if (isset($_POST['otloss'])) {
+            if (empty($_POST['minOTLossAmount'])) {
+                $enteredOTLosses = 0;
+            }
+            $query_str .= " AND ot_losses > " . $enteredOTLosses;
+        }
+        if (isset($_POST['points'])) {
+            if (empty($_POST['minPointsAmount'])) {
+                $enteredPoints = 0;
+            }
+            $query_str .= " AND points > " . $enteredPoints;
+        }
+        if (isset($_POST['goalsPerGame'])) {
+            if (empty($_POST['minGoalPerAmount'])) {
+                $enteredGoalsPerGame = 0;
+            }
+            $query_str .= " AND goals_for_per_game > " . $enteredGoalsPerGame;
+        }
+        if (isset($_POST['goalsAllowed'])) {
+            if (empty($_POST['minGoalsAllowedAmount'])) {
+                $enteredGoalsAllowedPerGame = 0;
+            }
+            $query_str .= " AND goals_against_per_game > " . $enteredGoalsAllowedPerGame;
+        }
+        if (isset($_POST['shotsPerGame'])) {
+          if (empty($_POST['minShotsPerAmount'])) {
+              $enteredShotsPerGame = 0;
+          }
+          $query_str .= " AND shots_for_per_game > " . $enteredShotsPerGame;
+        }
+        if (isset($_POST['shotsAllowedPerGame'])) {
+          if (empty($_POST['minShotsAllowedAmount'])) {
+              $enteredShotsAllowedPerGame = 0;
+          }
+          $query_str .= " AND shots_against_per_game > " . $enteredShotsAllowedPerGame;
+        }
+        if (isset($_POST['faceoffPercent'])) {
+          if (empty($_POST['minFaceoffAmount'])) {
+              $enteredFaceoffWin = 0;
+          }
+          $query_str .= " AND faceoff_win_percent > " . $enteredFaceoffWin;
+        }
+        if (isset($_POST['gamesPlayed'])) {
+          if (empty($_POST['minGamesAmount'])) {
+              $enteredGames = 0;
+          }
+          $query_str .= " AND games_played > " . $enteredGames;
+        }
+
+        $query_str .= " ORDER BY team_name";
+
+        echo "<br />" . $query_str;
+        $res = $db->query($query_str);
+
+        echo "<ul>";
+        while ($row = $res->fetch_row()) {
+            echo "<li>";
+            format_name_as_link_team($row[0], $row[1], "teamdetails.php"); // link shows product name, but is identified by it's product code
+            echo "</li>\n";
+        };
+        echo "</ul>";
+
+        $res->free_result();
         }
     }
     $db->close();
