@@ -91,13 +91,13 @@ if (isset($_POST['submit'])) { // if submit button was clicked
 if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
   $sql_show_teams = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME LIKE '%_".$username."'";
   $res = $db->query($sql_show_teams);
+  echo "<h3>My Fantasy Teams</h3>";
   echo "<ul>";
   while ($row = $res->fetch_row())
   {
     $sql_show_team_name = "SELECT team_title FROM $row[0]";
     $result = $db->query($sql_show_team_name);
     $subRow = $result->fetch_row();
-    echo "<h3>My Fantasy Teams</h3>";
     echo "<li>";
     echo "<a href=\"userteam.php?fantasyTeamID=$row[0]\">$subRow[0]</a>";
     echo "</li>";

@@ -81,5 +81,11 @@ while ($row = $res->fetch_row())
 }
 echo "</table>";
 echo "<br />";
-echo "<a href=\"lookup.php\">Search Players</a>"; 
+if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
+    if (strpos($_SESSION['username'],$team_title[1]) !== false) {
+        echo "<a href=\"lookup.php\">Search Players</a>"; 
+    }
+    
+}
+
 ?>
