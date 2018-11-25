@@ -24,11 +24,9 @@ if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
 if (!empty($_SESSION['playerID']) && !empty($_SESSION['name'])) {
     $playerID = $_SESSION['playerID'];
     $playerName = $_SESSION['name'];
-    echo "yes<br />$playerName<br />";
 } else {
     $playerID = $_SESSION['playerID'] = [];
     $playerName = $_SESSION['name'] = [];
-    echo "nope";
 }
 ?>
 
@@ -47,14 +45,20 @@ $_SESSION['team_title'] = $team_title[0];
 // insert player into fantasy team table
 if (!empty($_SESSION['playerID']) && !empty($_SESSION['name']) && !empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID']))
 {
-    $sql_insert_player = "INSERT INTO $fantasyTeamID VALUES ('".$teamID."','".$username."','".$playerID."','".$title."')";
-    echo $sql_insert_player;
-    $res = $db->query($sql_insert_player);
+    if ((strpos($_SESSION['username'],$team_title[1])) !== false)
+    {
+        $sql_insert_player = "INSERT INTO $fantasyTeamID VALUES ('".$teamID."','".$username."','".$playerID."','".$title."')";
+        echo $sql_insert_player;
+        $res = $db->query($sql_insert_player);
     
-    // unset session values
-    unset($_SESSION['playerID']);
-    unset($_SESSION['name']);
-    echo "<br /><br /><br /><br /> more testing";
+        // unset session values
+        unset($_SESSION['playerID']);
+        unset($_SESSION['name']);
+    } 
+    else
+    {
+        redirect_to("fantasy.php");
+    }
 }
 
 $query = "SELECT $teamID.playerID, player.name, player.position FROM $teamID INNER JOIN player ON $teamID.playerID = player.playerID WHERE $teamID.playerID = player.playerID";

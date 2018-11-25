@@ -9,6 +9,8 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
         unset($_SESSION['user_email']);
         unset($_SESSION['firstName']);
         unset($_SESSION['username']);
+        unset($_SESSION['playerID']);
+        unset($_SESSION['name']);
         session_destroy(); // destroy all saved values
         echo "You are logged out.";
         header("Location: login.php");
