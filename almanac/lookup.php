@@ -13,7 +13,7 @@ $name = "";
 
     <h1>Database Search</h1>
 
-    <form action="lookup.php" method="post">
+    <form name="player" action="lookup.php" method="post">
         <table>
             <tr>
                 <td>
@@ -325,10 +325,9 @@ $name = "";
             $res->free_result();
         }
     }
-    $db->close();
     ?>
 
-    <form action="lookup.php" method="post">
+    <form name="team" action="lookup.php" method="post">
         <table>
             <tr>
                 <td>
@@ -337,6 +336,7 @@ $name = "";
                     <p>By Team:</p>
 
                     <?php
+
                     // sql for filling drop down with order numbers from database
                     $sql = "SELECT team_name FROM team ORDER BY team_name";
                     $teamDropDownResult = mysqli_query($db, $sql);
@@ -347,7 +347,7 @@ $name = "";
                     // first value of drop down is empty
                     echo "<option value=\"\"></option>";
 
-                    // fill drop down with order numbers from database
+                    // fill drop down with teams from database
                     while ($row = mysqli_fetch_array($teamDropDownResult)) {
                         ?>
                 <option value="<?php echo $row['team_name']; ?>" <?php if (isset($_POST['team_name']) && $_POST['team_name'] != "" && $_POST['team_name'] == $team) echo " selected"; ?> > <?php echo $row['team_name'] ?> </option>;
@@ -579,7 +579,7 @@ $name = "";
             echo "<ul>";
             while ($row = $res->fetch_row()) {
                 echo "<li>";
-                format_name_as_link($row[0], $row[1], "teamdetails.php"); // link shows product name, but is identified by it's product code
+                format_name_as_link_team($row[0], $row[1], "teamdetails.php"); // link shows product name, but is identified by it's product code
                 echo "</li>\n";
             };
             echo "</ul>";

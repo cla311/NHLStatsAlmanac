@@ -63,8 +63,6 @@ if($stmt->fetch())
 }
 
 get_player($id,$name1);
-echo $id;
-echo $name1;
 
 echo "</tr>";
 echo "</table>";

@@ -201,6 +201,10 @@ function format_name_as_link_fantasy($id, $name, $page) {
   echo "<a href=\"$page?fantasyTeamID=$id\">$name</a>";
 }
 
+function format_name_as_link_team($id, $name, $page) {
+  echo "<a href=\"$page?teamID=$id\">$name</a>";
+}
+
 function fantasy_team_page($page, $title) {
     return "\"$page?fantasyTeamID=$title\"";
 }
