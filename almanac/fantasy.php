@@ -2,6 +2,16 @@
 require('../required/nav.php');
 require('../required/functions.php');
 session_start();
+
+if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
+  $email = $_SESSION['user_email'];
+  $firstName = $_SESSION['firstName'];
+  $username = $_SESSION['username'];
+} else {
+  $email = $_SESSION['user_email'] = [];
+  $firstName = $_SESSION['firstName'] = [];
+  $username = $_SESSION['username'] = [];
+}
 ?>
 
 <?php require_login(); // if not logged in, redirect to login page ?>
@@ -77,6 +87,21 @@ if (isset($_POST['submit'])) { // if submit button was clicked
         echo "Team name is needed";
     }
 }
+
+$sql_show_teams = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME LIKE '%_".$username."'";
+$res = $db->query($sql_show_teams);
+echo "<ul>";
+while ($row = $res->fetch_row())
+{
+  $sql_show_team_name = "SELECT team_title FROM $row[0]";
+  $result = $db->query($sql_show_team_name);
+  $subRow = $result->fetch_row();
+  echo "<h3>My Fantasy Teams</h3>";
+  echo "<li>";
+  format_name_as_link($row[0], $subRow[0], "userteam.php");
+  echo "</li>";
+}
+echo "</ul>";
 
 $db->close();
 ?>
