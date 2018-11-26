@@ -83,6 +83,9 @@ $name = "";
                 $enteredGWG = 0;
                 $enteredPenaltyMinutes = 0;
                 $enteredGames = 0;
+                $enteredSaves = 0;
+                $enteredWins = 0;
+                $enteredLosses = 0;
                 ?>
 
                 <h3>Secondary Filters</h3>
@@ -131,6 +134,30 @@ $name = "";
                 if (isset($_POST['minGamesAmount'])) {
                     echo htmlentities($_POST['minGamesAmount']);
                     $enteredGames = $_POST['minGamesAmount'];
+                }
+                ?>"/><br>
+
+                <input type="checkbox" name="saves" value="savesNum" <?php if (isset($_POST['saves'])) echo "checked=\"checked\""; ?> />
+                Saves greater than: <input type="number" name="minSavesAmount" value="<?php
+                if (isset($_POST['minSavesAmount'])) {
+                    echo htmlentities($_POST['minSavesAmount']);
+                    $enteredSaves = $_POST['minSavesAmount'];
+                }
+                ?>"/><br>
+
+                <input type="checkbox" name="wins" value="winsNum" <?php if (isset($_POST['wins'])) echo "checked=\"checked\""; ?> />
+                Wins greater than: <input type="number" name="minWinsAmount" value="<?php
+                if (isset($_POST['minWinsAmount'])) {
+                    echo htmlentities($_POST['minWinsAmount']);
+                    $enteredWins = $_POST['minWinsAmount'];
+                }
+                ?>"/><br>
+
+                <input type="checkbox" name="losses" value="lossesNum" <?php if (isset($_POST['losses'])) echo "checked=\"checked\""; ?> />
+                Losses greater than: <input type="number" name="minLossAmount" value="<?php
+                if (isset($_POST['minLossAmount'])) {
+                    echo htmlentities($_POST['minLossAmount']);
+                    $enteredLosses = $_POST['minLossAmount'];
                 }
                 ?>"/><br>
             </td>
@@ -195,6 +222,24 @@ $name = "";
                 }
                 $query_str .= " AND stats.games_played > " . $enteredGames;
             }
+            if (isset($_POST['saves'])) {
+              if (empty($_POST['minSavesAmount'])) {
+                  $enteredSaves = 0;
+              }
+              $query_str .= " AND goalie_stats.saves > " . $enteredSaves;
+            }
+            if (isset($_POST['wins'])) {
+              if (empty($_POST['minWinsAmount'])) {
+                  $enteredWins = 0;
+              }
+              $query_str .= " AND goalie_stats.wins > " . $enteredWins;
+            }
+            if (isset($_POST['losses'])) {
+              if (empty($_POST['minLossAmount'])) {
+                  $enteredLosses = 0;
+              }
+              $query_str .= " AND goalie_stats.losses > " . $enteredLosses;
+            }
 
             $query_str .= " ORDER BY name";
 
@@ -252,6 +297,24 @@ $name = "";
                 }
                 $query_str .= " AND stats.games_played > " . $enteredGames;
             }
+            if (isset($_POST['saves'])) {
+              if (empty($_POST['minSavesAmount'])) {
+                  $enteredSaves = 0;
+              }
+              $query_str .= " AND goalie_stats.saves > " . $enteredSaves;
+            }
+            if (isset($_POST['wins'])) {
+              if (empty($_POST['minWinsAmount'])) {
+                  $enteredWins = 0;
+              }
+              $query_str .= " AND goalie_stats.wins > " . $enteredWins;
+            }
+            if (isset($_POST['losses'])) {
+              if (empty($_POST['minLossAmount'])) {
+                  $enteredLosses = 0;
+              }
+              $query_str .= " AND goalie_stats.losses > " . $enteredLosses;
+            }
 
             $query_str .= " ORDER BY name";
 
@@ -308,6 +371,24 @@ $name = "";
                 }
                 $query_str .= " AND stats.games_played > " . $enteredGames;
             }
+            if (isset($_POST['saves'])) {
+              if (empty($_POST['minSavesAmount'])) {
+                  $enteredSaves = 0;
+              }
+              $query_str .= " AND goalie_stats.saves > " . $enteredSaves;
+            }
+            if (isset($_POST['wins'])) {
+              if (empty($_POST['minWinsAmount'])) {
+                  $enteredWins = 0;
+              }
+              $query_str .= " AND goalie_stats.wins > " . $enteredWins;
+            }
+            if (isset($_POST['losses'])) {
+              if (empty($_POST['minLossAmount'])) {
+                  $enteredLosses = 0;
+              }
+              $query_str .= " AND goalie_stats.losses > " . $enteredLosses;
+            }
 
             $query_str .= " ORDER BY name";
 
@@ -360,6 +441,24 @@ $name = "";
                     $enteredGames = 0;
                 }
                 $query_str .= " AND stats.games_played > " . $enteredGames;
+            }
+            if (isset($_POST['saves'])) {
+              if (empty($_POST['minSavesAmount'])) {
+                  $enteredSaves = 0;
+              }
+              $query_str .= " AND goalie_stats.saves > " . $enteredSaves;
+            }
+            if (isset($_POST['wins'])) {
+              if (empty($_POST['minWinsAmount'])) {
+                  $enteredWins = 0;
+              }
+              $query_str .= " AND goalie_stats.wins > " . $enteredWins;
+            }
+            if (isset($_POST['losses'])) {
+              if (empty($_POST['minLossAmount'])) {
+                  $enteredLosses = 0;
+              }
+              $query_str .= " AND goalie_stats.losses > " . $enteredLosses;
             }
 
             $query_str .= " ORDER BY name";
@@ -453,7 +552,6 @@ $name = "";
                 $enteredShotsPerGame = 0;
                 $enteredShotsAllowedPerGame = 0;
                 $enteredFaceoffWin = 0;
-                $enteredGames = 0;
                 ?>
 
                 <h3>Secondary Filters</h3>
@@ -526,14 +624,6 @@ $name = "";
                 if (isset($_POST['minFaceoffAmount'])) {
                     echo htmlentities($_POST['minFaceoffAmount']);
                     $enteredFaceoffWin = $_POST['minFaceoffAmount'];
-                }
-                ?>"/><br>
-
-                <input type="checkbox" name="gamesPlayed" value="gamesNum" <?php if (isset($_POST['gamesPlayed'])) echo "checked=\"checked\""; ?> />
-                Games Played greater than: <input type="number" name="minGamesAmount" value="<?php
-                if (isset($_POST['minGamesAmount'])) {
-                    echo htmlentities($_POST['minGamesAmount']);
-                    $enteredFaceoffWin = $_POST['minGamesAmount'];
                 }
                 ?>"/><br>
             </td>
