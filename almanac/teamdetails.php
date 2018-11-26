@@ -100,5 +100,29 @@ echo "<h3>Team Stats</h3>";
     echo "</table>";
     $stmt->free_result();
 
+    $query = "SELECT player.playerID, player.name, player.position FROM player INNER JOIN team ON player.teamID = team.teamID WHERE player.teamID = $id";
+    echo $query;
+    $res = $db->query($query);
+
+    echo "<h3>Roster</h3>";
+
+    echo "<table border=\"solid\">";
+    echo "<tr>";
+    echo "<th>Players</th>";
+    echo "<th>Position</th>";
+    echo "</tr>";
+    while ($row = $res->fetch_row())
+    {
+        echo "<tr>";
+        echo "<td align=\"center\">";
+        format_name_as_link($row[0],$row[1],"details.php");
+        echo "</td>";
+        echo "<td align=\"center\">";
+        echo $row[2];
+        echo "</td>";
+        echo "</tr>";
+    }
+    echo "</table>";
+
 $db->close();
 ?>
