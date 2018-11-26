@@ -158,7 +158,7 @@ $name = "";
             echo $team;
 
             // get name to display link, use teamID to find players in database
-            $query_str .= "player.playerID, name FROM player INNER JOIN team ON player.teamID = team.teamID INNER JOIN stats ON player.playerID = stats.playerID WHERE team.teamID = $teamID";
+            $query_str .= "player.playerID, name FROM player LEFT JOIN stats ON player.playerID = stats.playerID LEFT JOIN goalie_stats ON goalie_stats.playerID = player.playerID WHERE team.teamID = $teamID";
             if (isset($_POST['goals'])) {
                 if (empty($_POST['minGoalAmount'])) {
                     $enteredGoals = 0;
@@ -215,7 +215,7 @@ $name = "";
             echo $city;
 
             // get name to display link, use city name to find players in database
-            $query_str .= "player.playerID, name FROM player INNER JOIN team ON player.teamID = team.teamID INNER JOIN stats ON player.playerID = stats.playerID WHERE team.city = '" . $city . "'";
+            $query_str .= "player.playerID, name FROM player LEFT JOIN stats ON player.playerID = stats.playerID LEFT JOIN goalie_stats ON goalie_stats.playerID = player.playerID WHERE team.city = '" . $city . "'";
             if (isset($_POST['goals'])) {
                 if (empty($_POST['minGoalAmount'])) {
                     $enteredGoals = 0;
@@ -271,7 +271,7 @@ $name = "";
             $name = $_POST['name'];
             echo "Returning players with name containing: '" . $name . "'";
 
-            $query_str .= "player.playerID, player.name FROM player INNER JOIN stats ON player.playerID = stats.playerID WHERE name LIKE '%" . $name . "%'";
+            $query_str .= "player.playerID, player.name FROM player LEFT JOIN stats ON player.playerID = stats.playerID LEFT JOIN goalie_stats ON goalie_stats.playerID = player.playerID WHERE name LIKE '%" . $name . "%'";
             if (isset($_POST['goals'])) {
                 if (empty($_POST['minGoalAmount'])) {
                     $enteredGoals = 0;
@@ -324,7 +324,7 @@ $name = "";
 
             $res->free_result();
         } else {
-          $query_str .= "player.playerID, player.name FROM player INNER JOIN stats ON player.playerID = stats.playerID WHERE name LIKE '%%'";
+          $query_str .= "player.playerID, player.name FROM player LEFT JOIN stats ON player.playerID = stats.playerID LEFT JOIN goalie_stats ON goalie_stats.playerID = player.playerID WHERE name LIKE '%%'";
           if (isset($_POST['goals'])) {
             if (empty($_POST['minGoalAmount'])) {
                 $enteredGoals = 0;
