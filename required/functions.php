@@ -2,6 +2,8 @@
 
 require_once('connection.php');
 
+$nhlAPI = "https://statsapi.web.nhl.com";
+
 // set to https
 function require_ssl() {
     if ($_SERVER["HTTPS"] != "on") {
@@ -198,11 +200,11 @@ function format_name_as_link($id, $name, $page) {
 }
 
 function format_name_as_link_fantasy($id, $name, $page) {
-  echo "<a href=\"$page?fantasyTeamID=$id\">$name</a>";
+    echo "<a href=\"$page?fantasyTeamID=$id\">$name</a>";
 }
 
 function format_name_as_link_team($id, $name, $page) {
-  echo "<a href=\"$page?teamID=$id\">$name</a>";
+    echo "<a href=\"$page?teamID=$id\">$name</a>";
 }
 
 function fantasy_team_page($page, $title) {

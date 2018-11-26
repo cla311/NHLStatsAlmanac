@@ -1,12 +1,69 @@
 <?php
 require('../required/nav.php');
 require('../required/functions.php');
+ini_set('max_execution_time', 0);
+ini_set('memory_limit', '960M');
 ?>
 
 <?php
 $team = "";
 $city = "";
 $name = "";
+
+if (!isset($_POST['submit']) && !isset($_POST['search'])) {
+    $teams = file_get_contents($nhlAPI . '/api/v1/teams');
+    $teams_array = json_decode($teams, true);
+    $team_ids = array();
+    foreach ($teams_array["teams"] as $row) {
+        array_push($team_ids, $row['id']);
+    }
+    unset($row);
+
+    foreach ($team_ids as $ids) {
+        $team_roster = file_get_contents($nhlAPI . '/api/v1/teams/' . $ids . "/roster");
+        $teamRoster_array = json_decode($team_roster, true);
+
+        foreach ($teamRoster_array["roster"] as $player) {
+            $currPlayer = file_get_contents($nhlAPI . '/api/v1/people/' . $player["person"]["id"]);
+            $player_array = json_decode($currPlayer, true);
+            foreach ($player_array["people"] as $person) {
+                $playerID = $person["id"];
+                $teamID = $ids;
+                $photo = "https://nhl.bamcontent.com/images/headshots/current/168x168/" . $person["id"] . ".jpg";
+
+                if (!isset($person["primaryNumber"])) {
+                    $number = "NULL";
+                } else {
+                    $number = $person["primaryNumber"];
+                }
+
+                $playerName = mysqli_real_escape_string($db, $person["fullName"]);
+                $weight = $person["weight"];
+
+                $original = ["'", "\""];
+                $replace = [" feet", " inches"];
+                $height = str_replace($original, $replace, $person["height"]);
+
+                if (!isset($person["nationality"])) {
+                    $nationality = "N/A";
+                } else {
+                    $nationality = $person["nationality"];
+                }
+
+                $age = $person["currentAge"];
+                $birthDate = $person["birthDate"];
+                $position = $person["primaryPosition"]["abbreviation"];
+
+                $query = "INSERT IGNORE INTO player VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                $stmt = $db->prepare($query);
+                $stmt->bind_param("iisisississ", $playerID, $teamID, $photo,
+                        $number, $playerName, $weight, $height, $nationality, $age,
+                        $birthDate, $position);
+                $stmt->execute();
+            }
+        }
+    }
+}
 ?>
 
 <body>
@@ -22,17 +79,17 @@ $name = "";
                     <p>By Team:</p>
 
                     <?php
-                    // sql for filling drop down with order numbers from database
+// sql for filling drop down with order numbers from database
                     $sql = "SELECT team_name FROM team ORDER BY team_name";
                     $teamDropDownResult = mysqli_query($db, $sql);
 
-                    // drop down with order numbers from database
+// drop down with order numbers from database
                     echo "<select name =\"team_name\">";
 
-                    // first value of drop down is empty
+// first value of drop down is empty
                     echo "<option value=\"\"></option>";
 
-                    // fill drop down with order numbers from database
+// fill drop down with order numbers from database
                     while ($row = mysqli_fetch_array($teamDropDownResult)) {
                         ?>
                 <option value="<?php echo $row['team_name']; ?>" <?php if (isset($_POST['team_name']) && $_POST['team_name'] != "" && $_POST['team_name'] == $team) echo " selected"; ?> > <?php echo $row['team_name'] ?> </option>;
@@ -48,17 +105,17 @@ $name = "";
             <p>By City:</p>
 
             <?php
-            // sql for filling drop down with city from database
+// sql for filling drop down with city from database
             $sql = "SELECT DISTINCT city FROM team ORDER BY city";
             $cityDropDownResult = mysqli_query($db, $sql);
 
-            // drop down with city from database
+// drop down with city from database
             echo "<select name =\"city\">";
 
-            // first value of drop down is empty
+// first value of drop down is empty
             echo "<option value=\"\"></option>";
 
-            // fill drop down with city from database
+// fill drop down with city from database
             while ($row = mysqli_fetch_array($cityDropDownResult)) {
                 ?>
                 <option value="<?php echo $row['city']; ?>" <?php if (isset($_POST['city']) && $_POST['city'] != "" && $_POST['city'] == $city) echo " selected"; ?> > <?php echo $row['city'] ?> </option>;
@@ -223,22 +280,22 @@ $name = "";
                 $query_str .= " AND stats.games_played > " . $enteredGames;
             }
             if (isset($_POST['saves'])) {
-              if (empty($_POST['minSavesAmount'])) {
-                  $enteredSaves = 0;
-              }
-              $query_str .= " AND goalie_stats.saves > " . $enteredSaves;
+                if (empty($_POST['minSavesAmount'])) {
+                    $enteredSaves = 0;
+                }
+                $query_str .= " AND goalie_stats.saves > " . $enteredSaves;
             }
             if (isset($_POST['wins'])) {
-              if (empty($_POST['minWinsAmount'])) {
-                  $enteredWins = 0;
-              }
-              $query_str .= " AND goalie_stats.wins > " . $enteredWins;
+                if (empty($_POST['minWinsAmount'])) {
+                    $enteredWins = 0;
+                }
+                $query_str .= " AND goalie_stats.wins > " . $enteredWins;
             }
             if (isset($_POST['losses'])) {
-              if (empty($_POST['minLossAmount'])) {
-                  $enteredLosses = 0;
-              }
-              $query_str .= " AND goalie_stats.losses > " . $enteredLosses;
+                if (empty($_POST['minLossAmount'])) {
+                    $enteredLosses = 0;
+                }
+                $query_str .= " AND goalie_stats.losses > " . $enteredLosses;
             }
 
             $query_str .= " ORDER BY name";
@@ -298,22 +355,22 @@ $name = "";
                 $query_str .= " AND stats.games_played > " . $enteredGames;
             }
             if (isset($_POST['saves'])) {
-              if (empty($_POST['minSavesAmount'])) {
-                  $enteredSaves = 0;
-              }
-              $query_str .= " AND goalie_stats.saves > " . $enteredSaves;
+                if (empty($_POST['minSavesAmount'])) {
+                    $enteredSaves = 0;
+                }
+                $query_str .= " AND goalie_stats.saves > " . $enteredSaves;
             }
             if (isset($_POST['wins'])) {
-              if (empty($_POST['minWinsAmount'])) {
-                  $enteredWins = 0;
-              }
-              $query_str .= " AND goalie_stats.wins > " . $enteredWins;
+                if (empty($_POST['minWinsAmount'])) {
+                    $enteredWins = 0;
+                }
+                $query_str .= " AND goalie_stats.wins > " . $enteredWins;
             }
             if (isset($_POST['losses'])) {
-              if (empty($_POST['minLossAmount'])) {
-                  $enteredLosses = 0;
-              }
-              $query_str .= " AND goalie_stats.losses > " . $enteredLosses;
+                if (empty($_POST['minLossAmount'])) {
+                    $enteredLosses = 0;
+                }
+                $query_str .= " AND goalie_stats.losses > " . $enteredLosses;
             }
 
             $query_str .= " ORDER BY name";
@@ -372,22 +429,22 @@ $name = "";
                 $query_str .= " AND stats.games_played > " . $enteredGames;
             }
             if (isset($_POST['saves'])) {
-              if (empty($_POST['minSavesAmount'])) {
-                  $enteredSaves = 0;
-              }
-              $query_str .= " AND goalie_stats.saves > " . $enteredSaves;
+                if (empty($_POST['minSavesAmount'])) {
+                    $enteredSaves = 0;
+                }
+                $query_str .= " AND goalie_stats.saves > " . $enteredSaves;
             }
             if (isset($_POST['wins'])) {
-              if (empty($_POST['minWinsAmount'])) {
-                  $enteredWins = 0;
-              }
-              $query_str .= " AND goalie_stats.wins > " . $enteredWins;
+                if (empty($_POST['minWinsAmount'])) {
+                    $enteredWins = 0;
+                }
+                $query_str .= " AND goalie_stats.wins > " . $enteredWins;
             }
             if (isset($_POST['losses'])) {
-              if (empty($_POST['minLossAmount'])) {
-                  $enteredLosses = 0;
-              }
-              $query_str .= " AND goalie_stats.losses > " . $enteredLosses;
+                if (empty($_POST['minLossAmount'])) {
+                    $enteredLosses = 0;
+                }
+                $query_str .= " AND goalie_stats.losses > " . $enteredLosses;
             }
 
             $query_str .= " ORDER BY name";
@@ -443,22 +500,22 @@ $name = "";
                 $query_str .= " AND stats.games_played > " . $enteredGames;
             }
             if (isset($_POST['saves'])) {
-              if (empty($_POST['minSavesAmount'])) {
-                  $enteredSaves = 0;
-              }
-              $query_str .= " AND goalie_stats.saves > " . $enteredSaves;
+                if (empty($_POST['minSavesAmount'])) {
+                    $enteredSaves = 0;
+                }
+                $query_str .= " AND goalie_stats.saves > " . $enteredSaves;
             }
             if (isset($_POST['wins'])) {
-              if (empty($_POST['minWinsAmount'])) {
-                  $enteredWins = 0;
-              }
-              $query_str .= " AND goalie_stats.wins > " . $enteredWins;
+                if (empty($_POST['minWinsAmount'])) {
+                    $enteredWins = 0;
+                }
+                $query_str .= " AND goalie_stats.wins > " . $enteredWins;
             }
             if (isset($_POST['losses'])) {
-              if (empty($_POST['minLossAmount'])) {
-                  $enteredLosses = 0;
-              }
-              $query_str .= " AND goalie_stats.losses > " . $enteredLosses;
+                if (empty($_POST['minLossAmount'])) {
+                    $enteredLosses = 0;
+                }
+                $query_str .= " AND goalie_stats.losses > " . $enteredLosses;
             }
 
             $query_str .= " ORDER BY name";
@@ -488,17 +545,17 @@ $name = "";
                     <p>By Team:</p>
 
                     <?php
-                    // sql for filling drop down with order numbers from database
+// sql for filling drop down with order numbers from database
                     $sql = "SELECT team_name FROM team ORDER BY team_name";
                     $teamDropDownResult = mysqli_query($db, $sql);
 
-                    // drop down with order numbers from database
+// drop down with order numbers from database
                     echo "<select name =\"team_name\">";
 
-                    // first value of drop down is empty
+// first value of drop down is empty
                     echo "<option value=\"\"></option>";
 
-                    // fill drop down with teams from database
+// fill drop down with teams from database
                     while ($row = mysqli_fetch_array($teamDropDownResult)) {
                         ?>
                 <option value="<?php echo $row['team_name']; ?>" <?php if (isset($_POST['team_name']) && $_POST['team_name'] != "" && $_POST['team_name'] == $team) echo " selected"; ?> > <?php echo $row['team_name'] ?> </option>;
@@ -514,17 +571,17 @@ $name = "";
             <p>By City:</p>
 
             <?php
-            // sql for filling drop down with city from database
+// sql for filling drop down with city from database
             $sql = "SELECT DISTINCT city FROM team ORDER BY city";
             $cityDropDownResult = mysqli_query($db, $sql);
 
-            // drop down with city from database
+// drop down with city from database
             echo "<select name =\"city\">";
 
-            // first value of drop down is empty
+// first value of drop down is empty
             echo "<option value=\"\"></option>";
 
-            // fill drop down with city from database
+// fill drop down with city from database
             while ($row = mysqli_fetch_array($cityDropDownResult)) {
                 ?>
                 <option value="<?php echo $row['city']; ?>" <?php if (isset($_POST['city']) && $_POST['city'] != "" && $_POST['city'] == $city) echo " selected"; ?> > <?php echo $row['city'] ?> </option>;
