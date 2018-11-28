@@ -299,12 +299,12 @@ $stmt->bind_param('s', $id);
 $stmt->execute();
 $stmt->bind_result($photo1);
 
+echo "<div class=\"body\">";
+echo "<div class\"content\">";
 if ($stmt->fetch()) {
-    echo "<img src=\"$photo1\" alt=\"Player Photo\">";
+  echo "<img class=\"player-picture\" src=\"$photo1\" alt=\"Player Photo\">";
 }
 $stmt->free_result();
-
-echo "<br /><br />";
 
 $query = "SELECT name, team.team_name, weight, height, nationality, age, position FROM player INNER JOIN team ON player.teamID = team.teamID WHERE playerID = ?";
 $stmt = $db->prepare($query);
@@ -313,25 +313,25 @@ $stmt->execute();
 $stmt->bind_result($name1, $team_name1, $weight1, $height1, $nationality1, $age1, $position1);
 
 // display information in a table
-echo "<table border=\"solid\">";
-echo "<tr>";
-echo "<th>Name</th>";
-echo "<th>Team</th>";
-echo "<th>Weight</th>";
-echo "<th>Height</th>";
-echo "<th>Nationality</th>";
-echo "<th>Age</th>";
-echo "<th>Position</th>";
-echo "</tr>";
+echo "<table class=\"player-details\">";
+// echo "<tr>";
+// echo "<th>Name</th>";
+// echo "<th>Team</th>";
+// echo "<th>Weight</th>";
+// echo "<th>Height</th>";
+// echo "<th>Nationality</th>";
+// echo "<th>Age</th>";
+// echo "<th>Position</th>";
+// echo "</tr>";
 
 if ($stmt->fetch()) {
     echo "<td align=\"center\">" . $name1 . "</td>";
     echo "<td align=\"center\">" . $team_name1 . "</td>";
-    echo "<td align=\"center\">" . $weight1 . "</td>";
+    echo "<td align=\"center\">" . $weight1 . " lbs.</td>";
     echo "<td align=\"center\">" . $height1 . "</td>";
     echo "<td align=\"center\">" . $nationality1 . "</td>";
     echo "<td align=\"center\">" . $age1 . "</td>";
-    echo "<td align=\"center\">" . $position1 . "</td>";
+    echo "<td class=\"far-right\" align=\"center\">" . $position1 . "</td>";
 }
 
 get_player($id, $name1);
@@ -450,4 +450,6 @@ if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
 } else {
     echo "<a href=\"fantasy.php\">Add to Fantasy Team</a>";
 }
+echo "</div>";
+echo "<div>";
 ?>

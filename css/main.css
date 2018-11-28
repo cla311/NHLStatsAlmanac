@@ -39,6 +39,38 @@ h1.logo {
     /* padding: 10px; */
 }
 
+img.player-picture {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: solid;
+    border-width: 5px;
+    color: rgba(10,15,16,1);
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+}
+
+table.player-details {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+table.player-details td {
+    padding: 0.5rem;
+    border-left: solid;
+    border-width: 1px;
+    border-color: rgba(255,153,51,1);
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+table.player-details td.far-right {
+    border-right: solid;
+    border-width: 1px;
+    border-color: rgba(255,153,51,1);
+}
+
 .content h1.log {
     margin-bottom: 3rem;
     text-align: center;
@@ -69,6 +101,35 @@ h1.logo {
 
 .content p.author {
     text-align: center;
+    margin-bottom: 4rem;
+}
+
+.content table.fantasy-roster {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.content table.fantasy-roster th {
+    padding: 1rem;
+    color: rgba(255,153,51,1);
+    background-color: rgba(10,15,16,1);
+}
+
+.content table.fantasy-roster td {
+    padding: 0.5rem;
+    background-color: rgba(10,15,16,0.25);
+}
+
+.content table.fantasy-roster td a {
+    color: rgba(53,93,237,1);
+    transition: 0.3s;
+    -webkit-transition: 0.15s;
+    font-size: 1rem;
+}
+
+.content table.fantasy-roster td a:hover {
+    color: rgba(7,53,221,1);
 }
 
 header {

@@ -68,14 +68,14 @@ echo "<div class=\"content\">";
 echo "<h3 class=\"fantasy-title\">" . $team_title[0] . "</h3>";
 echo "<p class=\"author\">Created by " . $team_title[1] . "</p>";
 
-echo "<table border=\"solid\">";
+echo "<table class=\"fantasy-roster\">";
 echo "<tr>";
 echo "<th>Players</th>";
 echo "<th>Position</th>";
 echo "</tr>";
 while ($row = $res->fetch_row()) {
     echo "<tr>";
-    echo "<td align=\"center\">";
+    echo "<td>";
     format_name_as_link($row[0], $row[1], "details.php");
     echo "</td>";
     echo "<td align=\"center\">";
