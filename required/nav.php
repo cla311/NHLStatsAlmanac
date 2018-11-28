@@ -1,3 +1,7 @@
+<head>
+<link rel="stylesheet" href="../css/main.css">
+</head>
+
 <?php
 $host = $_SERVER['HTTP_HOST']
 ?>
