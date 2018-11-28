@@ -60,10 +60,13 @@ if (!empty($_SESSION['playerID']) && !empty($_SESSION['name']) && !empty($_SESSI
 }
 
 $query = "SELECT $teamID.playerID, player.name, player.position FROM $teamID INNER JOIN player ON $teamID.playerID = player.playerID WHERE $teamID.playerID = player.playerID";
-echo $query;
+// echo $query;
 $res = $db->query($query);
 
-echo "<h3>" . $team_title[0] . "</h3>";
+echo "<div class=\"body\">";
+echo "<div class=\"content\">";
+echo "<h3 class=\"fantasy-title\">" . $team_title[0] . "</h3>";
+echo "<p class=\"author\">Created by " . $team_title[1] . "</p>";
 
 echo "<table border=\"solid\">";
 echo "<tr>";
@@ -87,4 +90,6 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
         echo "<a href=\"lookup.php\">Search Players</a>";
     }
 }
+echo "</div>";
+echo "</div>";
 ?>

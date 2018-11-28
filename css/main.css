@@ -11,6 +11,7 @@ img.logo {
     width: 30%;
     height: 50%;
     margin-top: 3rem;
+    margin-bottom: 3rem;
 }
 
 h1.logo {
@@ -22,6 +23,52 @@ h1.logo {
     position: relative;
     margin-left: auto;
     margin-right: auto;
+}
+
+.body {
+    background-color: rgba(232,232,232,0.75);
+}
+
+.content {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    /* border: 3px solid green; */
+    /* padding: 10px; */
+}
+
+.content h1.log {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.content form {
+    margin-bottom: 2rem;
+}
+
+.content form .input {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    text-align: center;
+}
+
+.content p.center {
+    text-align: center;
+}
+
+.content h3.fantasy-title {
+    text-align: center;
+    font-size: 3rem;
+    letter-spacing: 3px;
+    font-family: "sports", Helvetica, Arial, sans-serif;
+    color: rgba(255,153,51,1);
+}
+
+.content p.author {
+    text-align: center;
 }
 
 header {

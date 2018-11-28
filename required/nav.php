@@ -16,8 +16,8 @@ $host = $_SERVER['HTTP_HOST']
         echo "<a class=\"nav-item\" href=\"http://" . $host . "/NHLStatsAlmanac/almanac/index.php\">Home</a> ";
         echo "<a class=\"nav-item\" href=\"http://" . $host . "/NHLStatsAlmanac/almanac/lookup.php\">Search</a> ";
         echo "<a class=\"nav-item\" href=\"http://" . $host . "/NHLStatsAlmanac/almanac/fantasy.php\">Fantasy Teams</a> ";
-        echo "<a class=\"nav-item\" href=\"http://" . $host . "/NHLStatsAlmanac/almanac/login.php\">Login/Logout</a>";
         echo "<a class=\"nav-item\" href=\"http://" . $host . "/NHLStatsAlmanac/almanac/account.php\">My Account</a>";
+        echo "<a class=\"nav-item\" href=\"http://" . $host . "/NHLStatsAlmanac/almanac/login.php\">Login/Logout</a>";
         ?>
     </nav>
 

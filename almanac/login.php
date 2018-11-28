@@ -52,11 +52,11 @@ if (is_post_request()) {
             if (password_verify($password, $user['password'])) {
                 log_in_user($user);
 
-                // if (!empty($_SESSION['productID']) && !empty($_SESSION['productName'])) { // if user was trying to save an item to their watchlist
-                //   header('Location: http://'.$_SERVER['HTTP_HOST'].'/rdonnell/A4/addtowatchlist.php');
+                // if (!empty($_SESSION['playerID']) && !empty($_SESSION['ame'])) { // if user was trying to save an item to their watchlist
+                //   header('Location: http://'.$_SERVER['HTTP_HOST'].'/NHLStatsAlmanac/almanac/addtowatchlist.php');
                 //   exit();
                 // } else { // otherwise, send user to model list
-                header('Location: http://' . $_SERVER['HTTP_HOST'] . '/NHLStatsAlmanac/almanac/lookup.php');
+                header('Location: http://' . $_SERVER['HTTP_HOST'] . '/NHLStatsAlmanac/almanac/index.php');
                 //   exit();
                 // }
             } else {
@@ -75,23 +75,35 @@ if (is_post_request()) {
 <?php
 // only show login info they aren't logged in
 if (empty($_SESSION['user_email']) && empty($_SESSION['firstName']) && empty($_SESSION['username'])) {
+  ?>
+  <div class="body">
+    <!-- <div class="content"></div> -->
+      <div class="content">
+        <h1 class="log">Log In</h1>
+
+        <?php echo display_errors($errors); ?>
+
+        <form action="login.php" method="post">
+          <div class="input">
+            Email:<br />
+            <input type="text" name="email" value="<?php echo h($email); ?>" /><br /><br />
+          </div>
+          <div class="input">
+            Password:<br />
+            <input type="password" name="password" value="" /><br /><br />
+          </div>
+          <div class="input">
+            <input type="submit" name="submit" value="Submit"/>
+          </div>
+        </form>
+
+        <p class="center">Not registered yet? <a href="register.php">Register here<a></p>
+
+    <?php
+    } else { // otherwise, don't let them
+      echo "You are already logged in.";
+    }
     ?>
-    <h1>Log in</h1>
-
-    <?php echo display_errors($errors); ?>
-
-    <form action="login.php" method="post">
-        Email:<br />
-        <input type="text" name="email" value="<?php echo h($email); ?>" /><br /><br />
-        Password:<br />
-        <input type="password" name="password" value="" /><br /><br />
-        <input type="submit" name="submit" value="Submit"/>
-    </form>
-
-    <p>Not registered yet? <a href="register.php">Register here<a></p>
-
-                <?php
-            } else { // otherwise, don't let them
-                echo "You are already logged in.";
-            }
-            ?>
+    </div>
+    <!-- <div class="content"></div> -->
+  </div>
