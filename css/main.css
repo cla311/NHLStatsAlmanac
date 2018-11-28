@@ -1,0 +1,58 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+img.logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    height: 50%;
+    margin-top: 3rem;
+}
+
+h1.logo {
+    font-family: "sports", Helvetica, Arial, sans-serif;
+    font-size: 4rem;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+header {
+    margin: 0;
+    padding: 0;
+    position: sticky;
+}
+
+a.nav-item {
+    display: inline-block;
+    text-align: center;
+    background-color: rgba(10,15,16,0.35);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    text-decoration: none;
+    color: rgba(10,15,16,1);
+    transition: 0.3s;
+    -webkit-transition: 0.3s;
+    border-color: rgba(10,15,16,0.35);
+    border-bottom: solid; 
+    border-top: solid;
+    border-width: 2px;
+}
+a.nav-item:hover {
+    color: rgba(255,153,51,1);
+    border-bottom: solid; 
+    border-width: 2px;
+    background-color: rgba(10,15,16,0.65);
+}
+
+@font-face {
+    font-family: "sports";
+    src: url("../font/sportsjersey.ttf");
+  }
