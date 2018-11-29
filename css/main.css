@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     font-family: Helvetica, Arial, sans-serif;
+    /* display: block; */
 }
 
 img.logo {
@@ -44,8 +45,8 @@ img.player-picture {
     margin-left: auto;
     margin-right: auto;
     border: solid;
-    border-width: 5px;
-    color: rgba(10,15,16,1);
+    border-width: 3px;
+    color: rgba(255,153,51,1);
     margin-top: 3rem;
     margin-bottom: 1rem;
 }
@@ -71,6 +72,61 @@ table.player-details td.far-right {
     border-color: rgba(255,153,51,1);
 }
 
+h3.player-stats {
+    /* text-align: center; */
+    font-size: 2rem;
+    letter-spacing: 3px;
+    font-family: "sports", Helvetica, Arial, sans-serif;
+    color: rgba(255,153,51,1);
+    margin-bottom: 1rem;
+    margin-top: 3rem;
+}
+
+.stats {
+    margin: 2rem;
+    margin-bottom: 1rem;
+}
+
+table.show-stats{
+    margin-bottom: 0;
+}
+
+table.show-stats th {
+    padding: 0.5rem;
+    color: rgba(255,153,51,1);
+    background-color: rgba(10,15,16,1);
+    font-size: 0.8rem;
+}
+
+table.show-stats td {
+    padding: 0.5rem;
+    background-color: rgba(10,15,16,0.25);
+    font-size: 0.8rem;
+}
+
+table.show-stats td.y-axis {
+    padding: 0.5rem;
+    color: rgba(255,153,51,1);
+    background-color: rgba(10,15,16,1);
+    font-size: 0.8rem;
+}
+
+a.add-link {
+    background-color: rgba(255,153,51,1);
+    transition: 0.3s;
+    -webkit-transition: 0.3s;
+    font-size: 1rem;
+    color: #fff;
+    padding: 1rem;
+    margin: 0 auto;
+    text-decoration: none;
+    display: inline-block;
+}
+
+a.add-link:hover {
+    background-color: rgba(255,121,0,1);
+}
+
 .content h1.log {
     margin-bottom: 3rem;
     text-align: center;
@@ -84,6 +140,10 @@ table.player-details td.far-right {
     margin-left: auto;
     margin-right: auto;
     width: 50%;
+    text-align: center;
+}
+
+.center {
     text-align: center;
 }
 
@@ -123,7 +183,7 @@ table.player-details td.far-right {
 
 .content table.fantasy-roster td a {
     color: rgba(53,93,237,1);
-    transition: 0.3s;
+    transition: 0.15s;
     -webkit-transition: 0.15s;
     font-size: 1rem;
 }
@@ -158,6 +218,18 @@ a.nav-item:hover {
     border-bottom: solid; 
     border-width: 2px;
     background-color: rgba(10,15,16,0.65);
+}
+
+.fill {
+    display: block;
+}
+
+.fill h3 {
+    text-align: center;
+}
+
+.fill p {
+    text-align: center;
 }
 
 @font-face {

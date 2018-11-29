@@ -340,9 +340,8 @@ echo "</tr>";
 echo "</table>";
 $stmt->free_result();
 
-echo "<br /><br />";
-
-echo "<h3>Player Stats</h3>";
+echo "<div class=\"stats\">";
+echo "<h3 class=\"player-stats\">Player Stats</h3>";
 switch ($player_position) {
     case ('G'):
         $query = "SELECT season, games_played, starts, wins, losses, ot_losses, shots_against, saves, goals_against, save_percent, goals_against_average, shutouts FROM goalie_stats INNER JOIN player ON goalie_stats.playerID = player.playerID WHERE goalie_stats.playerID = ?";
@@ -351,7 +350,7 @@ switch ($player_position) {
         $stmt->execute();
         $stmt->bind_result($season1, $games_played1, $starts1, $wins1, $losses1, $ot_losses1, $shots_against1, $saves1, $goals_against1, $save_percent1, $goals_against_average1, $shutouts1);
 
-        echo "<table border=\"solid\">";
+        echo "<table class=\"show-stats\">";
         echo "<tr>";
         echo "<th>Season</th>";
         echo "<th>Games Played</th>";
@@ -399,7 +398,7 @@ switch ($player_position) {
         $stmt->execute();
         $stmt->bind_result($season1, $games_played1, $goals1, $assists1, $penalty_minutes1, $power_play_goals1, $power_play_points1, $short_handed_goals1, $short_handed_points1, $game_winning_goals1, $plus_minus1, $shots1, $overtime_goals1);
 
-        echo "<table border=\"solid\">";
+        echo "<table class=\"show-stats\">";
         echo "<tr>";
         echo "<th>Season</th>";
         echo "<th>Games Played</th>";
@@ -419,9 +418,9 @@ switch ($player_position) {
         while ($stmt->fetch()) {
             echo "<tr>";
             if ($season1 != "NHL Career") {
-                echo "<td align=\"center\">" . substr_replace($season1, "-", 4, 0) . "</td>";
+                echo "<td class=\"y-axis\" align=\"center\">" . substr_replace($season1, "-", 4, 0) . "</td>";
             } else {
-                echo "<td align=\"center\">" . $season1 . "</td>";
+                echo "<td class=\"y-axis\" align=\"center\">" . $season1 . "</td>";
             }
             echo "<td align=\"center\">" . $games_played1 . "</td>";
             echo "<td align=\"center\">" . $goals1 . "</td>";
@@ -441,15 +440,22 @@ switch ($player_position) {
         $stmt->free_result();
         break;
 }
+// echo "</div>";
 
 $db->close();
 
 echo "<br /><br />";
 if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
-    echo "<a href=\"userteam.php?fantasyTeamID=$fantasyTeamID\">Add to Fantasy Team</a>";
+  echo "<div class=\"center\">";  
+  echo "<a class=\"add-link\" href=\"userteam.php?fantasyTeamID=$fantasyTeamID\">Add to Fantasy Team</a>";
+  echo "</div>";
 } else {
-    echo "<a href=\"fantasy.php\">Add to Fantasy Team</a>";
+  echo "<div class=\"center\">";
+  echo "<a class=\"add-link\" href=\"fantasy.php\">Add to Fantasy Team</a>";
+  echo "</div>";
 }
+echo "<br /><br />";
+echo "</div>";
 echo "</div>";
 echo "<div>";
 ?>

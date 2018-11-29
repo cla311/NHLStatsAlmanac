@@ -25,7 +25,20 @@ a.nav-item {
     flex-basis: 20%;
 }
 
-/* .content {
+.space {
     flex-grow: 1;
     flex-basis: 100%;
-} */
+    
+}
+
+.section {
+    flex-grow: 1;
+    flex-basis: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.fill {
+    flex-grow: 1;
+    flex-basis: 100%;
+}
