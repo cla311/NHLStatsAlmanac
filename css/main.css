@@ -230,7 +230,35 @@ a.nav-item:hover {
     text-align: center;
 }
 
+.grid .grid-col-1of2 {
+    width: 100%;
+    text-align: center;
+    margin-top: 4rem;
+}
+
+.grid .grid-col-1of2 ul {
+    list-style-type: none;
+}
+
+.grid .grid-col-1of2 ul a {
+    color: rgba(53,93,237,1);
+    text-decoration: none;
+}
+
+.grid .grid-col-1of2 ul a:hover {
+    color: rgba(7,53,221,1);
+}
+
 .grid .grid-col-1of3 h3 {
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+    font-family: "sports", Helvetica, Arial, sans-serif;
+    color: rgba(255,153,51,1);
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.grid .grid-col-1of2 h3 {
     font-size: 1.5rem;
     letter-spacing: 3px;
     font-family: "sports", Helvetica, Arial, sans-serif;
@@ -261,10 +289,19 @@ a.nav-item:hover {
 .center-block {
     margin: auto;
     width: 50%;
+    margin-bottom: 2rem;
 }
 
 .center-block p {
     text-align: center;
+}
+
+.center-block p a {
+    text-decoration: none;
+}
+
+.center-block p a:hover {
+    color: rgba(7,53,221,1);
 }
 
 .col-1of2 {

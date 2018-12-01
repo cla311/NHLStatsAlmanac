@@ -41,6 +41,11 @@ a.nav-item {
     flex-basis: 33.333%;
   }
 
+  .grid .grid-col-1of2 {
+    flex-grow: 1;
+    flex-basis: 50%;
+  }
+
   .half {
     display: flex;
     flex-wrap: wrap;

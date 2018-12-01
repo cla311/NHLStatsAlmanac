@@ -16,51 +16,7 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
 
 <?php require_login(); // if not logged in, redirect to login page ?>
 
-<div class="half">
-    <body>
-        <div class="col-1of2">
-            <form action="fantasy.php" method="post">
-                <table>
-                    <tr>
-                        <td>
-                            <h3>Team Setup</h3>
-
-                            <p></p>
-                            Title: <input type="text" name="team_title" value="<?php if (isset($_POST['team_title'])) echo htmlentities($_POST['team_title']); ?>" />
-                            <?php
-                            //  $city="";
-                            //   // sql for filling drop down with city from database
-                            //   $sql = "SELECT DISTINCT city FROM team ORDER BY city";
-                            //   $cityDropDownResult = mysqli_query($db, $sql);
-                            //   // drop down with city from database
-                            //   echo "<br /><br />";
-                            //   echo "City: ";
-                            //   echo "<select name =\"city\">";
-                            //   // first value of drop down is empty
-                            //   echo "<option value=\"\"></option>";
-                            //   // fill drop down with city from database
-                            //   while ($row = mysqli_fetch_array($cityDropDownResult))
-                            //   {
-                            ?>
-                            <!-- <option value="<?php echo $row['city']; ?>" <?php if (isset($_POST['city']) && $_POST['city'] != "" && $_POST['city'] == $city) echo " selected"; ?> > <?php echo $row['city'] ?> </option>; -->
-                            <?php
-                            // }
-                            // echo "</select>";
-                            // mysqli_free_result($cityDropDownResult);
-                            ?>
-
-                            <br /><br />
-                        </td>
-                    </tr>
-                </table>
-                <br>
-
-                <input type="submit" name="submit" value="Create" />
-            </form>
-        </div>
-    </body>
-
-    <?php
+<?php
 
     if (isset($_POST['submit'])) { // if submit button was clicked
         if (isset($_POST['team_title'])) {
@@ -89,28 +45,45 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
             echo "Team name is needed";
         }
     }
-
-    if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
-    $sql_show_teams = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME LIKE '%_".$username."'";
-    $res = $db->query($sql_show_teams);
-    echo "<div class=\"col-1of2\">";
-    echo "<h3>My Fantasy Teams</h3>";
-    echo "<ul>";
-    while ($row = $res->fetch_row())
-    {
-        $sql_show_team_name = "SELECT team_title FROM $row[0]";
-        $result = $db->query($sql_show_team_name);
-        $subRow = $result->fetch_row();
-        echo "<li>";
-        echo "<a href=\"userteam.php?fantasyTeamID=$row[0]\">$subRow[0]</a>";
-        echo "</li>";
-    }
-    echo "</ul>";
-    echo "</div>";
-    }
-echo "</div>";
-
-echo "<a href=\"lookup.php\">Search Players</a>";
-
-$db->close();
 ?>
+
+<div class="grid">
+    <div class="grid-col-1of2">
+        <h3>Team Setup</h3>
+        <form action="fantasy.php" method="post">
+            Title: <input type="text" name="team_title" value="<?php if (isset($_POST['team_title'])) echo htmlentities($_POST['team_title']); ?>" />
+            <br /><br /><input type="submit" name="submit" value="Create" />
+        </form>
+    </div>
+    
+    <br /><br />
+
+    <div class="grid-col-1of2">
+        <?php   
+            if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) 
+            {
+                $sql_show_teams = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME LIKE '%_".$username."'";
+                $res = $db->query($sql_show_teams);
+                echo "<h3>My Fantasy Teams</h3>";
+                echo "<ul>";
+                while ($row = $res->fetch_row())
+                {
+                    $sql_show_team_name = "SELECT team_title FROM $row[0]";
+                    $result = $db->query($sql_show_team_name);
+                    $subRow = $result->fetch_row();
+                    echo "<li>";
+                    echo "<a href=\"userteam.php?fantasyTeamID=$row[0]\">$subRow[0]</a>";
+                    echo "</li>";
+                }
+                echo "</ul>";
+            }
+        ?>
+    </div>
+</div>
+
+<?php 
+    echo "<div class=\"center-block\">";
+    echo "<p><a href=\"lookup.php\">Search Players</a></p>";
+    echo "</div>";
+    $db->close();
+ ?>
