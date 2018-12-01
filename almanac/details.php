@@ -52,7 +52,12 @@ $stmtGoalie->bind_param("sisiiiiiiiiiiiiiiiiiiiiii", $statID,
         $played, $starts, $wins, $losses, $ot, $shotsAgainst, $saves,
         $goalsAgainst, $savePercent, $goalsAgainstAverage, $shutouts);
 
-$currPlayer = file_get_contents($nhlAPI . '/api/v1/people/' . $id);
+$url = $nhlAPI . '/api/v1/people/' . $id;
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_URL, $url);
+$currPlayer = curl_exec($ch);
+curl_close($ch);
 $player_array = json_decode($currPlayer, true);
 foreach ($player_array["people"] as $person) {
     $playerID = $id;
@@ -76,221 +81,116 @@ foreach ($player_array["people"] as $person) {
     $age = $person["currentAge"];
     $birthDate = $person["birthDate"];
     $position = $person["primaryPosition"]["abbreviation"];
-    $playerStatsSeason = file_get_contents($nhlAPI . '/api/v1/people/'
-            . $id . "/stats?stats=statsSingleSeason&season=20182019");
+
+    $url = $nhlAPI . '/api/v1/people/' . $id . "/stats?stats=statsSingleSeason&season=20182019";
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    $playerStatsSeason = curl_exec($ch);
+    curl_close($ch);
     $playerStats_array = json_decode($playerStatsSeason, true);
     foreach ($playerStats_array["stats"][0]["splits"] as $seasonStats) {
-        if ($person["primaryPosition"]["abbreviation"] != "G") {
-            $statID = $id . "-" . $seasonStats["season"];
-            $playerID = $id;
-            $season = $seasonStats["season"];
-            $played = $seasonStats["stat"]["games"];
-            $goals = $seasonStats["stat"]["goals"];
-            $assists = $seasonStats["stat"]["assists"];
-            $pim = $seasonStats["stat"]["penaltyMinutes"];
-            $ppGoals = $seasonStats["stat"]["powerPlayGoals"];
-            $ppPoints = $seasonStats["stat"]["powerPlayPoints"];
-            $shGoals = $seasonStats["stat"]["shortHandedGoals"];
-            $shPoints = $seasonStats["stat"]["shortHandedPoints"];
-            $gwGoals = $seasonStats["stat"]["gameWinningGoals"];
-            $plusMinus = $seasonStats["stat"]["plusMinus"];
-            $shots = $seasonStats["stat"]["shots"];
-            $otGoals = $seasonStats["stat"]["overTimeGoals"];
+        switch ($player_position) {
+            case ('G'):
+                $statID = $id . "-" . $seasonStats["season"];
+                $playerID = $id;
+                $season = $seasonStats["season"];
+                $played = $seasonStats["stat"]["games"];
+                $starts = $seasonStats["stat"]["gamesStarted"];
+                $wins = $seasonStats["stat"]["wins"];
+                $losses = $seasonStats["stat"]["losses"];
+                $ot = $seasonStats["stat"]["ot"];
+                $shotsAgainst = $seasonStats["stat"]["shotsAgainst"];
+                $saves = $seasonStats["stat"]["saves"];
+                $goalsAgainst = $seasonStats["stat"]["goalsAgainst"];
+                $savePercent = $seasonStats["stat"]["savePercentage"];
+                $goalsAgainstAverage = $seasonStats["stat"]["goalAgainstAverage"];
+                $shutouts = $seasonStats["stat"]["shutouts"];
 
-            $stmtPlayer->execute();
-        } else {
-            $statID = $id . "-" . $seasonStats["season"];
-            $playerID = $id;
-            $season = $seasonStats["season"];
-            $played = $seasonStats["stat"]["games"];
-            $starts = $seasonStats["stat"]["gamesStarted"];
-            $wins = $seasonStats["stat"]["wins"];
-            $losses = $seasonStats["stat"]["losses"];
-            $ot = $seasonStats["stat"]["ot"];
-            $shotsAgainst = $seasonStats["stat"]["shotsAgainst"];
-            $saves = $seasonStats["stat"]["saves"];
-            $goalsAgainst = $seasonStats["stat"]["goalsAgainst"];
-            $savePercent = $seasonStats["stat"]["savePercentage"];
-            $goalsAgainstAverage = $seasonStats["stat"]["goalAgainstAverage"];
-            $shutouts = $seasonStats["stat"]["shutouts"];
+                $stmtGoalie->execute();
+                break;
+            default:
+                $statID = $id . "-" . $seasonStats["season"];
+                $playerID = $id;
+                $season = $seasonStats["season"];
+                $played = $seasonStats["stat"]["games"];
+                $goals = $seasonStats["stat"]["goals"];
+                $assists = $seasonStats["stat"]["assists"];
+                $pim = $seasonStats["stat"]["penaltyMinutes"];
+                $ppGoals = $seasonStats["stat"]["powerPlayGoals"];
+                $ppPoints = $seasonStats["stat"]["powerPlayPoints"];
+                $shGoals = $seasonStats["stat"]["shortHandedGoals"];
+                $shPoints = $seasonStats["stat"]["shortHandedPoints"];
+                $gwGoals = $seasonStats["stat"]["gameWinningGoals"];
+                $plusMinus = $seasonStats["stat"]["plusMinus"];
+                $shots = $seasonStats["stat"]["shots"];
+                $otGoals = $seasonStats["stat"]["overTimeGoals"];
 
-            $stmtGoalie->execute();
+                $stmtPlayer->execute();
+                break;
         }
     }
     unset($seasonStats);
 
-    $playerStatsCareer = file_get_contents($nhlAPI . '/api/v1/people/'
-            . $id . "/stats?stats=careerRegularSeason");
+    $url = $nhlAPI . '/api/v1/people/' . $id . "/stats?stats=careerRegularSeason";
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    $playerStatsCareer = curl_exec($ch);
+    curl_close($ch);
     $careerStats_array = json_decode($playerStatsSeason, true);
     foreach ($careerStats_array["stats"][0]["splits"] as $careerStats) {
-        if ($person["primaryPosition"]["abbreviation"] != "G") {
-            $statID = $id . "-Career";
-            $playerID = $id;
-            $season = $careerStats["season"];
-            $played = $careerStats["stat"]["games"];
-            $goals = $careerStats["stat"]["goals"];
-            $assists = $careerStats["stat"]["assists"];
-            $pim = $careerStats["stat"]["penaltyMinutes"];
-            $ppGoals = $careerStats["stat"]["powerPlayGoals"];
-            $ppPoints = $careerStats["stat"]["powerPlayPoints"];
-            $shGoals = $careerStats["stat"]["shortHandedGoals"];
-            $shPoints = $careerStats["stat"]["shortHandedPoints"];
-            $gwGoals = $careerStats["stat"]["gameWinningGoals"];
-            $plusMinus = $careerStats["stat"]["plusMinus"];
-            $shots = $careerStats["stat"]["shots"];
-            $otGoals = $careerStats["stat"]["overTimeGoals"];
+        switch ($player_position) {
+            case ('G'):
+                $statID = $id . "-Career";
+                $playerID = $id;
+                $season = $careerStats["season"];
+                $played = $careerStats["stat"]["games"];
+                $starts = $careerStats["stat"]["gamesStarted"];
+                $wins = $careerStats["stat"]["wins"];
+                $losses = $careerStats["stat"]["losses"];
+                $ot = $careerStats["stat"]["ot"];
+                $shotsAgainst = $careerStats["stat"]["shotsAgainst"];
+                $saves = $careerStats["stat"]["saves"];
+                $goalsAgainst = $careerStats["stat"]["goalsAgainst"];
+                $savePercent = $careerStats["stat"]["savePercentage"];
+                $goalsAgainstAverage = $careerStats["stat"]["goalAgainstAverage"];
+                $shutouts = $careerStats["stat"]["shutouts"];
 
-            $stmtPlayer->execute();
-        } else {
-            $statID = $id . "-Career";
-            $playerID = $id;
-            $season = $careerStats["season"];
-            $played = $careerStats["stat"]["games"];
-            $starts = $careerStats["stat"]["gamesStarted"];
-            $wins = $careerStats["stat"]["wins"];
-            $losses = $careerStats["stat"]["losses"];
-            $ot = $careerStats["stat"]["ot"];
-            $shotsAgainst = $careerStats["stat"]["shotsAgainst"];
-            $saves = $careerStats["stat"]["saves"];
-            $goalsAgainst = $careerStats["stat"]["goalsAgainst"];
-            $savePercent = $careerStats["stat"]["savePercentage"];
-            $goalsAgainstAverage = $careerStats["stat"]["goalAgainstAverage"];
-            $shutouts = $careerStats["stat"]["shutouts"];
+                $stmtGoalie->execute();
+                break;
+            default:
+                $statID = $id . "-Career";
+                $playerID = $id;
+                $season = $careerStats["season"];
+                $played = $careerStats["stat"]["games"];
+                $goals = $careerStats["stat"]["goals"];
+                $assists = $careerStats["stat"]["assists"];
+                $pim = $careerStats["stat"]["penaltyMinutes"];
+                $ppGoals = $careerStats["stat"]["powerPlayGoals"];
+                $ppPoints = $careerStats["stat"]["powerPlayPoints"];
+                $shGoals = $careerStats["stat"]["shortHandedGoals"];
+                $shPoints = $careerStats["stat"]["shortHandedPoints"];
+                $gwGoals = $careerStats["stat"]["gameWinningGoals"];
+                $plusMinus = $careerStats["stat"]["plusMinus"];
+                $shots = $careerStats["stat"]["shots"];
+                $otGoals = $careerStats["stat"]["overTimeGoals"];
 
-            $stmtGoalie->execute();
+                $stmtPlayer->execute();
+                break;
         }
     }
     unset($careerStats);
 }
 unset($person);
+$stmtPlayer->close();
+$stmtGoalie->close();
 
 $query = "UPDATE player SET teamID=?, photo=?, number=?, name=?, weight=?, "
         . "height=?, age=?, position=? WHERE playerID=?";
 $stmt = $db->prepare($query);
 $stmt->bind_param('isisisisi', $teamID, $photo, $number, $playerName, $weight, $height, $age, $position, $id);
 $stmt->execute();
-
-$playerStatsSeason = file_get_contents($nhlAPI . '/api/v1/people/'
-        . $id . "/stats?stats=statsSingleSeason&season=20182019");
-$playerStats_array = json_decode($playerStatsSeason, true);
-foreach ($playerStats_array["stats"][0]["splits"] as $seasonStats) {
-    switch ($player_position) {
-        case ('G'):
-            $playerID = $id;
-            $season = $seasonStats["season"];
-            $played = $seasonStats["stat"]["games"];
-            $starts = $seasonStats["stat"]["gamesStarted"];
-            $wins = $seasonStats["stat"]["wins"];
-            $losses = $seasonStats["stat"]["losses"];
-            $ot = $seasonStats["stat"]["ot"];
-            $shotsAgainst = $seasonStats["stat"]["shotsAgainst"];
-            $saves = $seasonStats["stat"]["saves"];
-            $goalsAgainst = $seasonStats["stat"]["goalsAgainst"];
-            $savePercent = $seasonStats["stat"]["savePercentage"];
-            $goalsAgainstAverage = $seasonStats["stat"]["goalAgainstAverage"];
-            $shutouts = $seasonStats["stat"]["shutouts"];
-
-            $query = "UPDATE goalie_stats SET games_played=?, starts=?, wins=?, "
-                    . "losses=?, ot_losses=?, shots_against=?, saves=?, "
-                    . "goals_against=?, save_percent=?, goals_against_average=?, "
-                    . "shutouts=? WHERE playerID=? AND season=?";
-            $stmt = $db->prepare($query);
-            $stmt->bind_param('iiiiiiiiddiis', $played, $starts, $wins, $losses,
-                    $ot, $shotsAgainst, $saves, $goalsAgainst, $savePercent,
-                    $goalsAgainstAverage, $shutouts, $playerID, $season);
-            $stmt->execute();
-
-            break;
-        default :
-            $playerID = $id;
-            $season = $seasonStats["season"];
-            $played = $seasonStats["stat"]["games"];
-            $goals = $seasonStats["stat"]["goals"];
-            $assists = $seasonStats["stat"]["assists"];
-            $pim = $seasonStats["stat"]["penaltyMinutes"];
-            $ppGoals = $seasonStats["stat"]["powerPlayGoals"];
-            $ppPoints = $seasonStats["stat"]["powerPlayPoints"];
-            $shGoals = $seasonStats["stat"]["shortHandedGoals"];
-            $shPoints = $seasonStats["stat"]["shortHandedPoints"];
-            $gwGoals = $seasonStats["stat"]["gameWinningGoals"];
-            $plusMinus = $seasonStats["stat"]["plusMinus"];
-            $shots = $seasonStats["stat"]["shots"];
-            $otGoals = $seasonStats["stat"]["overTimeGoals"];
-
-            $query = "UPDATE stats SET games_played=?, goals=?, assists=?, penalty_minutes=?, "
-                    . "power_play_goals=?, power_play_points=?, short_handed_goals=?, "
-                    . "short_handed_points=?, game_winning_goals=?, plus_minus=?, shots=?, "
-                    . "overtime_goals=? WHERE playerID=? AND season=?";
-            $stmt = $db->prepare($query);
-            $stmt->bind_param('iiiiiiiiiiiiis', $played, $goals, $assists, $pim, $ppGoals,
-                    $ppPoints, $shGoals, $shPoints, $gwGoals, $plusMinus, $shots, $otGoals,
-                    $playerID, $season);
-            $stmt->execute();
-
-            break;
-    }
-}
-
-$playerStatsCareer = file_get_contents($nhlAPI . '/api/v1/people/'
-        . $id . "/stats?stats=careerRegularSeason");
-$careerStats_array = json_decode($playerStatsCareer, true);
-foreach ($careerStats_array["stats"][0]["splits"] as $careerStats) {
-    switch ($player_position) {
-        case ('G'):
-            $playerID = $id;
-            $season = "NHL Career";
-            $played = $careerStats["stat"]["games"];
-            $starts = $careerStats["stat"]["gamesStarted"];
-            $wins = $careerStats["stat"]["wins"];
-            $losses = $careerStats["stat"]["losses"];
-            $ot = $careerStats["stat"]["ot"];
-            $shotsAgainst = $careerStats["stat"]["shotsAgainst"];
-            $saves = $careerStats["stat"]["saves"];
-            $goalsAgainst = $careerStats["stat"]["goalsAgainst"];
-            $savePercent = $careerStats["stat"]["savePercentage"];
-            $goalsAgainstAverage = $careerStats["stat"]["goalAgainstAverage"];
-            $shutouts = $careerStats["stat"]["shutouts"];
-
-            $query = "UPDATE goalie_stats SET games_played=?, starts=?, wins=?, "
-                    . "losses=?, ot_losses=?, shots_against=?, saves=?, "
-                    . "goals_against=?, save_percent=?, goals_against_average=?, "
-                    . "shutouts=? WHERE playerID=? AND season=?";
-            $stmt = $db->prepare($query);
-            $stmt->bind_param('iiiiiiiiddiis', $played, $starts, $wins, $losses,
-                    $ot, $shotsAgainst, $saves, $goalsAgainst, $savePercent,
-                    $goalsAgainstAverage, $shutouts, $playerID, $season);
-            $stmt->execute();
-
-            break;
-        default :
-            $playerID = $id;
-            $season = "NHL Career";
-            $played = $careerStats["stat"]["games"];
-            $goals = $careerStats["stat"]["goals"];
-            $assists = $careerStats["stat"]["assists"];
-            $pim = $careerStats["stat"]["penaltyMinutes"];
-            $ppGoals = $careerStats["stat"]["powerPlayGoals"];
-            $ppPoints = $careerStats["stat"]["powerPlayPoints"];
-            $shGoals = $careerStats["stat"]["shortHandedGoals"];
-            $shPoints = $careerStats["stat"]["shortHandedPoints"];
-            $gwGoals = $careerStats["stat"]["gameWinningGoals"];
-            $plusMinus = $careerStats["stat"]["plusMinus"];
-            $shots = $careerStats["stat"]["shots"];
-            $otGoals = $careerStats["stat"]["overTimeGoals"];
-
-            $query = "UPDATE stats SET games_played=?, goals=?, assists=?, penalty_minutes=?, "
-                    . "power_play_goals=?, power_play_points=?, short_handed_goals=?, "
-                    . "short_handed_points=?, game_winning_goals=?, plus_minus=?, shots=?, "
-                    . "overtime_goals=? WHERE playerID=? AND season=?";
-            $stmt = $db->prepare($query);
-            $stmt->bind_param('iiiiiiiiiiiiis', $played, $goals, $assists, $pim, $ppGoals,
-                    $ppPoints, $shGoals, $shPoints, $gwGoals, $plusMinus, $shots, $otGoals,
-                    $playerID, $season);
-            $stmt->execute();
-
-            break;
-    }
-}
 
 // display player image
 $query = "SELECT photo FROM player INNER JOIN team ON player.teamID = team.teamID WHERE playerID = ?";
@@ -302,7 +202,7 @@ $stmt->bind_result($photo1);
 echo "<div class=\"body\">";
 echo "<div class\"content\">";
 if ($stmt->fetch()) {
-  echo "<img class=\"player-picture\" src=\"$photo1\" alt=\"Player Photo\">";
+    echo "<img class=\"player-picture\" src=\"$photo1\" alt=\"Player Photo\">";
 }
 $stmt->free_result();
 
@@ -446,13 +346,13 @@ $db->close();
 
 echo "<br /><br />";
 if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
-  echo "<div class=\"center\">";  
-  echo "<a class=\"add-link\" href=\"userteam.php?fantasyTeamID=$fantasyTeamID\">Add to Fantasy Team</a>";
-  echo "</div>";
+    echo "<div class=\"center\">";
+    echo "<a class=\"add-link\" href=\"userteam.php?fantasyTeamID=$fantasyTeamID\">Add to Fantasy Team</a>";
+    echo "</div>";
 } else {
-  echo "<div class=\"center\">";
-  echo "<a class=\"add-link\" href=\"fantasy.php\">Add to Fantasy Team</a>";
-  echo "</div>";
+    echo "<div class=\"center\">";
+    echo "<a class=\"add-link\" href=\"fantasy.php\">Add to Fantasy Team</a>";
+    echo "</div>";
 }
 echo "<br /><br />";
 echo "</div>";
