@@ -87,7 +87,9 @@ echo "</table>";
 echo "<br />";
 if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
     if (strpos($_SESSION['username'], $team_title[1]) !== false) {
-        echo "<a href=\"lookup.php\">Search Players</a>";
+        echo "<div class=\"center-block\">";
+        echo "<p><a class=\"add\" href=\"lookup.php\">Search Players</a></p>";
+        echo "</div>";
     }
 }
 echo "</div>";

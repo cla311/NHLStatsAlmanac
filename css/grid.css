@@ -40,4 +40,21 @@ a.nav-item {
     flex-grow: 1;
     flex-basis: 33.333%;
   }
+
+  .half {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .half body {
+    flex-grow: 1;
+    flex-basis: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .col-1of2 {
+    flex-grow: 1;
+    flex-basis: 50%;
+  }
   

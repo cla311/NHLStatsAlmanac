@@ -248,6 +248,30 @@ a.nav-item:hover {
     color: rgba(10, 15, 16, 1);
 }
 
+.add {
+    text-align: center;
+    color: rgba(53,93,237,1);
+    text-decoration: none;
+}
+
+.add:hover {
+    color: rgba(7,53,221,1);
+}
+
+.center-block {
+    margin: auto;
+    width: 50%;
+}
+
+.center-block p {
+    text-align: center;
+}
+
+.col-1of2 {
+    margin: auto;
+    width: 50%;
+}
+
 @font-face {
     font-family: "sports";
     src: url("../font/sportsjersey.ttf");
