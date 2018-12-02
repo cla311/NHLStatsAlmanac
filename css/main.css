@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0;
     font-family: Helvetica, Arial, sans-serif;
-    /* display: block; */
 }
 
 img.logo {
@@ -26,18 +25,11 @@ h1.logo {
     margin-right: auto;
 }
 
-.body {
-    background-color: rgba(232,232,232,0.75);
-}
-
 .content {
     margin-top: 5rem;
-    margin-bottom: 5rem;
     margin-left: auto;
     margin-right: auto;
-    width: 50%;
-    /* border: 3px solid green; */
-    /* padding: 10px; */
+    width: 100%;
 }
 
 img.player-picture {
@@ -94,7 +86,6 @@ table.team-details td.far-right {
 }
 
 h3.player-stats {
-    /* text-align: center; */
     font-size: 2rem;
     letter-spacing: 3px;
     font-family: "sports", Helvetica, Arial, sans-serif;
@@ -104,14 +95,12 @@ h3.player-stats {
 }
 
 h3.current-team-stats {
-    /* text-align: center; */
     font-size: 2rem;
     letter-spacing: 3px;
     font-family: "sports", Helvetica, Arial, sans-serif;
     color: rgba(255,153,51,1);
     margin-bottom: 1rem;
     margin-top: 3rem;
-    /* margin-left: 2rem; */
     text-align: center;
 }
 
@@ -144,6 +133,7 @@ table.show-stats th {
     background-color: rgba(10,15,16,1);
     font-size: 0.8rem;
 }
+
 table.show-team-stats th {
     padding: 0.75rem;
     color: rgba(255,153,51,1);
@@ -160,6 +150,7 @@ table.show-stats td {
     background-color: rgba(10,15,16,0.25);
     font-size: 0.8rem;
 }
+
 table.show-team-stats td {
     padding: 0.5rem;
     background-color: rgba(10,15,16,0.25);
@@ -199,8 +190,8 @@ h1.search {
     margin-top: 3rem;
 }
 
-.content h1.log {
-    margin-bottom: 3rem;
+h1.log {
+    margin-bottom: 2rem;
     text-align: center;
 }
 
@@ -297,24 +288,28 @@ a.nav-item {
     transition: 0.3s;
     -webkit-transition: 0.3s;
     border-color: rgba(10,15,16,0.35);
-    border-bottom: solid; 
+    border-bottom: solid;
     border-top: solid;
     border-width: 2px;
 }
+
 a.nav-item:hover {
     color: rgba(255,153,51,1);
-    border-bottom: solid; 
+    border-bottom: solid;
     border-width: 2px;
     background-color: rgba(10,15,16,0.65);
 }
 
 .grid {
-    margin-bottom: 4rem;
-    margin-top: 2rem;
+    margin: 2rem auto 4rem auto;
 }
 
 .grid .grid-col-1of3 {
     width: 100%;
+    text-align: center;
+}
+
+.grid .grid-form-1of3 {
     text-align: center;
 }
 
@@ -406,7 +401,40 @@ a.nav-item:hover {
     width: 50%;
 }
 
+.account-field{
+    display: block;
+    text-align: center;
+}
+
+.account-field form{
+    display: inline-block;
+}
+
+.account-field form label{
+    text-align: left;
+    float: left;
+}
+
+.account-field form input{
+    float: right;
+    margin-left: 15px;
+}
+
+.account-field form input[type=submit]{
+    float: left;
+    margin-left: 0;
+}
+
+.errors {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+input[type=submit] {
+    padding: 0.25rem;
+}
+
 @font-face {
     font-family: "sports";
     src: url("../font/sportsjersey.ttf");
-  }
+}

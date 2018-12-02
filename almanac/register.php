@@ -1,11 +1,6 @@
-<body>
-    <?php
-    session_start();
-    require_once('../required/nav.php');
-    ?>
-</body>
-
 <?php
+session_start();
+require_once('../required/nav.php');
 require_once('../required/functions.php');
 require_ssl(); // set to https
 // if user accessed this page when logged in, log them out

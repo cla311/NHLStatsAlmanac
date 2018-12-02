@@ -1,12 +1,8 @@
 <?php
 
+session_start();
 require('../required/nav.php');
 require('../required/functions.php');
-?>
-
-<?php
-
-session_start();
 
 if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
     $title = $_SESSION['team_title'];

@@ -1,12 +1,8 @@
 <?php
 
+session_start();
 require('../required/nav.php');
 require('../required/functions.php');
-?>
-
-<?php
-
-session_start();
 
 if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
     $title = $_SESSION['team_title'];
@@ -61,8 +57,7 @@ $stmt->bind_param('s', $id);
 $stmt->execute();
 $stmt->bind_result($team_name1, $city1, $arena1, $conference1, $division1);
 
-if ($stmt->fetch()) 
-{
+if ($stmt->fetch()) {
     echo "<div class=\"center-title\">";
     echo "<h2 class=\"nhl-team\">$team_name1</h2>";
     echo "</div>";

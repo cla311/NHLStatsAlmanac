@@ -1,8 +1,8 @@
 <?php
 
+session_start();
 require('../required/nav.php');
 require('../required/functions.php');
-session_start();
 
 if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
     $email = $_SESSION['user_email'];
@@ -31,7 +31,7 @@ if (!empty($_SESSION['playerID']) && !empty($_SESSION['name'])) {
 }
 ?>
 
-<?php require_login(); // if not logged in, redirect to login page  ?>
+<?php require_login(); // if not logged in, redirect to login page   ?>
 
 <?php
 
