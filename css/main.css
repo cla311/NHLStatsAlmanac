@@ -25,13 +25,10 @@ h1.logo {
     margin-right: auto;
 }
 
-<<<<<<< HEAD
 /* .body {
     background-color: rgba(232,232,232,0.75);
 } */
 
-=======
->>>>>>> 5894542464eb510e7fb2b824a0caac155b18dc96
 .content {
     margin-top: 5rem;
     margin-left: auto;
@@ -409,7 +406,6 @@ a.nav-item:hover {
     width: 50%;
 }
 
-<<<<<<< HEAD
 .center-button {
     text-align: center;
 }
@@ -419,8 +415,6 @@ a.nav-item:hover {
     margin-right: auto;
 }
 
-=======
->>>>>>> 5894542464eb510e7fb2b824a0caac155b18dc96
 .account-field{
     display: block;
     text-align: center;
