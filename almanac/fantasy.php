@@ -1,7 +1,7 @@
 <?php
+session_start();
 require('../required/nav.php');
 require('../required/functions.php');
-session_start();
 
 if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
     $email = $_SESSION['user_email'];

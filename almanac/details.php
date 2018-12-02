@@ -1,13 +1,18 @@
 <?php
 
+session_start();
 require('../required/nav.php');
 require('../required/functions.php');
-?>
 
-<?php
-
-session_start();
-
+if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
+    $email = $_SESSION['user_email'];
+    $firstName = $_SESSION['firstName'];
+    $username = $_SESSION['username'];
+} else {
+    $email = $_SESSION['user_email'] = [];
+    $firstName = $_SESSION['firstName'] = [];
+    $username = $_SESSION['username'] = [];
+}
 if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
     $title = $_SESSION['team_title'];
     $fantasyTeamID = $_SESSION['fantasyTeamID'];
@@ -344,15 +349,23 @@ switch ($player_position) {
 
 $db->close();
 
+get_player($id, $name1);
+
 echo "<br /><br />";
-if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
-    echo "<div class=\"center\">";
-    echo "<a class=\"add-link\" href=\"userteam.php?fantasyTeamID=$fantasyTeamID\">Add to Fantasy Team</a>";
-    echo "</div>";
+if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
+    if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
+        echo "<div class=\"center\">";
+        echo "<a class=\"add-link\" href=\"userteam.php?fantasyTeamID=$fantasyTeamID\">Add to Fantasy Team</a>";
+        echo "</div>";
+    } else {
+        echo "<div class=\"center\">";
+        echo "<a class=\"add-link\" href=\"fantasy.php\">Add to Fantasy Team</a>";
+        echo "</div>";
+    }
 } else {
     echo "<div class=\"center\">";
-    echo "<a class=\"add-link\" href=\"fantasy.php\">Add to Fantasy Team</a>";
-    echo "</div>";
+        echo "<a class=\"add-link\" href=\"login.php\">Add to Fantasy Team</a>";
+        echo "</div>";
 }
 echo "<br /><br />";
 echo "</div>";

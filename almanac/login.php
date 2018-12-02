@@ -1,11 +1,10 @@
 <?php
+session_start();
 require('../required/nav.php');
 require('../required/functions.php');
 ?>
 
 <?php
-session_start();
-
 require_ssl(); // set to https
 // check for user login
 if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && $_SESSION['username']) {
@@ -13,7 +12,7 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && $_SESSI
     $firstName = $_SESSION['firstName'];
     $username = $_SESSION['username'];
     // if user is logged in, go to logout page
-    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/NHLStatsAlmanac/almanac/logout.php');
+    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/NHLStatsAlmanac/almanac/index.php');
     exit();
 } else { // otherwise, go to login page
     $email = $_SESSION['user_email'] = [];
@@ -34,7 +33,7 @@ if (is_post_request()) {
 
     // Validations
     if (is_blank($email)) {
-        $errors[] = "email cannot be blank.";
+        $errors[] = "Email cannot be blank.";
     }
     if (is_blank($password)) {
         $errors[] = "Password cannot be blank.";
@@ -52,13 +51,13 @@ if (is_post_request()) {
             if (password_verify($password, $user['password'])) {
                 log_in_user($user);
 
-                // if (!empty($_SESSION['playerID']) && !empty($_SESSION['ame'])) { // if user was trying to save an item to their watchlist
-                //   header('Location: http://'.$_SERVER['HTTP_HOST'].'/NHLStatsAlmanac/almanac/addtowatchlist.php');
-                //   exit();
-                // } else { // otherwise, send user to model list
+                if (!empty($_SESSION['playerID']) && !empty($_SESSION['name'])) { // if user was trying to save an item to their watchlist
+                  header('Location: http://'.$_SERVER['HTTP_HOST'].'/NHLStatsAlmanac/almanac/fantasy.php');
+                  exit();
+                } else { // otherwise, send user to model list
                 header('Location: http://' . $_SERVER['HTTP_HOST'] . '/NHLStatsAlmanac/almanac/index.php');
-                //   exit();
-                // }
+                  exit();
+                }
             } else {
                 // email found, but password does not match
                 $errors[] = $login_failure_msg;
@@ -72,38 +71,26 @@ if (is_post_request()) {
 }
 ?>
 
-<?php
-// only show login info they aren't logged in
-if (empty($_SESSION['user_email']) && empty($_SESSION['firstName']) && empty($_SESSION['username'])) {
-  ?>
-  <div class="body">
-    <!-- <div class="content"></div> -->
-      <div class="content">
-        <h1 class="log">Log In</h1>
+<div class="grid">
+    <div class="grid-col-1of3">
+        <h1 class="log">Login</h1>
 
         <?php echo display_errors($errors); ?>
 
         <form action="login.php" method="post">
-          <div class="input">
-            Email:<br />
-            <input type="text" name="email" value="<?php echo h($email); ?>" /><br /><br />
-          </div>
-          <div class="input">
-            Password:<br />
-            <input type="password" name="password" value="" /><br /><br />
-          </div>
-          <div class="input">
-            <input type="submit" name="submit" value="Submit"/>
-          </div>
+            <div class="input">
+                Email:<br />
+                <input type="text" name="email" value="<?php echo h($email); ?>" /><br /><br />
+            </div>
+            <div class="input">
+                Password:<br />
+                <input type="password" name="password" value="" /><br /><br />
+            </div>
+            <div class="input" id="bottom-space">
+                <input type="submit" name="submit" value="Login"/>
+            </div>
         </form>
 
-        <p class="center">Not registered yet? <a href="register.php">Register here<a></p>
-
-    <?php
-    } else { // otherwise, don't let them
-      echo "You are already logged in.";
-    }
-    ?>
+        <p class="center">Not registered yet? <a href="register.php">Register here</a></p>
     </div>
-    <!-- <div class="content"></div> -->
-  </div>
+</div>

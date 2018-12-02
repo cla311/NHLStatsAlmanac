@@ -1,6 +1,6 @@
 * {
     box-sizing: border-box;
-  }
+}
 
 body {
     display: flex;
@@ -28,38 +28,42 @@ a.nav-item {
     flex-grow: 1;
     flex-basis: 20%;
 }
-  
+
 .grid {
     flex-grow: 1;
     flex-basis: 100%;
     display: flex;
     flex-wrap: wrap;
-  }
+}
 
 .grid .grid-col-1of3 {
     flex-grow: 1;
     flex-basis: 33.333%;
-  }
+}
 
-  .grid .grid-col-1of2 {
+.grid .grid-form-1of3 {
+    flex-grow: 1;
+    flex-basis: 33.333%;
+}
+
+.grid .grid-col-1of2 {
     flex-grow: 1;
     flex-basis: 50%;
-  }
+}
 
-  .half {
+.half {
     display: flex;
     flex-wrap: wrap;
-  }
+}
 
-  .half body {
+.half body {
     flex-grow: 1;
     flex-basis: 100%;
     display: flex;
     flex-wrap: wrap;
-  }
+}
 
-  .col-1of2 {
+.col-1of2 {
     flex-grow: 1;
     flex-basis: 50%;
-  }
-  
+}
