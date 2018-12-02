@@ -33,16 +33,7 @@ if (!empty($_SESSION['playerID']) && !empty($_SESSION['name'])) {
     $playerName = $_SESSION['name'] = [];
 }
 ?>
-
-<<<<<<< HEAD
-<<<<<<< HEAD
 <?php // require_login(); // if not logged in, redirect to login page  ?>
-=======
-<?php require_login(); // if not logged in, redirect to login page   ?>
->>>>>>> 5894542464eb510e7fb2b824a0caac155b18dc96
-=======
-<?php require_login(); // if not logged in, redirect to login page   ?>
->>>>>>> 5894542464eb510e7fb2b824a0caac155b18dc96
 
 <?php
 
