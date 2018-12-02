@@ -20,10 +20,11 @@ $sql_display_fantasy = "SELECT TABLE_NAME FROM information_schema.tables WHERE T
 AND TABLE_NAME != 'goalie_stats' AND TABLE_NAME != 'members' AND TABLE_NAME != 'player' 
 AND TABLE_NAME != 'roster' AND TABLE_NAME != 'stats' AND TABLE_NAME != 'team'";
 $sql_display_fantasy .= " LIMIT 10";
-echo $sql_display_fantasy;
 $res = $db->query($sql_display_fantasy);
 
-  echo "<h3>My Fantasy Teams</h3>";
+echo "<div class=\"grid\">";
+echo "<div class=\"grid-col-1of2\">";
+  echo "<h3>Member Fantasy Teams</h3>";
   echo "<ul>";
   while ($row = $res->fetch_row())
   {
@@ -38,4 +39,6 @@ $res = $db->query($sql_display_fantasy);
     
   }
   echo "</ul>";
+  echo "</div>";
+  echo "</div>";
 ?>

@@ -57,6 +57,12 @@ table.player-details {
     width: 50%;
 }
 
+table.team-details {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
 table.player-details td {
     padding: 0.5rem;
     border-left: solid;
@@ -66,7 +72,22 @@ table.player-details td {
     border-collapse: collapse;
 }
 
+table.team-details td {
+    padding: 0.5rem;
+    border-left: solid;
+    border-width: 1px;
+    border-color: rgba(255,153,51,1);
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
 table.player-details td.far-right {
+    border-right: solid;
+    border-width: 1px;
+    border-color: rgba(255,153,51,1);
+}
+
+table.team-details td.far-right {
     border-right: solid;
     border-width: 1px;
     border-color: rgba(255,153,51,1);
@@ -82,13 +103,39 @@ h3.player-stats {
     margin-top: 3rem;
 }
 
+h3.current-team-stats {
+    /* text-align: center; */
+    font-size: 2rem;
+    letter-spacing: 3px;
+    font-family: "sports", Helvetica, Arial, sans-serif;
+    color: rgba(255,153,51,1);
+    margin-bottom: 1rem;
+    margin-top: 3rem;
+    /* margin-left: 2rem; */
+    text-align: center;
+}
+
 .stats {
     margin: 2rem;
     margin-bottom: 1rem;
 }
 
+.team-stats {
+    margin: 2rem;
+    margin-bottom: 1rem;
+    margin: auto;
+    width: 50%;
+}
+
 table.show-stats{
     margin-bottom: 0;
+}
+
+table.show-team-stats{
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
 }
 
 table.show-stats th {
@@ -97,8 +144,23 @@ table.show-stats th {
     background-color: rgba(10,15,16,1);
     font-size: 0.8rem;
 }
+table.show-team-stats th {
+    padding: 0.75rem;
+    color: rgba(255,153,51,1);
+    background-color: rgba(10,15,16,1);
+    font-size: 0.8rem;
+}
+
+#bottom-space {
+    margin-bottom: 2rem;
+}
 
 table.show-stats td {
+    padding: 0.5rem;
+    background-color: rgba(10,15,16,0.25);
+    font-size: 0.8rem;
+}
+table.show-team-stats td {
     padding: 0.5rem;
     background-color: rgba(10,15,16,0.25);
     font-size: 0.8rem;
@@ -125,6 +187,16 @@ a.add-link {
 
 a.add-link:hover {
     background-color: rgba(255,121,0,1);
+}
+
+h1.search {
+    font-family: "sports", Helvetica, Arial, sans-serif;
+    text-align: center;
+    color: rgba(255,121,0,1);
+    font-size: 3rem;
+    width: 100%;
+    margin: auto;
+    margin-top: 3rem;
 }
 
 .content h1.log {
@@ -190,6 +262,22 @@ a.add-link:hover {
 
 .content table.fantasy-roster td a:hover {
     color: rgba(7,53,221,1);
+}
+
+h2.nhl-team {
+    font-size: 3rem;
+    letter-spacing: 3px;
+    font-family: "sports", Helvetica, Arial, sans-serif;
+    color: rgba(255,153,51,1);
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.center-title {
+    margin: auto;
+    width: 100%;
+    margin-top: 2rem;
 }
 
 header {
@@ -265,6 +353,15 @@ a.nav-item:hover {
     color: rgba(255,153,51,1);
     margin-bottom: 1rem;
     margin-top: 1rem;
+}
+
+.grid .grid-col-1of2 h4 {
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+    font-family: "sports", Helvetica, Arial, sans-serif;
+    color: rgba(255,153,51,1);
+    margin-bottom: 1rem;
+    margin-top: 2rem;
 }
 
 .grid .left {

@@ -55,26 +55,32 @@ $stmt->bind_param('s', $id);
 $stmt->execute();
 $stmt->bind_result($team_name1, $city1, $arena1, $conference1, $division1);
 
-// display information in a table
-echo "<table border=\"solid\">";
-echo "<tr>";
-echo "<th>Name</th>";
-echo "<th>City</th>";
-echo "<th>Arena</th>";
-echo "<th>Conference</th>";
-echo "<th>Division</th>";
-echo "</tr>";
+if ($stmt->fetch()) 
+{
+    echo "<div class=\"center-title\">";
+    echo "<h2 class=\"nhl-team\">$team_name1</h2>";
+    echo "</div>";
 
-if ($stmt->fetch()) {
-    echo "<td align=\"center\">" . $team_name1 . "</td>";
+    // display information in a table
+    echo "<table class=\"team-details\">";
+    echo "<tr>";
     echo "<td align=\"center\">" . $city1 . "</td>";
     echo "<td align=\"center\">" . $arena1 . "</td>";
-    echo "<td align=\"center\">" . $conference1 . "</td>";
-    echo "<td align=\"center\">" . $division1 . "</td>";
+    echo "<td align=\"center\">" . $conference1 . " Conference</td>";
+    echo "<td class=\"far-right\" align=\"center\">" . $division1 . " Division</td>";
+    echo "</tr>";
+    echo "</table>";
 }
 
-echo "</tr>";
-echo "</table>";
+
+// echo "<tr>";
+// echo "<th>Name</th>";
+// echo "<th>City</th>";
+// echo "<th>Arena</th>";
+// echo "<th>Conference</th>";
+// echo "<th>Division</th>";
+// echo "</tr>";
+
 $stmt->free_result();
 
 $query_pos = "SELECT position FROM player INNER JOIN team on player.teamID = team.teamID WHERE playerID = $id";
@@ -86,7 +92,8 @@ $res_pos->free_result();
 
 echo "<br /><br />";
 
-echo "<h3>Team Stats</h3>";
+echo "<div class=\"show-team-stats\">";
+echo "<h3 class=\"current-team-stats\">Team Stats</h3>";
 
 $query = "SELECT games_played, wins, losses, ot_losses, points, goals_for_per_game, goals_against_per_game, power_play_percent, penalty_kill_percent, shots_for_per_game, shots_against_per_game, faceoff_win_percent FROM team WHERE teamID = ?";
 $stmt = $db->prepare($query);
@@ -94,7 +101,7 @@ $stmt->bind_param('s', $id);
 $stmt->execute();
 $stmt->bind_result($games_played1, $wins1, $losses1, $ot_losses1, $points1, $goals_for_per_game1, $goals_against_per_game1, $power_play_percent1, $penalty_kill_percent1, $shots_for_per_game1, $shots_against_per_game1, $faceoff_win_percent1);
 
-echo "<table border=\"solid\">";
+echo "<table class=\"show-team-stats\">";
 echo "<tr>";
 echo "<th>Games Played</th>";
 echo "<th>Wins</th>";
@@ -126,15 +133,16 @@ if ($stmt->fetch()) {
 }
 echo "</tr>";
 echo "</table>";
+echo "</div>";
 $stmt->free_result();
 
 $query = "SELECT player.playerID, player.name, player.position FROM player INNER JOIN team ON player.teamID = team.teamID WHERE player.teamID = $id ORDER BY player.name";
-echo $query;
 $res = $db->query($query);
 
-echo "<h3>Roster</h3>";
+echo "<div class=\"team-stats\">";
+echo "<h3 class=\"current-team-stats\">Roster</h3>";
 
-echo "<table border=\"solid\">";
+echo "<table class=\"show-team-stats\" id=\"bottom-space\">";
 echo "<tr>";
 echo "<th>Players</th>";
 echo "<th>Position</th>";
@@ -150,6 +158,7 @@ while ($row = $res->fetch_row()) {
     echo "</tr>";
 }
 echo "</table>";
+echo "</div>";
 
 $db->close();
 ?>
