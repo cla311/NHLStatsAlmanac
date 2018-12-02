@@ -591,7 +591,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                 $cityDropDownResult = mysqli_query($db, $sql);
 
                 // drop down with city from database
-                echo "<select name =\"city\">";
+                echo "<select name=\"team_city\">";
 
                 // first value of drop down is empty
                 echo "<option value=\"\"></option>";
@@ -599,7 +599,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                 // fill drop down with city from database
                 while ($row = mysqli_fetch_array($cityDropDownResult)) {
                     ?>
-                    <option value="<?php echo $row['city']; ?>" <?php if (isset($_POST['city']) && $_POST['city'] != "" && $_POST['city'] == $city) echo " selected"; ?> > <?php echo $row['city'] ?> </option>;
+                    <option value="<?php echo $row['city']; ?>" <?php if (isset($_POST['team_city']) && $_POST['team_city'] != "" && $_POST['team_city'] == $city) echo " selected"; ?> > <?php echo $row['city'] ?> </option>;
                     <?php
                 }
                 echo "</select>";
@@ -612,7 +612,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                 <br />
 
                 <p>By Name:</p>
-                Search: <input type="text" name="team_name" value="<?php if (isset($_POST['team_name'])) echo htmlentities($_POST['team_name']); ?>" />
+                Search: <input type="text" name="team_name_title" value="<?php if (isset($_POST['team_name_title'])) echo htmlentities($_POST['team_name_title']); ?>" />
                 </td>
 
                 <td>
@@ -795,8 +795,8 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     echo "</ul>";
 
                     $res->free_result();
-                } else if (isset($_POST['city']) && $_POST['city'] != "") {
-                    $city = $_POST['city'];
+                } else if (isset($_POST['team_city']) && $_POST['team_city'] != "") {
+                    $city = $_POST['team_city'];
                     echo "<br />";
                     echo "Returning players belonging to the city of" . $city;
 
@@ -871,8 +871,8 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     echo "</ul>";
 
                     $res->free_result();
-                } else if (isset($_POST['team_name']) && $_POST['team_name'] != "") {
-                    $name = $_POST['team_name'];
+                } else if (isset($_POST['team_name_title']) && $_POST['team_name_title'] != "") {
+                    $name = $_POST['team_name_title'];
                     echo "<br />";
                     echo "Returning teams with name containing: '" . $name . "'";
 
