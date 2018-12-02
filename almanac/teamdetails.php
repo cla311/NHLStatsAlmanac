@@ -20,7 +20,12 @@ $id = trim($_GET['teamID']);
 
 echo "<br /><br />";
 
-$team_stats = file_get_contents($nhlAPI . '/api/v1/teams/' . $id . "?expand=team.stats");
+$url = $nhlAPI . '/api/v1/teams/' . $id . "?expand=team.stats";
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_URL, $url);
+$team_stats = curl_exec($ch);
+curl_close($ch);
 $teamStats_array = json_decode($team_stats, true);
 
 foreach ($teamStats_array["teams"] as $stats) {
@@ -48,6 +53,7 @@ $stmt->bind_param('iiiiidddddddi', $played, $wins, $losses, $ot, $points,
         $goalsForGame, $goalsAgainstGame, $ppPercent, $pkPercent, $shotsForGame,
         $shotsAgainstGame, $faceoff, $teamID);
 $stmt->execute();
+$stmt->close();
 
 $query = "SELECT team_name, city, arena, conference, division FROM team WHERE teamID = ?";
 $stmt = $db->prepare($query);

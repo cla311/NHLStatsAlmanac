@@ -11,6 +11,12 @@ $city = "";
 $name = "";
 
 if (!isset($_POST['submit']) && !isset($_POST['search'])) {
+    $query = "INSERT IGNORE INTO player VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $db->prepare($query);
+    $stmt->bind_param("iisisississ", $playerID, $teamID, $photo,
+            $number, $playerName, $weight, $height, $nationality, $age,
+            $birthDate, $position);
+
     $teams = file_get_contents($nhlAPI . '/api/v1/teams');
     $teams_array = json_decode($teams, true);
     $team_ids = array();
@@ -20,11 +26,21 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
     unset($row);
 
     foreach ($team_ids as $ids) {
-        $team_roster = file_get_contents($nhlAPI . '/api/v1/teams/' . $ids . "/roster");
+        $url = $nhlAPI . '/api/v1/teams/' . $ids . "/roster";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        $team_roster = curl_exec($ch);
+        curl_close($ch);
         $teamRoster_array = json_decode($team_roster, true);
 
         foreach ($teamRoster_array["roster"] as $player) {
-            $currPlayer = file_get_contents($nhlAPI . '/api/v1/people/' . $player["person"]["id"]);
+            $url = $nhlAPI . '/api/v1/people/' . $player["person"]["id"];
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_URL, $url);
+            $currPlayer = curl_exec($ch);
+            curl_close($ch);
             $player_array = json_decode($currPlayer, true);
             foreach ($player_array["people"] as $person) {
                 $playerID = $person["id"];
@@ -54,15 +70,11 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                 $birthDate = $person["birthDate"];
                 $position = $person["primaryPosition"]["abbreviation"];
 
-                $query = "INSERT IGNORE INTO player VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                $stmt = $db->prepare($query);
-                $stmt->bind_param("iisisississ", $playerID, $teamID, $photo,
-                        $number, $playerName, $weight, $height, $nationality, $age,
-                        $birthDate, $position);
                 $stmt->execute();
             }
         }
     }
+    $stmt->close();
 }
 ?>
 
