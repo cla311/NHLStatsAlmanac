@@ -64,7 +64,6 @@ if (isset($_POST['accountInfoUpdate'])) {
             }
         }
         $sql_update .= " WHERE username = '$username'";
-        echo $sql_update;
         $update = $db->query($sql_update);
         echo "Account info updated sucessfully";
     }

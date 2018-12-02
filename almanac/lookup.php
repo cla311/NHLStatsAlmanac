@@ -5,6 +5,10 @@ require('../required/functions.php');
 ini_set('max_execution_time', 0);
 ini_set('memory_limit', '960M');
 
+$team = "";
+$city = "";
+$name = "";
+
 if (!isset($_POST['submit']) && !isset($_POST['search'])) {
     $query = "INSERT IGNORE INTO player VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $db->prepare($query);
@@ -547,6 +551,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
             ?>
         </div>
 
+        <!-- search for teams -->
         <div class="grid-col-1of2">
             <form name="team" action="lookup.php" method="post">
                 <h3>Select Team Parameters</h3>
@@ -559,7 +564,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                 $teamDropDownResult = mysqli_query($db, $sql);
 
                 // drop down with order numbers from database
-                echo "<select name =\"team_name\">";
+                echo "<select name=\"team_title\">";
 
                 // first value of drop down is empty
                 echo "<option value=\"\"></option>";
@@ -567,7 +572,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                 // fill drop down with teams from database
                 while ($row = mysqli_fetch_array($teamDropDownResult)) {
                     ?>
-                    <option value="<?php echo $row['team_name']; ?>" <?php if (isset($_POST['team_name']) && $_POST['team_name'] != "" && $_POST['team_name'] == $team) echo " selected"; ?> > <?php echo $row['team_name'] ?> </option>;
+                    <option value="<?php echo $row['team_name']; ?>" <?php if (isset($_POST['team_title']) && $_POST['team_title'] != "" && $_POST['team_title'] == $team) echo " selected"; ?> > <?php echo $row['team_name'] ?> </option>;
                     <?php
                 }
                 echo "</select>";
@@ -607,7 +612,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                 <br />
 
                 <p>By Name:</p>
-                Search: <input type="text" name="name" value="<?php if (isset($_POST['name'])) echo htmlentities($_POST['name']); ?>" />
+                Search: <input type="text" name="team_name" value="<?php if (isset($_POST['team_name'])) echo htmlentities($_POST['team_name']); ?>" />
                 </td>
 
                 <td>
@@ -624,75 +629,75 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     ?>
 
                     <h4>Secondary Filters</h4>
-                    <input type="checkbox" name="wins" value="winNum" <?php if (isset($_POST['win'])) echo "checked=\"checked\""; ?> />
-                    Wins Greater than: <input type="number" name="minWinAmount" value="<?php
-                    if (isset($_POST['minWinAmount'])) {
-                        echo htmlentities($_POST['minWinAmount']);
-                        $enteredWins = $_POST['minWinAmount'];
+                    <input type="checkbox" name="team_wins" value="winNum" <?php if (isset($_POST['team_wins'])) echo "checked=\"checked\""; ?> />
+                    Wins Greater than: <input type="number" name="team_minWinAmount" value="<?php
+                    if (isset($_POST['team_minWinAmount'])) {
+                        echo htmlentities($_POST['team_minWinAmount']);
+                        $enteredWins = $_POST['team_minWinAmount'];
                     }
                     ?>"/><br>
 
-                    <input type="checkbox" name="losses" value="lossNum" <?php if (isset($_POST['losses'])) echo "checked=\"checked\""; ?> />
-                    Losses Greater than: <input type="number" name="minLossAmount" value="<?php
-                    if (isset($_POST['minLossAmount'])) {
-                        echo htmlentities($_POST['minLossAmount']);
-                        $enteredLosses = $_POST['minLossAmount'];
+                    <input type="checkbox" name="team_losses" value="lossNum" <?php if (isset($_POST['team_losses'])) echo "checked=\"checked\""; ?> />
+                    Losses Greater than: <input type="number" name="team_minLossAmount" value="<?php
+                    if (isset($_POST['team_minLossAmount'])) {
+                        echo htmlentities($_POST['team_minLossAmount']);
+                        $enteredLosses = $_POST['team_minLossAmount'];
                     }
                     ?>"/><br>
 
-                    <input type="checkbox" name="otloss" value="otLossNum" <?php if (isset($_POST['otloss'])) echo "checked=\"checked\""; ?> />
-                    OT Losses Greater than: <input type="number" name="minOTLossAmount" value="<?php
-                    if (isset($_POST['minOTLossAmount'])) {
-                        echo htmlentities($_POST['minOTLossAmount']);
-                        $enteredOTLosses = $_POST['minOTLossAmount'];
+                    <input type="checkbox" name="team_otloss" value="otLossNum" <?php if (isset($_POST['team_otloss'])) echo "checked=\"checked\""; ?> />
+                    OT Losses Greater than: <input type="number" name="team_minOTLossAmount" value="<?php
+                    if (isset($_POST['team_minOTLossAmount'])) {
+                        echo htmlentities($_POST['team_minOTLossAmount']);
+                        $enteredOTLosses = $_POST['team_minOTLossAmount'];
                     }
                     ?>"/><br>
 
-                    <input type="checkbox" name="points" value="gamePointsNum" <?php if (isset($_POST['points'])) echo "checked=\"checked\""; ?> />
-                    Points greater than: <input type="number" name="minPointsAmount" value="<?php
-                    if (isset($_POST['minPointsAmount'])) {
-                        echo htmlentities($_POST['minPointsAmount']);
-                        $enteredPoints = $_POST['minPointsAmount'];
+                    <input type="checkbox" name="team_points" value="gamePointsNum" <?php if (isset($_POST['team_points'])) echo "checked=\"checked\""; ?> />
+                    Points greater than: <input type="number" name="team_minPointsAmount" value="<?php
+                    if (isset($_POST['team_minPointsAmount'])) {
+                        echo htmlentities($_POST['team_minPointsAmount']);
+                        $enteredPoints = $_POST['team_minPointsAmount'];
                     }
                     ?>"/><br>
 
-                    <input type="checkbox" name="goalsPerGame" value="goalsPerNum" <?php if (isset($_POST['goalsPerGame'])) echo "checked=\"checked\""; ?> />
-                    Goals per Game greater than: <input type="number" name="minGoalPerAmount" value="<?php
-                    if (isset($_POST['minGoalPerAmount'])) {
-                        echo htmlentities($_POST['minGoalPerAmount']);
-                        $enteredGoalsPerGame = $_POST['minGoalPerAmount'];
+                    <input type="checkbox" name="team_goalsPerGame" value="goalsPerNum" <?php if (isset($_POST['team_goalsPerGame'])) echo "checked=\"checked\""; ?> />
+                    Goals per Game greater than: <input type="number" name="team_minGoalPerAmount" value="<?php
+                    if (isset($_POST['team_minGoalPerAmount'])) {
+                        echo htmlentities($_POST['team_minGoalPerAmount']);
+                        $enteredGoalsPerGame = $_POST['team_minGoalPerAmount'];
                     }
                     ?>"/><br>
 
-                    <input type="checkbox" name="goalsAllowed" value="goalsAllowedNum" <?php if (isset($_POST['goalsAllowed'])) echo "checked=\"checked\""; ?> />
-                    Goals Allowed per Game greater than: <input type="number" name="minGoalsAllowedAmount" value="<?php
-                    if (isset($_POST['minGoalsAllowedAmount'])) {
-                        echo htmlentities($_POST['minGoalsAllowedAmount']);
-                        $enteredGoalsAllowedPerGame = $_POST['minGoalsAllowedAmount'];
+                    <input type="checkbox" name="team_goalsAllowed" value="goalsAllowedNum" <?php if (isset($_POST['team_goalsAllowed'])) echo "checked=\"checked\""; ?> />
+                    Goals Allowed per Game greater than: <input type="number" name="team_minGoalsAllowedAmount" value="<?php
+                    if (isset($_POST['team_minGoalsAllowedAmount'])) {
+                        echo htmlentities($_POST['team_minGoalsAllowedAmount']);
+                        $enteredGoalsAllowedPerGame = $_POST['team_minGoalsAllowedAmount'];
                     }
                     ?>"/><br>
 
-                    <input type="checkbox" name="shotsPerGame" value="shotsPerNum" <?php if (isset($_POST['shotsPerGame'])) echo "checked=\"checked\""; ?> />
-                    Shots per Game greater than: <input type="number" name="minShotsPerAmount" value="<?php
-                    if (isset($_POST['minShotsPerAmount'])) {
-                        echo htmlentities($_POST['minShotsPerAmount']);
-                        $enteredShotsPerGame = $_POST['minShotsPerAmount'];
+                    <input type="checkbox" name="team_shotsPerGame" value="shotsPerNum" <?php if (isset($_POST['team_shotsPerGame'])) echo "checked=\"checked\""; ?> />
+                    Shots per Game greater than: <input type="number" name="team_minShotsPerAmount" value="<?php
+                    if (isset($_POST['team_minShotsPerAmount'])) {
+                        echo htmlentities($_POST['team_minShotsPerAmount']);
+                        $enteredShotsPerGame = $_POST['team_minShotsPerAmount'];
                     }
                     ?>"/><br>
 
-                    <input type="checkbox" name="shotsAllowedPerGame" value="shotsAllowedNum" <?php if (isset($_POST['shotsAllowedPerGame'])) echo "checked=\"checked\""; ?> />
-                    Shots Allowed per Game greater than: <input type="number" name="minShotsAllowedAmount" value="<?php
-                    if (isset($_POST['minShotsAllowedAmount'])) {
-                        echo htmlentities($_POST['minShotsAllowedAmount']);
-                        $enteredShotsAllowedPerGame = $_POST['minShotsAllowedAmount'];
+                    <input type="checkbox" name="team_shotsAllowedPerGame" value="shotsAllowedNum" <?php if (isset($_POST['team_shotsAllowedPerGame'])) echo "checked=\"checked\""; ?> />
+                    Shots Allowed per Game greater than: <input type="number" name="team_minShotsAllowedAmount" value="<?php
+                    if (isset($_POST['team_minShotsAllowedAmount'])) {
+                        echo htmlentities($_POST['team_minShotsAllowedAmount']);
+                        $enteredShotsAllowedPerGame = $_POST['team_minShotsAllowedAmount'];
                     }
                     ?>"/><br>
 
-                    <input type="checkbox" name="faceoffPercent" value="faceoffNum" <?php if (isset($_POST['faceoffPercent'])) echo "checked=\"checked\""; ?> />
-                    Faceoff Win Percentage greater than: <input type="number" name="minFaceoffAmount" value="<?php
-                    if (isset($_POST['minFaceoffAmount'])) {
-                        echo htmlentities($_POST['minFaceoffAmount']);
-                        $enteredFaceoffWin = $_POST['minFaceoffAmount'];
+                    <input type="checkbox" name="team_faceoffPercent" value="faceoffNum" <?php if (isset($_POST['team_faceoffPercent'])) echo "checked=\"checked\""; ?> />
+                    Faceoff Win Percentage greater than: <input type="number" name="team_minFaceoffAmount" value="<?php
+                    if (isset($_POST['team_minFaceoffAmount'])) {
+                        echo htmlentities($_POST['team_minFaceoffAmount']);
+                        $enteredFaceoffWin = $_POST['team_minFaceoffAmount'];
                     }
                     ?>"/><br>
                     <br>
@@ -704,9 +709,10 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
             if (isset($_POST['search'])) { // if search button was clicked
                 $query_str = "SELECT DISTINCT ";
 
-                if (isset($_POST['team_name']) && $_POST['team_name'] != "") {
-                    $team = $_POST['team_name'];
+                if (isset($_POST['team_title']) && $_POST['team_title'] != "") {
+                    $team = $_POST['team_title'];
                     $query_teamID = "SELECT teamID FROM team WHERE team_name = '" . $team . "'";
+                    echo $query_teamID;
 
                     $res = $db->query($query_teamID);
                     $teamID = "";
@@ -715,72 +721,67 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     $res->free_result();
 
                     echo "<br />";
-                    echo "Returning players belonging to the " . $team;
+                    echo "Returning teams belonging to '".$team."' ";
 
                     // get name to display link, use teamID to find players in database
                     $query_str .= "teamID, team_name FROM team WHERE teamID = $teamID";
-                    if (isset($_POST['wins'])) {
-                        if (empty($_POST['minWinAmount'])) {
+                    if (isset($_POST['team_wins'])) {
+                        if (empty($_POST['team_minWinAmount'])) {
                             $enteredWins = 0;
                         }
                         $query_str .= " AND wins > " . $enteredWins;
                     }
-                    if (isset($_POST['losses'])) {
-                        if (empty($_POST['minLossAmount'])) {
+                    if (isset($_POST['team_losses'])) {
+                        if (empty($_POST['team_minLossAmount'])) {
                             $enteredLosses = 0;
                         }
                         $query_str .= " AND losses > " . $enteredLosses;
                     }
-                    if (isset($_POST['otloss'])) {
-                        if (empty($_POST['minOTLossAmount'])) {
+                    if (isset($_POST['team_otloss'])) {
+                        if (empty($_POST['team_minOTLossAmount'])) {
                             $enteredOTLosses = 0;
                         }
                         $query_str .= " AND ot_losses > " . $enteredOTLosses;
                     }
-                    if (isset($_POST['points'])) {
-                        if (empty($_POST['minPointsAmount'])) {
+                    if (isset($_POST['team_points'])) {
+                        if (empty($_POST['team_minPointsAmount'])) {
                             $enteredPoints = 0;
                         }
                         $query_str .= " AND points > " . $enteredPoints;
                     }
-                    if (isset($_POST['goalsPerGame'])) {
-                        if (empty($_POST['minGoalPerAmount'])) {
+                    if (isset($_POST['team_goalsPerGame'])) {
+                        if (empty($_POST['team_minGoalPerAmount'])) {
                             $enteredGoalsPerGame = 0;
                         }
                         $query_str .= " AND goals_for_per_game > " . $enteredGoalsPerGame;
                     }
-                    if (isset($_POST['goalsAllowed'])) {
-                        if (empty($_POST['minGoalsAllowedAmount'])) {
+                    if (isset($_POST['team_goalsAllowed'])) {
+                        if (empty($_POST['team_minGoalsAllowedAmount'])) {
                             $enteredGoalsAllowedPerGame = 0;
                         }
                         $query_str .= " AND goals_against_per_game > " . $enteredGoalsAllowedPerGame;
                     }
-                    if (isset($_POST['shotsPerGame'])) {
-                        if (empty($_POST['minShotsPerAmount'])) {
+                    if (isset($_POST['team_shotsPerGame'])) {
+                        if (empty($_POST['team_minShotsPerAmount'])) {
                             $enteredShotsPerGame = 0;
                         }
                         $query_str .= " AND shots_for_per_game > " . $enteredShotsPerGame;
                     }
-                    if (isset($_POST['shotsAllowedPerGame'])) {
-                        if (empty($_POST['minShotsAllowedAmount'])) {
+                    if (isset($_POST['team_shotsAllowedPerGame'])) {
+                        if (empty($_POST['team_minShotsAllowedAmount'])) {
                             $enteredShotsAllowedPerGame = 0;
                         }
                         $query_str .= " AND shots_against_per_game > " . $enteredShotsAllowedPerGame;
                     }
-                    if (isset($_POST['faceoffPercent'])) {
-                        if (empty($_POST['minFaceoffAmount'])) {
+                    if (isset($_POST['team_faceoffPercent'])) {
+                        if (empty($_POST['team_minFaceoffAmount'])) {
                             $enteredFaceoffWin = 0;
                         }
                         $query_str .= " AND faceoff_win_percent > " . $enteredFaceoffWin;
                     }
-                    if (isset($_POST['gamesPlayed'])) {
-                        if (empty($_POST['minGamesAmount'])) {
-                            $enteredGames = 0;
-                        }
-                        $query_str .= " AND games_played > " . $enteredGames;
-                    }
 
                     $query_str .= " ORDER BY team_name";
+                    echo $query_str;
 
                     $res = $db->query($query_str);
 
@@ -801,69 +802,63 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
 
                     // get name to display link, use city name to find players in database
                     $query_str .= "teamID, team_name FROM team WHERE team.city = '" . $city . "'";
-                    if (isset($_POST['wins'])) {
-                        if (empty($_POST['minWinAmount'])) {
+                    if (isset($_POST['team_wins'])) {
+                        if (empty($_POST['team_minWinAmount'])) {
                             $enteredWins = 0;
                         }
                         $query_str .= " AND wins > " . $enteredWins;
                     }
-                    if (isset($_POST['losses'])) {
-                        if (empty($_POST['minLossAmount'])) {
+                    if (isset($_POST['team_losses'])) {
+                        if (empty($_POST['team_minLossAmount'])) {
                             $enteredLosses = 0;
                         }
                         $query_str .= " AND losses > " . $enteredLosses;
                     }
-                    if (isset($_POST['otloss'])) {
-                        if (empty($_POST['minOTLossAmount'])) {
+                    if (isset($_POST['team_otloss'])) {
+                        if (empty($_POST['team_minOTLossAmount'])) {
                             $enteredOTLosses = 0;
                         }
                         $query_str .= " AND ot_losses > " . $enteredOTLosses;
                     }
-                    if (isset($_POST['points'])) {
-                        if (empty($_POST['minPointsAmount'])) {
+                    if (isset($_POST['team_points'])) {
+                        if (empty($_POST['team_minPointsAmount'])) {
                             $enteredPoints = 0;
                         }
                         $query_str .= " AND points > " . $enteredPoints;
                     }
-                    if (isset($_POST['goalsPerGame'])) {
-                        if (empty($_POST['minGoalPerAmount'])) {
+                    if (isset($_POST['team_goalsPerGame'])) {
+                        if (empty($_POST['team_minGoalPerAmount'])) {
                             $enteredGoalsPerGame = 0;
                         }
                         $query_str .= " AND goals_for_per_game > " . $enteredGoalsPerGame;
                     }
-                    if (isset($_POST['goalsAllowed'])) {
-                        if (empty($_POST['minGoalsAllowedAmount'])) {
+                    if (isset($_POST['team_goalsAllowed'])) {
+                        if (empty($_POST['team_minGoalsAllowedAmount'])) {
                             $enteredGoalsAllowedPerGame = 0;
                         }
                         $query_str .= " AND goals_against_per_game > " . $enteredGoalsAllowedPerGame;
                     }
-                    if (isset($_POST['shotsPerGame'])) {
-                        if (empty($_POST['minShotsPerAmount'])) {
+                    if (isset($_POST['team_shotsPerGame'])) {
+                        if (empty($_POST['team_minShotsPerAmount'])) {
                             $enteredShotsPerGame = 0;
                         }
                         $query_str .= " AND shots_for_per_game > " . $enteredShotsPerGame;
                     }
-                    if (isset($_POST['shotsAllowedPerGame'])) {
-                        if (empty($_POST['minShotsAllowedAmount'])) {
+                    if (isset($_POST['team_shotsAllowedPerGame'])) {
+                        if (empty($_POST['team_minShotsAllowedAmount'])) {
                             $enteredShotsAllowedPerGame = 0;
                         }
                         $query_str .= " AND shots_against_per_game > " . $enteredShotsAllowedPerGame;
                     }
-                    if (isset($_POST['faceoffPercent'])) {
-                        if (empty($_POST['minFaceoffAmount'])) {
+                    if (isset($_POST['team_faceoffPercent'])) {
+                        if (empty($_POST['team_minFaceoffAmount'])) {
                             $enteredFaceoffWin = 0;
                         }
                         $query_str .= " AND faceoff_win_percent > " . $enteredFaceoffWin;
                     }
-                    if (isset($_POST['gamesPlayed'])) {
-                        if (empty($_POST['minGamesAmount'])) {
-                            $enteredGames = 0;
-                        }
-                        $query_str .= " AND games_played > " . $enteredGames;
-                    }
 
                     $query_str .= " ORDER BY team_name";
-
+                    echo $query_str;
                     $res = $db->query($query_str);
 
                     echo "<br /><br />";
@@ -876,71 +871,65 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     echo "</ul>";
 
                     $res->free_result();
-                } else if (isset($_POST['name']) && $_POST['name'] != "") {
-                    $name = $_POST['name'];
+                } else if (isset($_POST['team_name']) && $_POST['team_name'] != "") {
+                    $name = $_POST['team_name'];
                     echo "<br />";
                     echo "Returning teams with name containing: '" . $name . "'";
 
                     $query_str .= "teamID, team_name FROM team WHERE team_name LIKE '%" . $name . "%'";
-                    if (isset($_POST['wins'])) {
-                        if (empty($_POST['minWinAmount'])) {
+                    if (isset($_POST['team_wins'])) {
+                        if (empty($_POST['team_minWinAmount'])) {
                             $enteredWins = 0;
                         }
                         $query_str .= " AND wins > " . $enteredWins;
                     }
-                    if (isset($_POST['losses'])) {
-                        if (empty($_POST['minLossAmount'])) {
+                    if (isset($_POST['team_losses'])) {
+                        if (empty($_POST['team_minLossAmount'])) {
                             $enteredLosses = 0;
                         }
                         $query_str .= " AND losses > " . $enteredLosses;
                     }
-                    if (isset($_POST['otloss'])) {
-                        if (empty($_POST['minOTLossAmount'])) {
+                    if (isset($_POST['team_otloss'])) {
+                        if (empty($_POST['team_minOTLossAmount'])) {
                             $enteredOTLosses = 0;
                         }
                         $query_str .= " AND ot_losses > " . $enteredOTLosses;
                     }
-                    if (isset($_POST['points'])) {
-                        if (empty($_POST['minPointsAmount'])) {
+                    if (isset($_POST['team_points'])) {
+                        if (empty($_POST['team_minPointsAmount'])) {
                             $enteredPoints = 0;
                         }
                         $query_str .= " AND points > " . $enteredPoints;
                     }
-                    if (isset($_POST['goalsPerGame'])) {
-                        if (empty($_POST['minGoalPerAmount'])) {
+                    if (isset($_POST['team_goalsPerGame'])) {
+                        if (empty($_POST['team_minGoalPerAmount'])) {
                             $enteredGoalsPerGame = 0;
                         }
                         $query_str .= " AND goals_for_per_game > " . $enteredGoalsPerGame;
                     }
-                    if (isset($_POST['goalsAllowed'])) {
-                        if (empty($_POST['minGoalsAllowedAmount'])) {
+                    if (isset($_POST['team_goalsAllowed'])) {
+                        if (empty($_POST['team_minGoalsAllowedAmount'])) {
                             $enteredGoalsAllowedPerGame = 0;
                         }
                         $query_str .= " AND goals_against_per_game > " . $enteredGoalsAllowedPerGame;
                     }
-                    if (isset($_POST['shotsPerGame'])) {
-                        if (empty($_POST['minShotsPerAmount'])) {
+                    if (isset($_POST['team_shotsPerGame'])) {
+                        if (empty($_POST['team_minShotsPerAmount'])) {
                             $enteredShotsPerGame = 0;
                         }
                         $query_str .= " AND shots_for_per_game > " . $enteredShotsPerGame;
                     }
-                    if (isset($_POST['shotsAllowedPerGame'])) {
-                        if (empty($_POST['minShotsAllowedAmount'])) {
+                    if (isset($_POST['team_shotsAllowedPerGame'])) {
+                        if (empty($_POST['team_minShotsAllowedAmount'])) {
                             $enteredShotsAllowedPerGame = 0;
                         }
                         $query_str .= " AND shots_against_per_game > " . $enteredShotsAllowedPerGame;
                     }
-                    if (isset($_POST['faceoffPercent'])) {
-                        if (empty($_POST['minFaceoffAmount'])) {
+                    if (isset($_POST['team_faceoffPercent'])) {
+                        if (empty($_POST['team_minFaceoffAmount'])) {
                             $enteredFaceoffWin = 0;
                         }
                         $query_str .= " AND faceoff_win_percent > " . $enteredFaceoffWin;
-                    }
-                    if (isset($_POST['gamesPlayed'])) {
-                        if (empty($_POST['minGamesAmount'])) {
-                            $enteredGames = 0;
-                        }
-                        $query_str .= " AND games_played > " . $enteredGames;
                     }
 
                     $query_str .= " ORDER BY team_name";
@@ -959,69 +948,63 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     $res->free_result();
                 } else {
                     $query_str .= "teamID, team_name FROM team WHERE team_name LIKE '%%'";
-                    if (isset($_POST['wins'])) {
-                        if (empty($_POST['minWinAmount'])) {
+                    if (isset($_POST['team_wins'])) {
+                        if (empty($_POST['team_minWinAmount'])) {
                             $enteredWins = 0;
                         }
                         $query_str .= " AND wins > " . $enteredWins;
                     }
-                    if (isset($_POST['losses'])) {
-                        if (empty($_POST['minLossAmount'])) {
+                    if (isset($_POST['team_losses'])) {
+                        if (empty($_POST['team_minLossAmount'])) {
                             $enteredLosses = 0;
                         }
                         $query_str .= " AND losses > " . $enteredLosses;
                     }
-                    if (isset($_POST['otloss'])) {
-                        if (empty($_POST['minOTLossAmount'])) {
+                    if (isset($_POST['team_otloss'])) {
+                        if (empty($_POST['team_minOTLossAmount'])) {
                             $enteredOTLosses = 0;
                         }
                         $query_str .= " AND ot_losses > " . $enteredOTLosses;
                     }
-                    if (isset($_POST['points'])) {
-                        if (empty($_POST['minPointsAmount'])) {
+                    if (isset($_POST['team_points'])) {
+                        if (empty($_POST['team_minPointsAmount'])) {
                             $enteredPoints = 0;
                         }
                         $query_str .= " AND points > " . $enteredPoints;
                     }
-                    if (isset($_POST['goalsPerGame'])) {
-                        if (empty($_POST['minGoalPerAmount'])) {
+                    if (isset($_POST['team_goalsPerGame'])) {
+                        if (empty($_POST['team_minGoalPerAmount'])) {
                             $enteredGoalsPerGame = 0;
                         }
                         $query_str .= " AND goals_for_per_game > " . $enteredGoalsPerGame;
                     }
-                    if (isset($_POST['goalsAllowed'])) {
-                        if (empty($_POST['minGoalsAllowedAmount'])) {
+                    if (isset($_POST['team_goalsAllowed'])) {
+                        if (empty($_POST['team_minGoalsAllowedAmount'])) {
                             $enteredGoalsAllowedPerGame = 0;
                         }
                         $query_str .= " AND goals_against_per_game > " . $enteredGoalsAllowedPerGame;
                     }
-                    if (isset($_POST['shotsPerGame'])) {
-                        if (empty($_POST['minShotsPerAmount'])) {
+                    if (isset($_POST['team_shotsPerGame'])) {
+                        if (empty($_POST['team_minShotsPerAmount'])) {
                             $enteredShotsPerGame = 0;
                         }
                         $query_str .= " AND shots_for_per_game > " . $enteredShotsPerGame;
                     }
-                    if (isset($_POST['shotsAllowedPerGame'])) {
-                        if (empty($_POST['minShotsAllowedAmount'])) {
+                    if (isset($_POST['team_shotsAllowedPerGame'])) {
+                        if (empty($_POST['team_minShotsAllowedAmount'])) {
                             $enteredShotsAllowedPerGame = 0;
                         }
                         $query_str .= " AND shots_against_per_game > " . $enteredShotsAllowedPerGame;
                     }
-                    if (isset($_POST['faceoffPercent'])) {
-                        if (empty($_POST['minFaceoffAmount'])) {
+                    if (isset($_POST['team_faceoffPercent'])) {
+                        if (empty($_POST['team_minFaceoffAmount'])) {
                             $enteredFaceoffWin = 0;
                         }
                         $query_str .= " AND faceoff_win_percent > " . $enteredFaceoffWin;
                     }
-                    if (isset($_POST['gamesPlayed'])) {
-                        if (empty($_POST['minGamesAmount'])) {
-                            $enteredGames = 0;
-                        }
-                        $query_str .= " AND games_played > " . $enteredGames;
-                    }
 
                     $query_str .= " ORDER BY team_name";
-
+echo $query_str;
                     $res = $db->query($query_str);
 
                     echo "<br /><br />";
