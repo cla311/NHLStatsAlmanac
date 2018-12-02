@@ -712,8 +712,6 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                 if (isset($_POST['team_title']) && $_POST['team_title'] != "") {
                     $team = $_POST['team_title'];
                     $query_teamID = "SELECT teamID FROM team WHERE team_name = '" . $team . "'";
-                    echo $query_teamID;
-
                     $res = $db->query($query_teamID);
                     $teamID = "";
                     $row = $res->fetch_row();
@@ -781,8 +779,6 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     }
 
                     $query_str .= " ORDER BY team_name";
-                    echo $query_str;
-
                     $res = $db->query($query_str);
 
                     echo "<br /><br />";
@@ -858,7 +854,6 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     }
 
                     $query_str .= " ORDER BY team_name";
-                    echo $query_str;
                     $res = $db->query($query_str);
 
                     echo "<br /><br />";
@@ -1004,7 +999,6 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     }
 
                     $query_str .= " ORDER BY team_name";
-echo $query_str;
                     $res = $db->query($query_str);
 
                     echo "<br /><br />";
