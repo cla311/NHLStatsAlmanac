@@ -13,6 +13,7 @@ if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
 }
 
 $id = trim($_GET['teamID']);
+$_SESSION['teamID'] = $id;
 
 echo "<br /><br />";
 
@@ -92,8 +93,24 @@ $player_position = $row[0];
 $res_pos->free_result();
 
 echo "<br /><br />";
+echo "<br /><br />";
 
 echo "<div class=\"show-team-stats\">";
+
+$query_watchlist = "SELECT COUNT(1) FROM team_watchlist WHERE username='" . $_SESSION['username']
+        . "' AND teamID='" . $_SESSION['teamID'] . "'";
+$res_list = $db->query($query_watchlist);
+$list_row = $res_list->fetch_row();
+
+echo "<div class=\"center\">";
+if ($list_row[0] >= 1) {
+    echo "<a class=\"add-link\" href=\"removewatchlist_team.php\">Remove from Favourites</a>";
+} else {
+    echo "<a class=\"add-link\" href=\"addtowatchlist_team.php\">Add to Favourites</a>";
+}
+$res_list->free_result();
+echo "</div>";
+
 echo "<h3 class=\"current-team-stats\">Team Stats</h3>";
 
 $query = "SELECT games_played, wins, losses, ot_losses, points, goals_for_per_game, goals_against_per_game, power_play_percent, penalty_kill_percent, shots_for_per_game, shots_against_per_game, faceoff_win_percent FROM team WHERE teamID = ?";

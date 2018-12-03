@@ -452,6 +452,14 @@ input[type=submit] {
     padding: 0.25rem;
 }
 
+.watchlist{
+    font-weight: bold;
+}
+
+.list-item{
+    list-style: none;
+}
+
 @font-face {
     font-family: "sports";
     src: url("../font/sportsjersey.ttf");

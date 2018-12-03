@@ -347,8 +347,6 @@ switch ($player_position) {
 }
 // echo "</div>";
 
-$db->close();
-
 get_player($id, $name1);
 
 echo "<br /><br />";
@@ -364,11 +362,27 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
     }
 } else {
     echo "<div class=\"center\">";
-        echo "<a class=\"add-link\" href=\"login.php\">Add to Fantasy Team</a>";
-        echo "</div>";
+    echo "<a class=\"add-link\" href=\"login.php\">Add to Fantasy Team</a>";
+    echo "</div>";
 }
 echo "<br /><br />";
+
+$query_watchlist = "SELECT COUNT(1) FROM watchlist WHERE username='" . $_SESSION['username']
+        . "' AND playerID='" . $_SESSION['playerID'] . "'";
+$res_list = $db->query($query_watchlist);
+$list_row = $res_list->fetch_row();
+
+echo "<div class=\"center\">";
+if ($list_row[0] >= 1) {
+    echo "<a class=\"add-link\" href=\"removewatchlist.php\">Remove from Favourites</a>";
+} else {
+    echo "<a class=\"add-link\" href=\"addtowatchlist.php\">Add to Favourites</a>";
+}
+$res_list->free_result();
+echo "</div>";
+
 echo "</div>";
 echo "</div>";
 echo "<div>";
+$db->close();
 ?>
