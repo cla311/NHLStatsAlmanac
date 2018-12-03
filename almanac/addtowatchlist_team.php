@@ -13,11 +13,9 @@ $sql .= "'" . $_SESSION['teamID'] . "'";
 $sql .= ")";
 $result = mysqli_query($db, $sql);
 
-// For INSERT statements, $result is true/false
 if ($result) {
     header("Location: account.php");
 } else {
-    // INSERT failed
     echo mysqli_error($db);
     db_disconnect($db);
     exit;

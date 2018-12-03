@@ -6,15 +6,14 @@ require('../required/functions.php');
 
 <?php
 require_ssl(); // set to https
-// check for user login
 if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && $_SESSION['username']) {
     $email = $_SESSION['user_email'];
     $firstName = $_SESSION['firstName'];
     $username = $_SESSION['username'];
-    // if user is logged in, go to logout page
+
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '/NHLStatsAlmanac/almanac/index.php');
     exit();
-} else { // otherwise, go to login page
+} else {
     $email = $_SESSION['user_email'] = [];
     $firstName = $_SESSION['firstName'] = [];
     $username = $_SESSION['username'] = [];
@@ -51,12 +50,15 @@ if (is_post_request()) {
             if (password_verify($password, $user['password'])) {
                 log_in_user($user);
 
-                if (!empty($_SESSION['playerID']) && !empty($_SESSION['name'])) { // if user was trying to save an item to their watchlist
-                  header('Location: http://'.$_SERVER['HTTP_HOST'].'/NHLStatsAlmanac/almanac/fantasy.php');
-                  exit();
-                } else { // otherwise, send user to model list
-                header('Location: http://' . $_SERVER['HTTP_HOST'] . '/NHLStatsAlmanac/almanac/index.php');
-                  exit();
+                if (!empty($_SESSION['playerID']) && !empty($_SESSION['name'])) {
+                    header('Location: http://' . $_SERVER['HTTP_HOST']
+                            . '/NHLStatsAlmanac/almanac/details.php?playerID='
+                            . $_SESSION['playerID']);
+                    exit();
+                } else {
+                    header('Location: http://' . $_SERVER['HTTP_HOST']
+                            . '/NHLStatsAlmanac/almanac/index.php');
+                    exit();
                 }
             } else {
                 // email found, but password does not match

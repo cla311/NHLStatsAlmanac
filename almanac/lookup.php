@@ -78,6 +78,13 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
 ?>
 
 <body>
+    <?php
+    if (isset($_SESSION["addPlayer"])) {
+        echo "<div class=\"center-block-p\">";
+        echo "<p class=\"added-player\">" . $_SESSION['addPlayer'] . "</p>";
+        echo "</div>";
+    }
+    ?>
     <h1 class="search">Database Search</h1>
 
     <div class="grid">
@@ -102,15 +109,8 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                 // fill drop down with order numbers from database
                 while ($row = mysqli_fetch_array($teamDropDownResult)) {
                     ?>
-                    <option value="<?php echo $row['team_name']; ?>" <?php if (isset($_POST['team_name']) && $_POST['team_name'] != "" && $_POST['team_name'] == $row['team_name']) echo " selected"; ?> > <?php echo $row['team_name'] ?> </option>;
+                    <option value="<?php echo $row['team_name']; ?>" <?php if (isset($_POST['team_name']) && $_POST ['team_name'] != "" && $_POST ['team_name'] == $row ['team_name']) echo " selected"; ?> > <?php echo $row['team_name'] ?> </option>;
                     <?php
-
-
-// echo "<option value=\"".$row["country_id"]."\"";
-// if($_POST['country'] == $row['country_id'])
-//       echo 'selected';
-// echo ">".$row["country_name"]."</option>";
-
                 }
                 echo "</select>";
 
@@ -124,20 +124,20 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                 <p>By City:</p>
 
                 <?php
-                // sql for filling drop down with city from database
+// sql for filling drop down with city from database
                 $sql = "SELECT DISTINCT city FROM team ORDER BY city";
                 $cityDropDownResult = mysqli_query($db, $sql);
 
                 // drop down with city from database
                 echo "<select name =\"city\">";
 
-                // first value of drop down is empty
+// first value of drop down is empty
                 echo "<option value=\"\"></option>";
 
-                // fill drop down with city from database
+// fill drop down with city from database
                 while ($row = mysqli_fetch_array($cityDropDownResult)) {
                     ?>
-                    <option value="<?php echo $row['city']; ?>" <?php if (isset($_POST['city']) && $_POST['city'] != "" && $_POST['city'] == $row['city']) echo " selected"; ?> > <?php echo $row['city'] ?> </option>;
+                    <option value="<?php echo $row['city']; ?>" <?php if (isset($_POST['city']) && $_POST ['city'] != "" && $_POST ['city'] == $row ['city']) echo " selected"; ?> > <?php echo $row['city'] ?> </option>;
                     <?php
                 }
                 echo "</select>";
@@ -244,10 +244,10 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
             </form>
 
             <?php
-            if (isset($_POST['submit'])) { // if submit button was clicked
+            if (isset($_POST['submit'])) {
                 $query_str = "SELECT DISTINCT ";
 
-                if (isset($_POST['team_name']) && $_POST['team_name'] != "") {
+                if (isset($_POST['team_name']) && $_POST ['team_name'] != "") {
                     $team = $_POST['team_name'];
                     $query_teamID = "SELECT teamID FROM team WHERE team_name = '" . $team . "'";
 
@@ -260,7 +260,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     echo "<br />";
                     echo "Returning players belonging to the " . $team;
 
-                    // get name to display link, use teamID to find players in database
+// get name to display link, use teamID to find players in database
                     $query_str .= "player.playerID, name FROM player LEFT JOIN team ON player.teamID = team.teamID LEFT JOIN stats ON player.playerID = stats.playerID LEFT JOIN goalie_stats ON goalie_stats.playerID = player.playerID WHERE team.teamID = $teamID";
                     if (isset($_POST['goals'])) {
                         if (empty($_POST['minGoalAmount'])) {
@@ -325,18 +325,18 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     echo "<ul>";
                     while ($row = $res->fetch_row()) {
                         echo "<li>";
-                        format_name_as_link($row[0], $row[1], "details.php"); // link shows product name, but is identified by it's product code
+                        format_name_as_link($row[0], $row[1], "details.php");
                         echo "</li>\n";
                     };
                     echo "</ul>";
 
                     $res->free_result();
-                } else if (isset($_POST['city']) && $_POST['city'] != "") {
+                } else if (isset($_POST['city']) && $_POST ['city'] != "") {
                     $city = $_POST['city'];
                     echo "<br />";
                     echo "Returning players belonging to the city of " . $city;
 
-                    // get name to display link, use city name to find players in database
+// get name to display link, use city name to find players in database
                     $query_str .= "player.playerID, name FROM player LEFT JOIN team ON player.teamID = team.teamID LEFT JOIN stats ON player.playerID = stats.playerID LEFT JOIN goalie_stats ON goalie_stats.playerID = player.playerID WHERE team.city = '" . $city . "'";
                     if (isset($_POST['goals'])) {
                         if (empty($_POST['minGoalAmount'])) {
@@ -401,13 +401,13 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     echo "<ul>";
                     while ($row = $res->fetch_row()) {
                         echo "<li>";
-                        format_name_as_link($row[0], $row[1], "details.php"); // link shows product name, but is identified by it's product code
+                        format_name_as_link($row[0], $row[1], "details.php");
                         echo "</li>\n";
                     };
                     echo "</ul>";
 
                     $res->free_result();
-                } else if (isset($_POST['name']) && $_POST['name'] != "") {
+                } else if (isset($_POST['name']) && $_POST ['name'] != "") {
                     $name = $_POST['name'];
                     echo "<br />";
                     echo "Returning players with name containing: '" . $name . "'";
@@ -476,7 +476,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     echo "<ul>";
                     while ($row = $res->fetch_row()) {
                         echo "<li>";
-                        format_name_as_link($row[0], $row[1], "details.php"); // link shows product name, but is identified by it's product code
+                        format_name_as_link($row[0], $row[1], "details.php");
                         echo "</li>\n";
                     };
                     echo "</ul>";
@@ -547,7 +547,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     echo "<ul>";
                     while ($row = $res->fetch_row()) {
                         echo "<li>";
-                        format_name_as_link($row[0], $row[1], "details.php"); // link shows product name, but is identified by it's product code
+                        format_name_as_link($row[0], $row[1], "details.php");
                         echo "</li>\n";
                     };
                     echo "</ul>";
@@ -566,20 +566,20 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                 <p>By Team:</p>
 
                 <?php
-                // sql for filling drop down with order numbers from database
+// sql for filling drop down with order numbers from database
                 $sql = "SELECT team_name FROM team ORDER BY team_name";
                 $teamDropDownResult = mysqli_query($db, $sql);
 
-                // drop down with order numbers from database
+// drop down with order numbers from database
                 echo "<select name=\"team_title\">";
 
-                // first value of drop down is empty
+// first value of drop down is empty
                 echo "<option value=\"\"></option>";
 
-                // fill drop down with teams from database
+// fill drop down with teams from database
                 while ($row = mysqli_fetch_array($teamDropDownResult)) {
                     ?>
-                    <option value="<?php echo $row['team_name']; ?>" <?php if (isset($_POST['team_title']) && $_POST['team_title'] != "" && $_POST['team_title'] == $row['team_name']) echo " selected"; ?> > <?php echo $row['team_name'] ?> </option>;
+                    <option value="<?php echo $row['team_name']; ?>" <?php if (isset($_POST['team_title']) && $_POST['team_title'] != "" && $_POST ['team_title'] == $row['team_name']) echo " selected"; ?> > <?php echo $row['team_name'] ?> </option>;
                     <?php
                 }
                 echo "</select>";
@@ -593,20 +593,20 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                 <p>By City:</p>
 
                 <?php
-                // sql for filling drop down with city from database
+// sql for filling drop down with city from database
                 $sql = "SELECT DISTINCT city FROM team ORDER BY city";
                 $cityDropDownResult = mysqli_query($db, $sql);
 
-                // drop down with city from database
+// drop down with city from database
                 echo "<select name=\"team_city\">";
 
-                // first value of drop down is empty
+// first value of drop down is empty
                 echo "<option value=\"\"></option>";
 
-                // fill drop down with city from database
+// fill drop down with city from database
                 while ($row = mysqli_fetch_array($cityDropDownResult)) {
                     ?>
-                    <option value="<?php echo $row['city']; ?>" <?php if (isset($_POST['team_city']) && $_POST['team_city'] != "" && $_POST['team_city'] == $row['city']) echo " selected"; ?> > <?php echo $row['city'] ?> </option>;
+                    <option value="<?php echo $row['city']; ?>" <?php if (isset($_POST['team_city']) && $_POST['team_city'] != "" && $_POST ['team_city'] == $row['city']) echo " selected"; ?> > <?php echo $row['city'] ?> </option>;
                     <?php
                 }
                 echo "</select>";
@@ -713,7 +713,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
             </form>
 
             <?php
-            if (isset($_POST['search'])) { // if search button was clicked
+            if (isset($_POST['search'])) {
                 $query_str = "SELECT DISTINCT ";
 
                 if (isset($_POST['team_title']) && $_POST['team_title'] != "") {
@@ -726,9 +726,9 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     $res->free_result();
 
                     echo "<br />";
-                    echo "Returning teams belonging to '".$team."' ";
+                    echo "Returning teams belonging to '" . $team . "' ";
 
-                    // get name to display link, use teamID to find players in database
+// get name to display link, use teamID to find players in database
                     $query_str .= "teamID, team_name FROM team WHERE teamID = $teamID";
                     if (isset($_POST['team_wins'])) {
                         if (empty($_POST['team_minWinAmount'])) {
@@ -792,7 +792,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     echo "<ul>";
                     while ($row = $res->fetch_row()) {
                         echo "<li>";
-                        format_name_as_link_team($row[0], $row[1], "teamdetails.php"); // link shows product name, but is identified by it's product code
+                        format_name_as_link_team($row[0], $row[1], "teamdetails.php");
                         echo "</li>\n";
                     };
                     echo "</ul>";
@@ -803,7 +803,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     echo "<br />";
                     echo "Returning players belonging to the city of " . $city;
 
-                    // get name to display link, use city name to find players in database
+// get name to display link, use city name to find players in database
                     $query_str .= "teamID, team_name FROM team WHERE team.city = '" . $city . "'";
                     if (isset($_POST['team_wins'])) {
                         if (empty($_POST['team_minWinAmount'])) {
@@ -867,7 +867,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     echo "<ul>";
                     while ($row = $res->fetch_row()) {
                         echo "<li>";
-                        format_name_as_link_team($row[0], $row[1], "teamdetails.php"); // link shows product name, but is identified by it's product code
+                        format_name_as_link_team($row[0], $row[1], "teamdetails.php");
                         echo "</li>\n";
                     };
                     echo "</ul>";
@@ -942,7 +942,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     echo "<ul>";
                     while ($row = $res->fetch_row()) {
                         echo "<li>";
-                        format_name_as_link_team($row[0], $row[1], "teamdetails.php"); // link shows product name, but is identified by it's product code
+                        format_name_as_link_team($row[0], $row[1], "teamdetails.php");
                         echo "</li>\n";
                     };
                     echo "</ul>";
@@ -1012,7 +1012,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     echo "<ul>";
                     while ($row = $res->fetch_row()) {
                         echo "<li>";
-                        format_name_as_link_team($row[0], $row[1], "teamdetails.php"); // link shows product name, but is identified by it's product code
+                        format_name_as_link_team($row[0], $row[1], "teamdetails.php");
                         echo "</li>\n";
                     };
                     echo "</ul>";

@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 require('../required/nav.php');
 require('../required/functions.php');
@@ -205,7 +204,7 @@ $stmt->execute();
 $stmt->bind_result($photo1);
 
 echo "<div class=\"body\">";
-echo "<div class\"content\">";
+echo "<div class=\"content\">";
 if ($stmt->fetch()) {
     echo "<img class=\"player-picture\" src=\"$photo1\" alt=\"Player Photo\">";
 }
@@ -219,15 +218,6 @@ $stmt->bind_result($name1, $team_name1, $weight1, $height1, $nationality1, $age1
 
 // display information in a table
 echo "<table class=\"player-details\">";
-// echo "<tr>";
-// echo "<th>Name</th>";
-// echo "<th>Team</th>";
-// echo "<th>Weight</th>";
-// echo "<th>Height</th>";
-// echo "<th>Nationality</th>";
-// echo "<th>Age</th>";
-// echo "<th>Position</th>";
-// echo "</tr>";
 
 if ($stmt->fetch()) {
     echo "<td align=\"center\">" . $name1 . "</td>";
@@ -345,7 +335,6 @@ switch ($player_position) {
         $stmt->free_result();
         break;
 }
-// echo "</div>";
 
 get_player($id, $name1);
 
@@ -356,32 +345,56 @@ if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
 }
 
 echo "<br /><br />";
-if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
-    // user must be the same as author to add to fantasy team
-    if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID']) && $_SESSION['username'] == $break[1]) {
-        echo "<div class=\"center\">";
-        echo "<a class=\"add-link\" href=\"userteam.php?fantasyTeamID=$fantasyTeamID\">Add to Fantasy Team</a>";
-        echo "</div>";
-    } else { // otherwise, select fantasy team to add to
-        echo "<div class=\"center\">";
-        echo "<a class=\"add-link\" href=\"fantasy.php\">Add to Fantasy Team</a>";
-        echo "</div>";
-    }
-} else {
-    echo "<div class=\"center\">";
-    echo "<a class=\"add-link\" href=\"login.php\">Add to Fantasy Team</a>";
+echo "<div class=\"grid\">";
+if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID']) && $_SESSION['username'] == $break[1]) {
+    echo "<div class=\"grid-col-1of3\">";
+    echo "<a class=\"add-link\" href=\"userteam.php?fantasyTeamID=$fantasyTeamID\">Add to $title</a>";
     echo "</div>";
 }
-echo "<br /><br />";
 
 if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
+    $sql_display_fantasy = "SELECT DISTINCT TABLE_NAME FROM INFORMATION_SCHEMA.COLUMNS "
+            . "WHERE COLUMN_NAME IN ('team_title','team_author') AND TABLE_SCHEMA='nhl_stats'";
+    $res = $db->query($sql_display_fantasy);
+
+    echo "<div class=\"grid-col-1of3\">";
+    echo "<div class=\"dropdown\">";
+    echo "<button onclick='myFunction()' class='dropbtn'>Add to Fantasy Team</button>";
+    echo "<div id='teams' class='dropdown-content'>";
+
+    if (!empty($fantasyTeamID)) {
+        while ($row = $res->fetch_row()) {
+            $sql_display = "SELECT DISTINCT team_title, fantasyTeamID FROM $row[0] "
+                    . "WHERE team_author='" . $_SESSION['username'] . "' AND "
+                    . "fantasyTeamID!='$fantasyTeamID'";
+            $my_result = $db->query($sql_display);
+            while ($subRow = $my_result->fetch_row()) {
+                echo "<a class = \"add-link\" href=\"userteam.php?fantasyTeamID=$subRow[1]\">$subRow[0]</a><br/>";
+            }
+        }
+    } else {
+        while ($row = $res->fetch_row()) {
+            $sql_display = "SELECT DISTINCT team_title, fantasyTeamID FROM $row[0] "
+                    . "WHERE team_author='" . $_SESSION['username'] . "'";
+            $my_result = $db->query($sql_display);
+            while ($subRow = $my_result->fetch_row()) {
+                echo "<a class = \"add-link\" href=\"userteam.php?fantasyTeamID=$subRow[1]\">$subRow[0]</a><br/>";
+            }
+        }
+    }
+    mysqli_free_result($my_result);
+    echo "</div>";
+    echo "</div>";
+    echo "</div>";
+
+
     $query_watchlist = "SELECT COUNT(1) FROM watchlist WHERE username='" . $_SESSION['username']
             . "' AND playerID='" . $_SESSION['playerID'] . "'";
 
     $res_list = $db->query($query_watchlist);
     $list_row = $res_list->fetch_row();
 
-    echo "<div class=\"center\">";
+    echo "<div class=\"grid-col-1of3\">";
     if ($list_row[0] >= 1) {
         echo "<a class=\"add-link\" href=\"removewatchlist.php\">Remove from Favourites</a>";
     } else {
@@ -390,13 +403,34 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
     $res_list->free_result();
     echo "</div>";
 } else {
-    echo "<div class=\"center\">";
+    echo "<div class=\"grid-col-1of3\">";
     echo "<a class=\"add-link\" href=\"login.php\">Add to Favourites</a>";
     echo "</div>";
 }
 
 echo "</div>";
-echo "</div>";
-echo "<div>";
 $db->close();
 ?>
+
+<script>
+    /* When the user clicks on the button,
+     toggle between hiding and showing the dropdown content */
+    function myFunction() {
+        document.getElementById("teams").classList.toggle("show");
+    }
+
+// Close the dropdown if the user clicks outside of it
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropbtn')) {
+
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
