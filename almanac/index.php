@@ -14,6 +14,7 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
     $username = $_SESSION['username'] = [];
 }
 
+// display fantasy teams
 $sql_display_fantasy = "SELECT TABLE_NAME FROM information_schema.tables WHERE TABLE_SCHEMA = 'nhl_stats'
 AND TABLE_NAME != 'goalie_stats' AND TABLE_NAME != 'members' AND TABLE_NAME != 'player'
 AND TABLE_NAME != 'roster' AND TABLE_NAME != 'stats' AND TABLE_NAME != 'team' AND TABLE_NAME != 'watchlist'

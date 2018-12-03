@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 require('../required/nav.php');
 require('../required/functions.php');
@@ -82,15 +81,6 @@ if ($stmt->fetch()) {
     echo "</tr>";
     echo "</table>";
 }
-
-
-// echo "<tr>";
-// echo "<th>Name</th>";
-// echo "<th>City</th>";
-// echo "<th>Arena</th>";
-// echo "<th>Conference</th>";
-// echo "<th>Division</th>";
-// echo "</tr>";
 
 $stmt->free_result();
 
