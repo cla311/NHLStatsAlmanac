@@ -196,7 +196,7 @@ function confirm_result_set($result_set) {
 
 // function for showing each product item as link in a list
 function format_name_as_link($id, $name, $page) {
-    echo "<a href=\"$page?playerID=$id\">$name</a>";
+    echo "<a class=\"no-line\" href=\"$page?playerID=$id\">$name</a>";
 }
 
 function format_name_as_link_fantasy($id, $name, $page) {

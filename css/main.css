@@ -226,6 +226,10 @@ h1.log {
     text-decoration: none;
 }
 
+.no-line a {
+    text-decoration: none;
+}
+
 .content p.center {
     text-align: center;
 }
@@ -238,6 +242,9 @@ a.blue:hover {
     color: rgba(7,53,221,1);
 }
 
+a.no-line {
+    text-decoration: none;
+}
 
 .content h3.fantasy-title {
     text-align: center;
