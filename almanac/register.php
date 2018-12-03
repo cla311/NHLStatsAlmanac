@@ -81,7 +81,7 @@ if (is_post_request()) {
             <div class="input">
                 <dl>
                     Username:<br />
-                    <input type="text" name="username" value="<?php echo h($user['username']); ?>" /><br />
+                    <input type="text" name="username" pattern="^[A-Za-z0-9]*$" title="Team name may only contain letters and numbers" value="<?php echo h($user['username']); ?>" /><br />
                 </dl>
                 <br />
             </div>
