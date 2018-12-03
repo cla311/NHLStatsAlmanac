@@ -244,6 +244,15 @@ a.blue:hover {
 
 a.no-line {
     text-decoration: none;
+    color: rgba(53,93,237,1);
+}
+
+a.no-line:hover {
+    color: rgba(7,53,221,1);
+}
+
+a.no-line:visited {
+    color: rgba(53,93,237,1);
 }
 
 .content h3.fantasy-title {
