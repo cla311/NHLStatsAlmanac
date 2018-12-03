@@ -51,37 +51,56 @@ if (is_post_request()) {
 }
 ?>
 
-<h1>Create user</h1>
 
-<form action="register.php" method="post">
-    <dl>
-        First Name:<br /><input type="text" name="firstName" value="<?php echo h($user['firstName']); ?>" />
-    </dl>
+<div class="grid">
+    <div class="grid-col-1of3">
+        <h1 class="log">Create user</h1>
 
-    <dl>
-        Last Name:<br />
-        <input type="text" name="lastName" value="<?php echo h($user['lastName']); ?>" />
-    </dl>
+        <form action="register.php" method="post">
+            <div class="input">
+                <dl>
+                    First Name:<br /><input type="text" name="firstName" value="<?php echo h($user['firstName']); ?>" />
+                </dl>
+                <br />
+            </div>
 
-    <dl>
-        Email:<br />
-        <input type="email" name="email" value="<?php echo h($user['email']); ?>" /><br />
-    </dl>
+            <dl>
+                Last Name:<br />
+                <input type="text" name="lastName" value="<?php echo h($user['lastName']); ?>" />
+            </dl>
 
-    <dl>
-        Username:<br />
-        <input type="text" name="username" value="<?php echo h($user['username']); ?>" /><br />
-    </dl>
+            <div class="input">
+                <dl>
+                    Email:<br />
+                    <input type="email" name="email" value="<?php echo h($user['email']); ?>" /><br />
+                </dl>
+                <br />
+            </div>
 
-    <dl>
-        Password:<br />
-        <input type="password" name="password" value="" />
-    </dl>
+            <div class="input">
+                <dl>
+                    Username:<br />
+                    <input type="text" name="username" value="<?php echo h($user['username']); ?>" /><br />
+                </dl>
+                <br />
+            </div>
 
-    <dl>
-        Confirm Password:<br />
-        <input type="password" name="confirm_password" value="" />
-    </dl>
-    <br />
-    <input type="submit" name="submit" value="Create user" />
-</form>
+            <div class="input">
+                <dl>
+                    Password:<br />
+                    <input type="password" name="password" value="" />
+                </dl>
+                <br />
+            </div>
+
+            <div class="input">
+                <dl>
+                    Confirm Password:<br />
+                    <input type="password" name="confirm_password" value="" />
+                </dl>
+                <br />
+            </div>
+            <input type="submit" name="submit" value="Create user" />
+        </form>
+    </div>
+</div>

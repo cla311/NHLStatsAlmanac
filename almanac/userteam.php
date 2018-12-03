@@ -8,7 +8,6 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
     $email = $_SESSION['user_email'];
     $firstName = $_SESSION['firstName'];
     $username = $_SESSION['username'];
-    echo "1";
 } else {
     $email = $_SESSION['user_email'] = [];
     $firstName = $_SESSION['firstName'] = [];
@@ -18,7 +17,6 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
 if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
     $title = $_SESSION['team_title'];
     $fantasyTeamID = $_SESSION['fantasyTeamID'];
-    echo "2";
 } else {
     $title = $_SESSION['team_title'] = [];
     $fantasyTeamID = $_SESSION['fantasyTeamID'] = [];
@@ -27,7 +25,6 @@ if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
 if (!empty($_SESSION['playerID']) && !empty($_SESSION['name'])) {
     $playerID = $_SESSION['playerID'];
     $playerName = $_SESSION['name'];
-    echo "3";
 } else {
     $playerID = $_SESSION['playerID'] = [];
     $playerName = $_SESSION['name'] = [];

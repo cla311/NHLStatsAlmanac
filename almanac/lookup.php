@@ -794,7 +794,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                 } else if (isset($_POST['team_city']) && $_POST['team_city'] != "") {
                     $city = $_POST['team_city'];
                     echo "<br />";
-                    echo "Returning players belonging to the city of" . $city;
+                    echo "Returning players belonging to the city of " . $city;
 
                     // get name to display link, use city name to find players in database
                     $query_str .= "teamID, team_name FROM team WHERE team.city = '" . $city . "'";
