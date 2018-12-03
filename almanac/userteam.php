@@ -30,7 +30,7 @@ if (!empty($_SESSION['playerID']) && !empty($_SESSION['name'])) {
     $playerName = $_SESSION['name'] = [];
 }
 ?>
-<?php // require_login(); // if not logged in, redirect to login page           ?>
+<?php // require_login(); // if not logged in, redirect to login page            ?>
 
 <?php
 
@@ -55,8 +55,6 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
             // unset session values
             unset($_SESSION['playerID']);
             unset($_SESSION['name']);
-        } else {
-            // redirect_to("fantasy.php");
         }
     }
 }

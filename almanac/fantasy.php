@@ -12,6 +12,9 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
     $firstName = $_SESSION['firstName'] = [];
     $username = $_SESSION['username'] = [];
 }
+
+unset($_SESSION['playerID']);
+unset($_SESSION['name']);
 ?>
 
 <?php require_login(); // if not logged in, redirect to login page ?>

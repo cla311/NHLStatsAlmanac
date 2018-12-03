@@ -355,9 +355,9 @@ if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
 }
 
 echo "<br /><br />";
+echo "<div class=\"grid\">";
 if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID']) && $_SESSION['username'] == $break[1]) {
-    echo "<div class=\"grid\">";
-    echo "<div class=\"grid-form-1of3\">";
+    echo "<div class=\"grid-col-1of3\">";
     echo "<a class=\"add-link\" href=\"userteam.php?fantasyTeamID=$fantasyTeamID\">Add to $title</a>";
     echo "</div>";
 }
@@ -367,7 +367,7 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
             . "WHERE COLUMN_NAME IN ('team_title','team_author') AND TABLE_SCHEMA='nhl_stats'";
     $res = $db->query($sql_display_fantasy);
 
-    echo "<div class=\"grid-form-1of3\">";
+    echo "<div class=\"grid-col-1of3\">";
     echo "<div class=\"dropdown\">";
     echo "<button onclick='myFunction()' class='dropbtn'>Add to Fantasy Team</button>";
     echo "<div id='teams' class='dropdown-content'>";
@@ -392,7 +392,7 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
     $res_list = $db->query($query_watchlist);
     $list_row = $res_list->fetch_row();
 
-    echo "<div class=\"grid-form-1of3\">";
+    echo "<div class=\"grid-col-1of3\">";
     if ($list_row[0] >= 1) {
         echo "<a class=\"add-link\" href=\"removewatchlist.php\">Remove from Favourites</a>";
     } else {
@@ -401,7 +401,7 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
     $res_list->free_result();
     echo "</div>";
 } else {
-    echo "<div class=\"grid-form-1of3\">";
+    echo "<div class=\"grid-col-1of3\">";
     echo "<a class=\"add-link\" href=\"login.php\">Add to Favourites</a>";
     echo "</div>";
 }

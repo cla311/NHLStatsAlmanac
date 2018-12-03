@@ -546,10 +546,8 @@ input[type=submit] {
     display: none;
     overflow: auto;
     z-index: 1;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 7.125rem;
+    position: relative;
+    bottom: 100px;
 }
 
 .dropdown-content a{
