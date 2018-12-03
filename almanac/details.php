@@ -218,15 +218,6 @@ $stmt->bind_result($name1, $team_name1, $weight1, $height1, $nationality1, $age1
 
 // display information in a table
 echo "<table class=\"player-details\">";
-// echo "<tr>";
-// echo "<th>Name</th>";
-// echo "<th>Team</th>";
-// echo "<th>Weight</th>";
-// echo "<th>Height</th>";
-// echo "<th>Nationality</th>";
-// echo "<th>Age</th>";
-// echo "<th>Position</th>";
-// echo "</tr>";
 
 if ($stmt->fetch()) {
     echo "<td align=\"center\">" . $name1 . "</td>";
@@ -344,7 +335,6 @@ switch ($player_position) {
         $stmt->free_result();
         break;
 }
-// echo "</div>";
 
 get_player($id, $name1);
 
@@ -371,13 +361,25 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
     echo "<div class=\"dropdown\">";
     echo "<button onclick='myFunction()' class='dropbtn'>Add to Fantasy Team</button>";
     echo "<div id='teams' class='dropdown-content'>";
-    while ($row = $res->fetch_row()) {
-        $sql_display = "SELECT DISTINCT team_title, fantasyTeamID FROM $row[0] "
-                . "WHERE team_author='" . $_SESSION['username'] . "' AND "
-                . "fantasyTeamID!='$fantasyTeamID'";
-        $my_result = $db->query($sql_display);
-        while ($subRow = $my_result->fetch_row()) {
-            echo "<a class = \"add-link\" href=\"userteam.php?fantasyTeamID=$subRow[1]\">$subRow[0]</a>";
+
+    if (!empty($fantasyTeamID)) {
+        while ($row = $res->fetch_row()) {
+            $sql_display = "SELECT DISTINCT team_title, fantasyTeamID FROM $row[0] "
+                    . "WHERE team_author='" . $_SESSION['username'] . "' AND "
+                    . "fantasyTeamID!='$fantasyTeamID'";
+            $my_result = $db->query($sql_display);
+            while ($subRow = $my_result->fetch_row()) {
+                echo "<a class = \"add-link\" href=\"userteam.php?fantasyTeamID=$subRow[1]\">$subRow[0]</a><br/>";
+            }
+        }
+    } else {
+        while ($row = $res->fetch_row()) {
+            $sql_display = "SELECT DISTINCT team_title, fantasyTeamID FROM $row[0] "
+                    . "WHERE team_author='" . $_SESSION['username'] . "'";
+            $my_result = $db->query($sql_display);
+            while ($subRow = $my_result->fetch_row()) {
+                echo "<a class = \"add-link\" href=\"userteam.php?fantasyTeamID=$subRow[1]\">$subRow[0]</a><br/>";
+            }
         }
     }
     mysqli_free_result($my_result);

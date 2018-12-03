@@ -99,7 +99,7 @@ echo "<label class='watchlist'>Players</label>";
 echo "<ul>";
 while ($row = $list->fetch_row()) {
     echo "<li class='list-item'>";
-    format_name_as_link($row[0], $row[1], "details.php"); // link shows product name, but is identified by it's product code
+    format_name_as_link($row[0], $row[1], "details.php");
     echo "</li>\n";
 }
 mysqli_free_result($list);
@@ -108,7 +108,7 @@ echo "<label class='watchlist'>Teams</label>";
 echo "<ul>";
 while ($row = $listTeam->fetch_row()) {
     echo "<li class='list-item'>";
-    format_name_as_link_team($row[0], $row[1], "teamdetails.php"); // link shows product name, but is identified by it's product code
+    format_name_as_link_team($row[0], $row[1], "teamdetails.php");
     echo "</li>\n";
 }
 mysqli_free_result($listTeam);

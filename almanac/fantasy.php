@@ -20,7 +20,7 @@ unset($_SESSION['name']);
 <?php require_login(); // if not logged in, redirect to login page ?>
 
 <?php
-if (isset($_POST['submit'])) { // if submit button was clicked
+if (isset($_POST['submit'])) {
     if (isset($_POST['team_title'])) {
         $title = $_POST['team_title'];
         $_SESSION['team_title'] = $title;

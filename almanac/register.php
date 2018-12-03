@@ -27,11 +27,13 @@ if (is_post_request()) {
     $result = insert_user($user); // insert user into database
     if ($result === true) {
         log_in_user($user); // log the user in
-        if (!empty($_SESSION['playerID']) && !empty($_SESSION['name'])) { // if user was trying to store a player to their fantasy, go to that page
-            header('Location: http://' . $_SERVER['HTTP_HOST'] . '/NHLStatsAlmanac/almanac/fantasy.php');
+        if (!empty($_SESSION['playerID']) && !empty($_SESSION['name'])) {
+            header('Location: http://' . $_SERVER['HTTP_HOST']
+                    . '/NHLStatsAlmanac/almanac/details.php?playerID='
+                    . $_SESSION['playerID']);
             exit();
-        } else { // otherwise send them to the search
-            header('Location: http://' . $_SERVER['HTTP_HOST'] . '/NHLStatsAlmanac/almanac/lookup.php');
+        } else {
+            header('Location: http://' . $_SERVER['HTTP_HOST'] . '/NHLStatsAlmanac/almanac/index.php');
             exit();
         }
     } else {

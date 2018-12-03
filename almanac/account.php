@@ -70,7 +70,6 @@ if (isset($_POST['accountInfoUpdate'])) {
 }
 
 $sql_user_info = "SELECT firstName, lastName, email, username FROM members WHERE email = '$email' AND firstName = '$firstName' AND username = '$username'";
-// echo $sql_user_info;
 $res = $db->query($sql_user_info);
 
 $sql_watchlist = "SELECT watchlist.playerID, player.name FROM watchlist JOIN player ON watchlist.playerID = player.playerID WHERE username = '$username'";
@@ -139,7 +138,7 @@ $userame = "";
         echo "<ul>";
         while ($row = $list->fetch_row()) {
             echo "<li class='list-item'>";
-            format_name_as_link($row[0], $row[1], "details.php"); // link shows product name, but is identified by it's product code
+            format_name_as_link($row[0], $row[1], "details.php");
             echo "</li>\n";
         }
         mysqli_free_result($list);
@@ -148,7 +147,7 @@ $userame = "";
         echo "<ul>";
         while ($row = $listTeam->fetch_row()) {
             echo "<li class='list-item'>";
-            format_name_as_link_team($row[0], $row[1], "teamdetails.php"); // link shows product name, but is identified by it's product code
+            format_name_as_link_team($row[0], $row[1], "teamdetails.php");
             echo "</li>\n";
         }
         mysqli_free_result($listTeam);

@@ -150,35 +150,28 @@ function validate_user($user) {
 
     if (is_blank($user['firstName'])) {
         array_push($errors, "First name cannot be blank.");
-        // $errors[] = "First name cannot be blank.";
     }
 
     if (is_blank($user['lastName'])) {
         array_push($errors, "Last name cannot be blank.");
-        // $errors[] = "Last name cannot be blank.";
     }
 
     if (is_blank($user['email'])) {
         array_push($errors, "Email cannot be blank.");
-        // $errors[] = "Email cannot be blank.";
     }
 
     if (is_blank($user['username'])) {
         array_push($errors, "Username cannot be blank.");
-        // $errors[] = "Username cannot be blank.";
     }
 
     if (is_blank($user['password'])) {
         array_push($errors, "Password cannot be blank.");
-        // $errors[] = "Password cannot be blank.";
     }
 
     if (is_blank($user['confirm_password'])) {
         array_push($errors, "Confirm password cannot be blank.");
-        // $errors[] = "Confirm password cannot be blank.";
     } else if ($user['password'] != $user['confirm_password']) {
         array_push($errors, "Password and confirm password must match.");
-        // $errors[] = "Password and confirm password must match.";
     }
 
     return $errors;

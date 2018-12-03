@@ -524,6 +524,11 @@ input[type=submit] {
     list-style: none;
 }
 
+.dropdown {
+    display: inline-block;
+    position: relative;
+}
+
 .dropbtn {
     background-color: rgba(255,153,51,1);
     transition: 0.3s;
@@ -546,18 +551,18 @@ input[type=submit] {
     display: none;
     overflow: auto;
     z-index: 1;
-    position: relative;
-    bottom: 100px;
+    position: absolute;
+    bottom: 50px;
 }
 
 .dropdown-content a{
     width: 185px;
-    background-color: rgba(10,15,16,0.25);
+    background-color: rgb(169,171,171);
     color: rgba(10,15,16,1);
 }
 
 .dropdown-content a:hover {
-    background-color: rgba(10,15,16,0.65);
+    background-color: rgb(96,99,100);
     color: rgba(255,153,51,1);
 }
 

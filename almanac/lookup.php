@@ -111,10 +111,6 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     ?>
                     <option value="<?php echo $row['team_name']; ?>" <?php if (isset($_POST['team_name']) && $_POST ['team_name'] != "" && $_POST ['team_name'] == $row ['team_name']) echo " selected"; ?> > <?php echo $row['team_name'] ?> </option>;
                     <?php
-// echo "<option value=\"".$row["country_id"]."\"";
-// if($_POST['country'] == $row['country_id'])
-//       echo 'selected';
-// echo ">".$row["country_name"]."</option>";
                 }
                 echo "</select>";
 
@@ -248,7 +244,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
             </form>
 
             <?php
-            if (isset($_POST['submit'])) { // if submit button was clicked
+            if (isset($_POST['submit'])) {
                 $query_str = "SELECT DISTINCT ";
 
                 if (isset($_POST['team_name']) && $_POST ['team_name'] != "") {
@@ -329,7 +325,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     echo "<ul>";
                     while ($row = $res->fetch_row()) {
                         echo "<li>";
-                        format_name_as_link($row[0], $row[1], "details.php"); // link shows product name, but is identified by it's product code
+                        format_name_as_link($row[0], $row[1], "details.php");
                         echo "</li>\n";
                     };
                     echo "</ul>";
@@ -405,7 +401,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     echo "<ul>";
                     while ($row = $res->fetch_row()) {
                         echo "<li>";
-                        format_name_as_link($row[0], $row[1], "details.php"); // link shows product name, but is identified by it's product code
+                        format_name_as_link($row[0], $row[1], "details.php");
                         echo "</li>\n";
                     };
                     echo "</ul>";
@@ -480,7 +476,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     echo "<ul>";
                     while ($row = $res->fetch_row()) {
                         echo "<li>";
-                        format_name_as_link($row[0], $row[1], "details.php"); // link shows product name, but is identified by it's product code
+                        format_name_as_link($row[0], $row[1], "details.php");
                         echo "</li>\n";
                     };
                     echo "</ul>";
@@ -551,7 +547,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     echo "<ul>";
                     while ($row = $res->fetch_row()) {
                         echo "<li>";
-                        format_name_as_link($row[0], $row[1], "details.php"); // link shows product name, but is identified by it's product code
+                        format_name_as_link($row[0], $row[1], "details.php");
                         echo "</li>\n";
                     };
                     echo "</ul>";
@@ -717,7 +713,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
             </form>
 
             <?php
-            if (isset($_POST['search'])) { // if search button was clicked
+            if (isset($_POST['search'])) {
                 $query_str = "SELECT DISTINCT ";
 
                 if (isset($_POST['team_title']) && $_POST['team_title'] != "") {
@@ -796,7 +792,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     echo "<ul>";
                     while ($row = $res->fetch_row()) {
                         echo "<li>";
-                        format_name_as_link_team($row[0], $row[1], "teamdetails.php"); // link shows product name, but is identified by it's product code
+                        format_name_as_link_team($row[0], $row[1], "teamdetails.php");
                         echo "</li>\n";
                     };
                     echo "</ul>";
@@ -871,7 +867,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     echo "<ul>";
                     while ($row = $res->fetch_row()) {
                         echo "<li>";
-                        format_name_as_link_team($row[0], $row[1], "teamdetails.php"); // link shows product name, but is identified by it's product code
+                        format_name_as_link_team($row[0], $row[1], "teamdetails.php");
                         echo "</li>\n";
                     };
                     echo "</ul>";
@@ -946,7 +942,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     echo "<ul>";
                     while ($row = $res->fetch_row()) {
                         echo "<li>";
-                        format_name_as_link_team($row[0], $row[1], "teamdetails.php"); // link shows product name, but is identified by it's product code
+                        format_name_as_link_team($row[0], $row[1], "teamdetails.php");
                         echo "</li>\n";
                     };
                     echo "</ul>";
@@ -1016,7 +1012,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                     echo "<ul>";
                     while ($row = $res->fetch_row()) {
                         echo "<li>";
-                        format_name_as_link_team($row[0], $row[1], "teamdetails.php"); // link shows product name, but is identified by it's product code
+                        format_name_as_link_team($row[0], $row[1], "teamdetails.php");
                         echo "</li>\n";
                     };
                     echo "</ul>";
