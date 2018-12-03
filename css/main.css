@@ -341,6 +341,15 @@ ul li {
     color: rgba(7,53,221,1);
 }
 
+.grid .grid-col-1of3 ul a {
+    color: rgba(53,93,237,1);
+    text-decoration: none;
+}
+
+.grid .grid-col-1of3 ul a:hover {
+    color: rgba(7,53,221,1);
+}
+
 .grid .grid-col-1of3 h3 {
     font-size: 1.5rem;
     letter-spacing: 3px;
@@ -399,6 +408,12 @@ ul li {
 
 .center-block p a {
     text-decoration: none;
+    color: rgba(53,93,237,1);
+}
+
+.center-block p a:visited {
+    text-decoration: none;
+    color: rgba(53,93,237,1);
 }
 
 .center-block p a:hover {

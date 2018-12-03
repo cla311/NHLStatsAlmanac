@@ -132,7 +132,7 @@ $userame = "";
 
     </div>
 
-    <div class="grid-col-1of3" >
+    <div class="grid-col-1of3">
         <?php
         echo "<h3>Favourites</h3>";
         echo "<label class='watchlist'>Players</label>";
