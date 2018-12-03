@@ -47,7 +47,7 @@ $_SESSION['team_title'] = $team_title[0];
 if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
     if (!empty($_SESSION['playerID']) && !empty($_SESSION['name']) && !empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
         if ((strpos($_SESSION['username'], $team_title[1])) !== false) {
-            $sql_insert_player = "INSERT INTO $fantasyTeamID VALUES ('" . $teamID . "','" . $username . "','" . $playerID . "','" . $title[0] . "')";
+            $sql_insert_player = "INSERT INTO $fantasyTeamID VALUES ('" . $teamID . "','" . $username . "','" . $playerID . "','" . $team_title[0] . "')";
             $res = $db->query($sql_insert_player);
 
             // unset session values
