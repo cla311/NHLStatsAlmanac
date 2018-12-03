@@ -349,9 +349,11 @@ switch ($player_position) {
 
 get_player($id, $name1);
 
-$break = array();
-array_push($break, $_SESSION['fantasyTeamID']);
-$break = explode("_", $_SESSION['fantasyTeamID']);
+if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
+    $break = array();
+    array_push($break, $_SESSION['fantasyTeamID']);
+    $break = explode("_", $_SESSION['fantasyTeamID']);
+}
 
 echo "<br /><br />";
 if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
