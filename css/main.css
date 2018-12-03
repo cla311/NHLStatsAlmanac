@@ -328,6 +328,10 @@ a.nav-item:hover {
     list-style-type: none;
 }
 
+ul li {
+    margin: 0.5rem;
+}
+
 .grid .grid-col-1of2 ul a {
     color: rgba(53,93,237,1);
     text-decoration: none;
