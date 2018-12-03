@@ -35,25 +35,26 @@ if (!empty($_SESSION['playerID']) && !empty($_SESSION['name'])) {
 <?php
 
 $teamID = trim($_GET['fantasyTeamID']);
+$_SESSION['fantasyTeamID'] = $teamID;
 
 $team_title = array();
 array_push($team_title, $teamID);
 $team_title = explode("_", $teamID);
-
-$_SESSION['fantasyTeamID'] = $teamID;
 $_SESSION['team_title'] = $team_title[0];
 
 // insert player into fantasy team table
 if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
-    if (!empty($_SESSION['playerID']) && !empty($_SESSION['name']) && !empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
+    if (!empty($_SESSION['playerID']) && !empty($_SESSION['name']) && !empty($team_title[0]) && !empty($teamID)) {
         if ((strpos($_SESSION['username'], $team_title[1])) !== false) {
-            $sql_insert_player = "INSERT INTO $fantasyTeamID VALUES ('" . $teamID . "','" . $username . "','" . $playerID . "','" . $team_title[0] . "')";
+            $sql_insert_player = "INSERT INTO $teamID VALUES ('" . $teamID . "','" . $username . "','" . $playerID . "','" . $team_title[0] . "')";
             $res = $db->query($sql_insert_player);
+            echo "<div class=\"center-block-p\">";
+            echo "<p class=\"added-player\">" . $_SESSION['name'] . " added to fantasy team</p>";
+            echo "</div>";
 
             // unset session values
             unset($_SESSION['playerID']);
             unset($_SESSION['name']);
-            echo "player added to fantasy team";
         } else {
             // redirect_to("fantasy.php");
         }

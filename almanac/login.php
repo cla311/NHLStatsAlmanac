@@ -91,6 +91,6 @@ if (is_post_request()) {
             </div>
         </form>
 
-        <p class="center">Not registered yet? <a href="register.php">Register here</a></p>
+        <p class="center">Not registered yet? <a class="blue" href="register.php">Register here</a></p>
     </div>
 </div>

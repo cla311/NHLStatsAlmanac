@@ -349,13 +349,18 @@ switch ($player_position) {
 
 get_player($id, $name1);
 
+$break = array();
+array_push($break, $_SESSION['fantasyTeamID']);
+$break = explode("_", $_SESSION['fantasyTeamID']);
+
 echo "<br /><br />";
 if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
-    if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
+    // user must be the same as author to add to fantasy team
+    if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID']) && $_SESSION['username'] == $break[1]) {
         echo "<div class=\"center\">";
         echo "<a class=\"add-link\" href=\"userteam.php?fantasyTeamID=$fantasyTeamID\">Add to Fantasy Team</a>";
         echo "</div>";
-    } else {
+    } else { // otherwise, select fantasy team to add to
         echo "<div class=\"center\">";
         echo "<a class=\"add-link\" href=\"fantasy.php\">Add to Fantasy Team</a>";
         echo "</div>";
@@ -368,7 +373,7 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
 echo "<br /><br />";
 
 if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
-    $query_watchlist = "SELECT COUNT(1) FROM watchlist WHERE username='" . $_SESSION["username"]
+    $query_watchlist = "SELECT COUNT(1) FROM watchlist WHERE username='" . $_SESSION['username']
             . "' AND playerID='" . $_SESSION['playerID'] . "'";
 
     $res_list = $db->query($query_watchlist);

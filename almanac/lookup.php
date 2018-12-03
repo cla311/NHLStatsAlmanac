@@ -102,8 +102,15 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                 // fill drop down with order numbers from database
                 while ($row = mysqli_fetch_array($teamDropDownResult)) {
                     ?>
-                    <option value="<?php echo $row['team_name']; ?>" <?php if (isset($_POST['team_name']) && $_POST['team_name'] != "" && $_POST['team_name'] == $team) echo " selected"; ?> > <?php echo $row['team_name'] ?> </option>;
+                    <option value="<?php echo $row['team_name']; ?>" <?php if (isset($_POST['team_name']) && $_POST['team_name'] != "" && $_POST['team_name'] == $row['team_name']) echo " selected"; ?> > <?php echo $row['team_name'] ?> </option>;
                     <?php
+
+
+// echo "<option value=\"".$row["country_id"]."\"";
+// if($_POST['country'] == $row['country_id'])
+//       echo 'selected';
+// echo ">".$row["country_name"]."</option>";
+
                 }
                 echo "</select>";
 
@@ -130,7 +137,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                 // fill drop down with city from database
                 while ($row = mysqli_fetch_array($cityDropDownResult)) {
                     ?>
-                    <option value="<?php echo $row['city']; ?>" <?php if (isset($_POST['city']) && $_POST['city'] != "" && $_POST['city'] == $city) echo " selected"; ?> > <?php echo $row['city'] ?> </option>;
+                    <option value="<?php echo $row['city']; ?>" <?php if (isset($_POST['city']) && $_POST['city'] != "" && $_POST['city'] == $row['city']) echo " selected"; ?> > <?php echo $row['city'] ?> </option>;
                     <?php
                 }
                 echo "</select>";
@@ -572,7 +579,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                 // fill drop down with teams from database
                 while ($row = mysqli_fetch_array($teamDropDownResult)) {
                     ?>
-                    <option value="<?php echo $row['team_name']; ?>" <?php if (isset($_POST['team_title']) && $_POST['team_title'] != "" && $_POST['team_title'] == $team) echo " selected"; ?> > <?php echo $row['team_name'] ?> </option>;
+                    <option value="<?php echo $row['team_name']; ?>" <?php if (isset($_POST['team_title']) && $_POST['team_title'] != "" && $_POST['team_title'] == $row['team_name']) echo " selected"; ?> > <?php echo $row['team_name'] ?> </option>;
                     <?php
                 }
                 echo "</select>";
@@ -599,7 +606,7 @@ if (!isset($_POST['submit']) && !isset($_POST['search'])) {
                 // fill drop down with city from database
                 while ($row = mysqli_fetch_array($cityDropDownResult)) {
                     ?>
-                    <option value="<?php echo $row['city']; ?>" <?php if (isset($_POST['team_city']) && $_POST['team_city'] != "" && $_POST['team_city'] == $city) echo " selected"; ?> > <?php echo $row['city'] ?> </option>;
+                    <option value="<?php echo $row['city']; ?>" <?php if (isset($_POST['team_city']) && $_POST['team_city'] != "" && $_POST['team_city'] == $row['city']) echo " selected"; ?> > <?php echo $row['city'] ?> </option>;
                     <?php
                 }
                 echo "</select>";

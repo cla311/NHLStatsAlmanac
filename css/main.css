@@ -180,6 +180,10 @@ a.add-link {
     display: inline-block;
 }
 
+p.added-player {
+    text-align: center;
+}
+
 a.add-link:hover {
     background-color: rgba(255,121,0,1);
 }
@@ -197,6 +201,10 @@ h1.search {
 h1.log {
     margin-bottom: 2rem;
     text-align: center;
+    color: rgba(255,121,0,1);
+    font-family: "sports", Helvetica, Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 2rem;
 }
 
 .content form {
@@ -214,9 +222,22 @@ h1.log {
     text-align: center;
 }
 
+.center a {
+    text-decoration: none;
+}
+
 .content p.center {
     text-align: center;
 }
+
+a.blue {
+    color: rgba(53,93,237,1);
+}
+
+a.blue:hover {
+    color: rgba(7,53,221,1);
+}
+
 
 .content h3.fantasy-title {
     text-align: center;
@@ -400,6 +421,16 @@ ul li {
     margin: auto;
     width: 50%;
     margin-bottom: 2rem;
+}
+
+.center-block-p {
+    margin: auto;
+    width: 50%;
+    margin-top: 2rem;
+}
+
+.center-block-p p {
+    text-align: center;
 }
 
 .center-block p {

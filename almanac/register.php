@@ -27,13 +27,13 @@ if (is_post_request()) {
     $result = insert_user($user); // insert user into database
     if ($result === true) {
         log_in_user($user); // log the user in
-        // if (!empty($_SESSION['productID']) && !empty($_SESSION['productName'])) { // if user was trying to store a product to their watchlist, go to that page
-        //   header('Location: http://'.$_SERVER['HTTP_HOST'].'/rdonnell/A4/addtowatchlist.php');
-        //   exit();
-        // } else { // otherwise send them to the list of products
+        if (!empty($_SESSION['playerID']) && !empty($_SESSION['name'])) { // if user was trying to store a player to their fantasy, go to that page
+          header('Location: http://'.$_SERVER['HTTP_HOST'].'/NHLStatsAlmanac/almanac/fantasy.php');
+          exit();
+        } else { // otherwise send them to the search
         header('Location: http://' . $_SERVER['HTTP_HOST'] . '/NHLStatsAlmanac/almanac/lookup.php');
-        //   exit();
-        // }
+          exit();
+        }
     } else {
         $errors = $result;
         print_r($errors);
@@ -54,7 +54,7 @@ if (is_post_request()) {
 
 <div class="grid">
     <div class="grid-col-1of3">
-        <h1 class="log">Create user</h1>
+        <h1 class="log">Create User</h1>
 
         <form action="register.php" method="post">
             <div class="input">
@@ -67,6 +67,7 @@ if (is_post_request()) {
             <dl>
                 Last Name:<br />
                 <input type="text" name="lastName" value="<?php echo h($user['lastName']); ?>" />
+                <br /><br />
             </dl>
 
             <div class="input">
