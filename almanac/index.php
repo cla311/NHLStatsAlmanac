@@ -21,6 +21,7 @@ $res = $db->query($sql_display_fantasy);
 echo "<div class=\"grid\">";
 echo "<div class=\"grid-col-1of2\">";
 if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
+
     echo "<h3>My Fantasy Teams</h3>";
     echo "<ul>";
     while ($row = $res->fetch_row()) {
@@ -28,9 +29,15 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
                 . "WHERE team_author='" . $_SESSION['username'] . "'";
         $my_result = $db->query($sql_display);
         while ($subRow = $my_result->fetch_row()) {
-            echo "<li>";
-            echo "<a href=\"userteam.php?fantasyTeamID=$subRow[1]\">$subRow[0]</a>";
-            echo "</li>";
+
+        $team_creator = array();
+        array_push($team_creator, $subRow[1]);
+        $team_creator = explode("_", $subRow[1]);
+            if ($team_creator[1] == $_SESSION['username']) {
+                echo "<li>";
+                echo "<a href=\"userteam.php?fantasyTeamID=$subRow[1]\">$subRow[0]</a>";
+                echo "</li>";
+            }
         }
     }
     mysqli_free_result($my_result);
