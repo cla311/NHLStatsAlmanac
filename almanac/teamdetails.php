@@ -4,6 +4,15 @@ session_start();
 require('../required/nav.php');
 require('../required/functions.php');
 
+if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
+    $email = $_SESSION['user_email'];
+    $firstName = $_SESSION['firstName'];
+    $username = $_SESSION['username'];
+} else {
+    $email = $_SESSION['user_email'] = [];
+    $firstName = $_SESSION['firstName'] = [];
+    $username = $_SESSION['username'] = [];
+}
 if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
     $title = $_SESSION['team_title'];
     $fantasyTeamID = $_SESSION['fantasyTeamID'];
@@ -97,19 +106,21 @@ echo "<br /><br />";
 
 echo "<div class=\"show-team-stats\">";
 
+if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
 $query_watchlist = "SELECT COUNT(1) FROM team_watchlist WHERE username='" . $_SESSION['username']
         . "' AND teamID='" . $_SESSION['teamID'] . "'";
-$res_list = $db->query($query_watchlist);
-$list_row = $res_list->fetch_row();
+    $res_list = $db->query($query_watchlist);
+    $list_row = $res_list->fetch_row();
 
-echo "<div class=\"center\">";
-if ($list_row[0] >= 1) {
-    echo "<a class=\"add-link\" href=\"removewatchlist_team.php\">Remove from Favourites</a>";
-} else {
-    echo "<a class=\"add-link\" href=\"addtowatchlist_team.php\">Add to Favourites</a>";
+    echo "<div class=\"center\">";
+    if ($list_row[0] >= 1) {
+        echo "<a class=\"add-link\" href=\"removewatchlist_team.php\">Remove from Favourites</a>";
+    } else {
+        echo "<a class=\"add-link\" href=\"addtowatchlist_team.php\">Add to Favourites</a>";
+    }
+    $res_list->free_result();
+    echo "</div>";
 }
-$res_list->free_result();
-echo "</div>";
 
 echo "<h3 class=\"current-team-stats\">Team Stats</h3>";
 
