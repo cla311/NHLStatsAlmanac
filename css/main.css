@@ -30,10 +30,11 @@ h1.logo {
 } */
 
 .content {
-    margin-top: 5rem;
+    margin-top: 2rem;
     margin-left: auto;
     margin-right: auto;
     width: 100%;
+    position: relative;
 }
 
 img.player-picture {
@@ -44,7 +45,7 @@ img.player-picture {
     border-width: 3px;
     color: rgba(255,153,51,1);
     margin-top: 3rem;
-    margin-bottom: 1rem;
+    margin-bottom: 3rem;
 }
 
 table.player-details {
@@ -94,8 +95,8 @@ h3.player-stats {
     letter-spacing: 3px;
     font-family: "sports", Helvetica, Arial, sans-serif;
     color: rgba(255,153,51,1);
-    margin-bottom: 1rem;
-    margin-top: 3rem;
+    margin: 3rem auto 2rem;
+    text-align: center;
 }
 
 h3.current-team-stats {
@@ -103,8 +104,7 @@ h3.current-team-stats {
     letter-spacing: 3px;
     font-family: "sports", Helvetica, Arial, sans-serif;
     color: rgba(255,153,51,1);
-    margin-bottom: 1rem;
-    margin-top: 3rem;
+    margin: 3rem, auto, 2rem;
     text-align: center;
 }
 
@@ -122,6 +122,8 @@ h3.current-team-stats {
 
 table.show-stats{
     margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 table.show-team-stats{
@@ -168,7 +170,7 @@ table.show-stats td.y-axis {
     font-size: 0.8rem;
 }
 
-a.add-link {
+.add-link {
     background-color: rgba(255,153,51,1);
     transition: 0.3s;
     -webkit-transition: 0.3s;
@@ -184,7 +186,7 @@ p.added-player {
     text-align: center;
 }
 
-a.add-link:hover {
+.add-link:hover {
     background-color: rgba(255,121,0,1);
 }
 
@@ -521,6 +523,51 @@ input[type=submit] {
 .list-item{
     list-style: none;
 }
+
+.dropbtn {
+    background-color: rgba(255,153,51,1);
+    transition: 0.3s;
+    -webkit-transition: 0.3s;
+    font-size: 1rem;
+    color: #fff;
+    padding: 1rem;
+    margin: 0 auto;
+    border: none;
+    cursor: pointer;
+    width: 185px;
+    position: relative;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    background-color: rgba(255,121,0,1);
+}
+
+.dropdown-content {
+    display: none;
+    overflow: auto;
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 7.125rem;
+}
+
+.dropdown-content a{
+    width: 185px;
+    background-color: rgba(10,15,16,0.25);
+    color: rgba(10,15,16,1);
+}
+
+.dropdown-content a:hover {
+    background-color: rgba(10,15,16,0.65);
+    color: rgba(255,153,51,1);
+}
+
+.show {
+    display: block;
+}
+
+
 
 @font-face {
     font-family: "sports";

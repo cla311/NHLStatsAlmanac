@@ -38,8 +38,9 @@ if (isset($_POST['submit'])) { // if submit button was clicked
         echo "<th>" . $title . "</th>";
         echo "</tr>";
         echo "</table>";
-
-        redirect_to("userteam.php?fantasyTeamID=$fantasyTeamID");
+        $_SESSION["fantasyTeamID"] = $fantasyTeamID;
+        $_SESSION["addPlayer"] = "Please add a player to your new fantasy team to continue";
+        redirect_to("lookup.php");
     } else {
         echo "Team name is needed";
     }
@@ -65,11 +66,11 @@ if (isset($_POST['submit'])) { // if submit button was clicked
             echo "<h3>My Fantasy Teams</h3>";
             echo "<ul>";
             while ($row = $res->fetch_row()) {
-                $sql_show_team_name = "SELECT team_title FROM $row[0]";
+                $sql_show_team_name = "SELECT team_title, fantasyTeamID FROM $row[0]";
                 $result = $db->query($sql_show_team_name);
                 $subRow = $result->fetch_row();
                 echo "<li>";
-                echo "<a href=\"userteam.php?fantasyTeamID=$row[0]\">$subRow[0]</a>";
+                echo "<a href=\"userteam.php?fantasyTeamID=$subRow[1]\">$subRow[0]</a>";
                 echo "</li>";
             }
             echo "</ul>";

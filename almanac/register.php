@@ -28,11 +28,11 @@ if (is_post_request()) {
     if ($result === true) {
         log_in_user($user); // log the user in
         if (!empty($_SESSION['playerID']) && !empty($_SESSION['name'])) { // if user was trying to store a player to their fantasy, go to that page
-          header('Location: http://'.$_SERVER['HTTP_HOST'].'/NHLStatsAlmanac/almanac/fantasy.php');
-          exit();
+            header('Location: http://' . $_SERVER['HTTP_HOST'] . '/NHLStatsAlmanac/almanac/fantasy.php');
+            exit();
         } else { // otherwise send them to the search
-        header('Location: http://' . $_SERVER['HTTP_HOST'] . '/NHLStatsAlmanac/almanac/lookup.php');
-          exit();
+            header('Location: http://' . $_SERVER['HTTP_HOST'] . '/NHLStatsAlmanac/almanac/lookup.php');
+            exit();
         }
     } else {
         $errors = $result;
@@ -81,7 +81,7 @@ if (is_post_request()) {
             <div class="input">
                 <dl>
                     Username:<br />
-                    <input type="text" name="username" pattern="^[A-Za-z0-9]*$" title="Team name may only contain letters and numbers" value="<?php echo h($user['username']); ?>" /><br />
+                    <input type="text" name="username" pattern="^[A-Za-z0-9]*$" title="Username may only contain letters and numbers" value="<?php echo h($user['username']); ?>" /><br />
                 </dl>
                 <br />
             </div>

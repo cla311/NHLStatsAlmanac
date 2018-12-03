@@ -52,11 +52,11 @@ if (is_post_request()) {
                 log_in_user($user);
 
                 if (!empty($_SESSION['playerID']) && !empty($_SESSION['name'])) { // if user was trying to save an item to their watchlist
-                  header('Location: http://'.$_SERVER['HTTP_HOST'].'/NHLStatsAlmanac/almanac/fantasy.php');
-                  exit();
+                    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/NHLStatsAlmanac/almanac/fantasy.php');
+                    exit();
                 } else { // otherwise, send user to model list
-                header('Location: http://' . $_SERVER['HTTP_HOST'] . '/NHLStatsAlmanac/almanac/index.php');
-                  exit();
+                    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/NHLStatsAlmanac/almanac/index.php');
+                    exit();
                 }
             } else {
                 // email found, but password does not match
