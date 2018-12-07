@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 require('../required/nav.php');
 require('../required/functions.php');
@@ -97,8 +98,8 @@ echo "<br /><br />";
 echo "<div class=\"show-team-stats\">";
 
 if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
-$query_watchlist = "SELECT COUNT(1) FROM team_watchlist WHERE username='" . $_SESSION['username']
-        . "' AND teamID='" . $_SESSION['teamID'] . "'";
+    $query_watchlist = "SELECT COUNT(1) FROM team_watchlist WHERE username='" . $_SESSION['username']
+            . "' AND teamID='" . $_SESSION['teamID'] . "'";
     $res_list = $db->query($query_watchlist);
     $list_row = $res_list->fetch_row();
 

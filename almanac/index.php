@@ -30,9 +30,9 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
         $my_result = $db->query($sql_display);
         while ($subRow = $my_result->fetch_row()) {
 
-        $team_creator = array();
-        array_push($team_creator, $subRow[1]);
-        $team_creator = explode("_", $subRow[1]);
+            $team_creator = array();
+            array_push($team_creator, $subRow[1]);
+            $team_creator = explode("_", $subRow[1]);
             if ($team_creator[1] == $_SESSION['username']) {
                 echo "<li>";
                 echo "<a href=\"userteam.php?fantasyTeamID=$subRow[1]\">$subRow[0]</a>";
