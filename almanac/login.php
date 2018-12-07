@@ -50,12 +50,12 @@ if (is_post_request()) {
             if (password_verify($password, $user['password'])) {
                 log_in_user($user);
 
-                if (!empty($_SESSION['playerID']) && !empty($_SESSION['name'])) {
+                if (!empty($_SESSION['playerID']) && !empty($_SESSION['name'])) { // if user wanted to add a player to the team, redirect to the player info page
                     header('Location: http://' . $_SERVER['HTTP_HOST']
                             . '/NHLStatsAlmanac/almanac/details.php?playerID='
                             . $_SESSION['playerID']);
                     exit();
-                } else {
+                } else { // go to home page
                     header('Location: http://' . $_SERVER['HTTP_HOST']
                             . '/NHLStatsAlmanac/almanac/index.php');
                     exit();
@@ -79,6 +79,7 @@ if (is_post_request()) {
 
         <?php echo display_errors($errors); ?>
 
+        <!-- sign in form -->
         <form action="login.php" method="post">
             <div class="input">
                 Email:<br />
@@ -93,6 +94,7 @@ if (is_post_request()) {
             </div>
         </form>
 
-        <p class="center">Not registered yet? <a class="blue" href="register.php">Register here</a></p>
+        <!-- link to register page -->
+        <p class="center">Not registered yet? <a class="blue" href="register.php">Register here</a></p> 
     </div>
 </div>

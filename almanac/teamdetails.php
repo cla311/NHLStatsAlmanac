@@ -85,6 +85,7 @@ if ($stmt->fetch()) {
 
 $stmt->free_result();
 
+// get the posiion of each player on the team
 $query_pos = "SELECT position FROM player INNER JOIN team on player.teamID = team.teamID WHERE playerID = $id";
 $res_pos = $db->query($query_pos);
 $row = $res_pos->fetch_row();
@@ -113,8 +114,10 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
     echo "</div>";
 }
 
+// current team information
 echo "<h3 class=\"current-team-stats\">Team Stats</h3>";
 
+// get current team stats and display them in a table
 $query = "SELECT games_played, wins, losses, ot_losses, points, goals_for_per_game, goals_against_per_game, power_play_percent, penalty_kill_percent, shots_for_per_game, shots_against_per_game, faceoff_win_percent FROM team WHERE teamID = ?";
 $stmt = $db->prepare($query);
 $stmt->bind_param('s', $id);
@@ -156,6 +159,7 @@ echo "</table>";
 echo "</div>";
 $stmt->free_result();
 
+// dispaly each player on the team roster
 $query = "SELECT player.playerID, player.name, player.position FROM player INNER JOIN team ON player.teamID = team.teamID WHERE player.teamID = $id ORDER BY player.name";
 $res = $db->query($query);
 

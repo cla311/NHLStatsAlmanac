@@ -60,12 +60,12 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
 }
 
 if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
-    if ((strpos($_SESSION['username'], $team_title[1])) !== false) {
+    if ((strpos($_SESSION['username'], $team_title[1])) !== false) { // if fantasy belongs to the user
         //plalyer removal
         $current_link = "userteam.php?fantasyTeamID=" . $team_title[0] . "_" . $team_title[1]; // get current link
 
+        // display fantasy team players
         $query = "SELECT $teamID.playerID, player.name, player.position FROM $teamID INNER JOIN player ON $teamID.playerID = player.playerID WHERE $teamID.playerID = player.playerID";
-        // echo $query;
         $res = $db->query($query);
 
         echo "<div class=\"body\">";
@@ -73,7 +73,7 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
         echo "<h3 class=\"fantasy-title\">" . $team_title[0] . "</h3>";
         echo "<p class=\"author\">Created by " . $team_title[1] . "</p>";
 
-        echo "<form action=\"$current_link\" method=\"post\">";
+        echo "<form action=\"$current_link\" method=\"post\">"; // for player removal
         echo "<table class=\"fantasy-roster\">";
         echo "<tr>";
         echo "<th>Players</th>";
@@ -100,7 +100,7 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
             if (strpos($_SESSION['username'], $team_title[1]) !== false) {
                 echo "<div class=\"center-button\">";
                 echo "<br />";
-                echo "<input type=\"submit\" name=\"delete\" value=\"Remove Players\">";
+                echo "<input type=\"submit\" name=\"delete\" value=\"Remove Players\">"; // remove checked players from the fantasy team
                 echo "</div>";
             }
         }
@@ -115,9 +115,8 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
         }
         echo "</div>";
         echo "</div>";
-    } else {
+    } else { // if team does not belong to user, they can't remove players, just display information normally
         $query = "SELECT $teamID.playerID, player.name, player.position FROM $teamID INNER JOIN player ON $teamID.playerID = player.playerID WHERE $teamID.playerID = player.playerID";
-        // echo $query;
         $res = $db->query($query);
 
         echo "<div class=\"body\">";
@@ -152,7 +151,7 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
         echo "</div>";
         echo "</div>";
     }
-} else {
+} else { // if user isn't logged in, just display team roster
     $query = "SELECT $teamID.playerID, player.name, player.position FROM $teamID INNER JOIN player ON $teamID.playerID = player.playerID WHERE $teamID.playerID = player.playerID";
     // echo $query;
     $res = $db->query($query);

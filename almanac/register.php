@@ -27,7 +27,7 @@ if (is_post_request()) {
     $result = insert_user($user); // insert user into database
     if ($result === true) {
         log_in_user($user); // log the user in
-        if (!empty($_SESSION['playerID']) && !empty($_SESSION['name'])) {
+        if (!empty($_SESSION['playerID']) && !empty($_SESSION['name'])) { // if user was trying to add a player to a fantsy team, go to player details
             header('Location: http://' . $_SERVER['HTTP_HOST']
                     . '/NHLStatsAlmanac/almanac/details.php?playerID='
                     . $_SESSION['playerID']);
@@ -54,6 +54,7 @@ if (is_post_request()) {
 ?>
 
 
+<!-- register form -->
 <div class="grid">
     <div class="grid-col-1of3">
         <h1 class="log">Create User</h1>

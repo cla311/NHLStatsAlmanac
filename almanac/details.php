@@ -20,8 +20,9 @@ if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
     $fantasyTeamID = $_SESSION['fantasyTeamID'] = [];
 }
 
-$id = trim($_GET['playerID']);
+$id = trim($_GET['playerID']); // pull id from url to get correct player information
 
+// get information based on playerID
 $query_pos = "SELECT position FROM player INNER JOIN team on player.teamID = team.teamID WHERE playerID = $id";
 $res_pos = $db->query($query_pos);
 $row = $res_pos->fetch_row();
@@ -86,6 +87,7 @@ foreach ($player_array["people"] as $person) {
     $birthDate = $person["birthDate"];
     $position = $person["primaryPosition"]["abbreviation"];
 
+    // players have season stats
     $url = $nhlAPI . '/api/v1/people/' . $id . "/stats?stats=statsSingleSeason&season=20182019";
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -94,6 +96,7 @@ foreach ($player_array["people"] as $person) {
     curl_close($ch);
     $playerStats_array = json_decode($playerStatsSeason, true);
     foreach ($playerStats_array["stats"][0]["splits"] as $seasonStats) {
+        // displayed stats change depending if the player is a goalie or not
         switch ($player_position) {
             case ('G'):
                 $statID = $id . "-" . $seasonStats["season"];
@@ -136,6 +139,7 @@ foreach ($player_array["people"] as $person) {
     }
     unset($seasonStats);
 
+    // players have career stats
     $url = $nhlAPI . '/api/v1/people/' . $id . "/stats?stats=careerRegularSeason";
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -144,6 +148,7 @@ foreach ($player_array["people"] as $person) {
     curl_close($ch);
     $careerStats_array = json_decode($playerStatsSeason, true);
     foreach ($careerStats_array["stats"][0]["splits"] as $careerStats) {
+        // displayed stats change depending if the player is a goalie or not
         switch ($player_position) {
             case ('G'):
                 $statID = $id . "-Career";
@@ -210,6 +215,7 @@ if ($stmt->fetch()) {
 }
 $stmt->free_result();
 
+// get player information, not stats
 $query = "SELECT name, team.team_name, weight, height, nationality, age, position FROM player INNER JOIN team ON player.teamID = team.teamID WHERE playerID = ?";
 $stmt = $db->prepare($query);
 $stmt->bind_param('s', $id);
@@ -235,8 +241,10 @@ echo "</tr>";
 echo "</table>";
 $stmt->free_result();
 
+// dispaly player stats
 echo "<div class=\"stats\">";
 echo "<h3 class=\"player-stats\">Player Stats</h3>";
+// stats change if player is a goalie or not
 switch ($player_position) {
     case ('G'):
         $query = "SELECT season, games_played, starts, wins, losses, ot_losses, shots_against, saves, goals_against, save_percent, goals_against_average, shutouts FROM goalie_stats INNER JOIN player ON goalie_stats.playerID = player.playerID WHERE goalie_stats.playerID = ?";
@@ -346,12 +354,14 @@ if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
 
 echo "<br /><br />";
 echo "<div class=\"grid\">";
+// display link to add player to last accessed fantasy team if the author matches the member
 if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID']) && $_SESSION['username'] == $break[1]) {
     echo "<div class=\"grid-col-1of3\">";
     echo "<a class=\"add-link\" href=\"userteam.php?fantasyTeamID=$fantasyTeamID\">Add to $title</a>";
     echo "</div>";
 }
 
+// display dropdown to add to fantasy team, it's up to the user which of their teams to add to
 if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
     $sql_display_fantasy = "SELECT DISTINCT TABLE_NAME FROM INFORMATION_SCHEMA.COLUMNS "
             . "WHERE COLUMN_NAME IN ('team_title','team_author') AND TABLE_SCHEMA='nhl_stats'";
@@ -402,7 +412,7 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
     }
     $res_list->free_result();
     echo "</div>";
-} else {
+} else { // if user isn't logged in, take them to the login page
     echo "<div class=\"grid-col-1of3\">";
     echo "<a class=\"add-link\" href=\"login.php\">Add to Favourites</a>";
     echo "</div>";

@@ -21,7 +21,7 @@ unset($_SESSION['name']);
 
 <?php
 if (isset($_POST['submit'])) {
-    if (isset($_POST['team_title'])) {
+    if (isset($_POST['team_title'])) { // create a new fantasy team
         $title = $_POST['team_title'];
         $_SESSION['team_title'] = $title;
         $author = $_SESSION['username'];
@@ -50,10 +50,12 @@ if (isset($_POST['submit'])) {
 }
 ?>
 
+<!-- page display -->
 <div class="grid">
     <div class="grid-col-1of2">
         <h3>Team Setup</h3>
-        <form action="fantasy.php" method="post">
+        <!-- create a new team -->
+        <form action="fantasy.php" method="post"> 
             Title: <input type="text" name="team_title" pattern="^[A-Za-z0-9]*$" title="Team name may only contain letters and numbers" value="<?php if (isset($_POST['team_title'])) echo htmlentities($_POST['team_title']); ?>" />
             <br /><br /><input type="submit" name="submit" value="Create" />
         </form>
@@ -63,6 +65,7 @@ if (isset($_POST['submit'])) {
 
     <div class="grid-col-1of2">
         <?php
+        // view your current fantasy teams
         if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
             $sql_show_teams = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME LIKE '%_" . $username . "'";
             $res = $db->query($sql_show_teams);
@@ -83,6 +86,7 @@ if (isset($_POST['submit'])) {
 </div>
 
 <?php
+// search players or teams
 echo "<div class=\"center-block\">";
 echo "<p><a href=\"lookup.php\">Search Players</a></p>";
 echo "</div>";

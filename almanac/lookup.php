@@ -98,13 +98,13 @@ $stmt->close();
                 $sql = "SELECT team_name FROM team ORDER BY team_name";
                 $teamDropDownResult = mysqli_query($db, $sql);
 
-                // drop down with order numbers from database
+                // drop down with team name from database
                 echo "<select name =\"team_name\">";
 
                 // first value of drop down is empty
                 echo "<option value=\"\"></option>";
 
-                // fill drop down with order numbers from database
+                // fill drop down with team names from database
                 while ($row = mysqli_fetch_array($teamDropDownResult)) {
                     ?>
                     <option value="<?php echo $row['team_name']; ?>"> <?php echo $row['team_name'] ?> </option>;
@@ -122,17 +122,17 @@ $stmt->close();
                 <p>By City:</p>
 
                 <?php
-// sql for filling drop down with city from database
+                // sql for filling drop down with city from database
                 $sql = "SELECT DISTINCT city FROM team ORDER BY city";
                 $cityDropDownResult = mysqli_query($db, $sql);
 
                 // drop down with city from database
                 echo "<select name =\"city\">";
 
-// first value of drop down is empty
+                // first value of drop down is empty
                 echo "<option value=\"\"></option>";
 
-// fill drop down with city from database
+                // fill drop down with city from database
                 while ($row = mysqli_fetch_array($cityDropDownResult)) {
                     ?>
                     <option value="<?php echo $row['city']; ?>"> <?php echo $row['city'] ?> </option>;
@@ -153,6 +153,7 @@ $stmt->close();
 
                 <td>
                     <?php
+                    // secondary filtering variables
                     $enteredGoals = 0;
                     $enteredAssists = 0;
                     $enteredShots = 0;
@@ -164,6 +165,7 @@ $stmt->close();
                     $enteredLosses = 0;
                     ?>
 
+                    <!-- set up secondary filtering -->
                     <h4>Secondary Filters</h4>
                     <input type="checkbox" name="goals" value="goalNum" <?php if (isset($_POST['goals'])) echo "checked=\"checked\""; ?> />
                     Goals Greater than: <input type="number" name="minGoalAmount"/><br>
@@ -208,17 +210,17 @@ $stmt->close();
                 <p>By Team:</p>
 
                 <?php
-// sql for filling drop down with order numbers from database
+                // sql for filling drop down with team name from database
                 $sql = "SELECT team_name FROM team ORDER BY team_name";
                 $teamDropDownResult = mysqli_query($db, $sql);
 
-// drop down with order numbers from database
+                // drop down with team name from database
                 echo "<select name=\"team_title\">";
 
-// first value of drop down is empty
+                // first value of drop down is empty
                 echo "<option value=\"\"></option>";
 
-// fill drop down with teams from database
+                // fill drop down with teams from database
                 while ($row = mysqli_fetch_array($teamDropDownResult)) {
                     ?>
                     <option value="<?php echo $row['team_name']; ?>"> <?php echo $row['team_name'] ?> </option>;
@@ -235,17 +237,17 @@ $stmt->close();
                 <p>By City:</p>
 
                 <?php
-// sql for filling drop down with city from database
+                // sql for filling drop down with city from database
                 $sql = "SELECT DISTINCT city FROM team ORDER BY city";
                 $cityDropDownResult = mysqli_query($db, $sql);
 
-// drop down with city from database
+                // drop down with city from database
                 echo "<select name=\"team_city\">";
 
-// first value of drop down is empty
+                // first value of drop down is empty
                 echo "<option value=\"\"></option>";
 
-// fill drop down with city from database
+                // fill drop down with city from database
                 while ($row = mysqli_fetch_array($cityDropDownResult)) {
                     ?>
                     <option value="<?php echo $row['city']; ?>"> <?php echo $row['city'] ?> </option>;
@@ -260,12 +262,14 @@ $stmt->close();
                 <p>OR</p>
                 <br />
 
+                <!-- search by entered text -->
                 <p>By Name:</p>
                 Search: <input type="text" name="team_name_title"  value="<?php if (isset($_POST['team_name_title'])) echo htmlentities($_POST['team_name_title']); ?>" />
                 </td>
 
                 <td>
                     <?php
+                    // secondary filtering variables
                     $enteredWins = 0;
                     $enteredLosses = 0;
                     $enteredOTLosses = 0;
@@ -315,6 +319,7 @@ $stmt->close();
         </div>
     </div>
 
+    <!-- don't reload the whole page -->
     <script>
         $("form[name='player']").on('submit', function (e) {
 

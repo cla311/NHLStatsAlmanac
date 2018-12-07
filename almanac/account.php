@@ -88,6 +88,7 @@ $userame = "";
 <div class="grid">
 
     <?php
+    // dispaly the user's current information
     while ($row = $res->fetch_assoc()) {
         $firstName = $row["firstName"];
         $lastName = $row["lastName"];
@@ -118,8 +119,9 @@ $userame = "";
     <div class="grid-form-1of3" >
         <?php echo display_errors($passwordError); ?>
 
+        <!-- dispaly form for updating user information -->
         <div class="account-field">
-            <form action="account.php" method="post">
+            <form action="account.php" method="post"> 
                 <label>New Email: </label><input type="text" name="email" /><br /><br />
                 <label>New First Name: </label><input type="text" name="firstName" /><br />
                 <label>New Last Name: </label><input type="text" name="lastName" /><br /><br />
@@ -131,6 +133,7 @@ $userame = "";
 
     </div>
 
+    <!-- show player and team favourites -->
     <div class="grid-col-1of3">
         <?php
         echo "<h3>Favourites</h3>";
