@@ -1,21 +1,4 @@
-<style>
-    .page {
-        padding:7px 8px;
-        border:1px solid #ccc;
-        color:#333;
-        font-weight:bold;
-        font-family: Helvetica, Arial, sans-serif;
-    }
-
-    .toPage {
-        margin-top: 1rem;
-        font-family: Helvetica, Arial, sans-serif;
-    }
-
-    .toPage input{
-        margin-left: 10px;
-    }
-</style>
+<link rel="stylesheet" href="../css/search_results.css">
 <?php
 session_start();
 require('../required/functions.php');

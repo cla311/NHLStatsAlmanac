@@ -1,0 +1,19 @@
+*{
+    font-family: Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+.page {
+    padding:7px 8px;
+    border:1px solid #ccc;
+    color:#333;
+    font-weight:bold;
+}
+
+.toPage {
+    margin-top: 1rem;
+}
+
+.toPage input{
+    margin-left: 10px;
+}
