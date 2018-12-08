@@ -21,7 +21,6 @@ if (!empty($_SESSION['team_title']) && !empty($_SESSION['fantasyTeamID'])) {
 }
 
 $id = trim($_GET['playerID']); // pull id from url to get correct player information
-
 // get information based on playerID
 $query_pos = "SELECT position FROM player INNER JOIN team on player.teamID = team.teamID WHERE playerID = $id";
 $res_pos = $db->query($query_pos);
@@ -32,7 +31,7 @@ $res_pos->free_result();
 
 echo "<br /><br />";
 
-// update player data and stats
+//Prepared statements for updating player and goalie stats
 $queryPlayer = "INSERT INTO stats VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
         . "ON DUPLICATE KEY UPDATE games_played=?, goals=?, assists=?, "
         . "penalty_minutes=?, power_play_goals=?, power_play_points=?, "
@@ -57,6 +56,7 @@ $stmtGoalie->bind_param("sisiiiiiiiiiiiiiiiiiiiiii", $statID,
         $played, $starts, $wins, $losses, $ot, $shotsAgainst, $saves,
         $goalsAgainst, $savePercent, $goalsAgainstAverage, $shutouts);
 
+//Get player info from the API
 $url = $nhlAPI . '/api/v1/people/' . $id;
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -87,7 +87,7 @@ foreach ($player_array["people"] as $person) {
     $birthDate = $person["birthDate"];
     $position = $person["primaryPosition"]["abbreviation"];
 
-    // players have season stats
+    //Get curent season stats from the API
     $url = $nhlAPI . '/api/v1/people/' . $id . "/stats?stats=statsSingleSeason&season=20182019";
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -139,7 +139,7 @@ foreach ($player_array["people"] as $person) {
     }
     unset($seasonStats);
 
-    // players have career stats
+    //Get player career stats from the API
     $url = $nhlAPI . '/api/v1/people/' . $id . "/stats?stats=careerRegularSeason";
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -192,14 +192,16 @@ foreach ($player_array["people"] as $person) {
     unset($careerStats);
 }
 unset($person);
-$stmtPlayer->close();
 $stmtGoalie->close();
+$stmtPlayer->close();
 
+//Update player info
 $query = "UPDATE player SET teamID=?, photo=?, number=?, name=?, weight=?, "
         . "height=?, age=?, position=? WHERE playerID=?";
 $stmt = $db->prepare($query);
 $stmt->bind_param('isisisisi', $teamID, $photo, $number, $playerName, $weight, $height, $age, $position, $id);
 $stmt->execute();
+$stmt->close();
 
 // display player image
 $query = "SELECT photo FROM player INNER JOIN team ON player.teamID = team.teamID WHERE playerID = ?";
@@ -214,6 +216,7 @@ if ($stmt->fetch()) {
     echo "<img class=\"player-picture\" src=\"$photo1\" alt=\"Player Photo\">";
 }
 $stmt->free_result();
+$stmt->close();
 
 // get player information, not stats
 $query = "SELECT name, team.team_name, weight, height, nationality, age, position FROM player INNER JOIN team ON player.teamID = team.teamID WHERE playerID = ?";
@@ -240,6 +243,7 @@ get_player($id, $name1);
 echo "</tr>";
 echo "</table>";
 $stmt->free_result();
+$stmt->close();
 
 // dispaly player stats
 echo "<div class=\"stats\">";
@@ -291,7 +295,6 @@ switch ($player_position) {
         }
 
         echo "</table>";
-        $stmt->free_result();
         break;
 
     default :
@@ -340,9 +343,10 @@ switch ($player_position) {
             echo "</tr>";
         }
         echo "</table>";
-        $stmt->free_result();
         break;
 }
+$stmt->free_result();
+$stmt->close();
 
 get_player($id, $name1);
 
@@ -397,7 +401,7 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
     echo "</div>";
     echo "</div>";
 
-
+    //Show add to favourites list button if not already in favourites, else show remove from favourites button
     $query_watchlist = "SELECT COUNT(1) FROM watchlist WHERE username='" . $_SESSION['username']
             . "' AND playerID='" . $_SESSION['playerID'] . "'";
 

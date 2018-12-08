@@ -2,6 +2,7 @@
 
 require_once('connection.php');
 
+//API link
 $nhlAPI = "https://statsapi.web.nhl.com";
 
 // set to https

@@ -9,12 +9,14 @@ $team = "";
 $city = "";
 $name = "";
 
+//Insert new players into the player table when page loads. If player exists, skip insert
 $query = "INSERT IGNORE INTO player VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 $stmt = $db->prepare($query);
 $stmt->bind_param("iisisississ", $playerID, $teamID, $photo,
         $number, $playerName, $weight, $height, $nationality, $age,
         $birthDate, $position);
 
+//Get tram ids to find plaers by roster
 $teams = file_get_contents($nhlAPI . '/api/v1/teams');
 $teams_array = json_decode($teams, true);
 $team_ids = array();
@@ -23,6 +25,7 @@ foreach ($teams_array["teams"] as $row) {
 }
 unset($row);
 
+//Get player info for each player by team roster
 foreach ($team_ids as $ids) {
     $url = $nhlAPI . '/api/v1/teams/' . $ids . "/roster";
     $ch = curl_init();
@@ -77,7 +80,7 @@ $stmt->close();
 
 <body>
     <?php
-    if (isset($_SESSION["addPlayer"])) {
+    if (isset($_SESSION["addPlayer"])) { //Request user to add a player to a newly created fantasy team
         echo "<div class=\"center-block-p\">";
         echo "<p class=\"added-player\">" . $_SESSION['addPlayer'] . "</p>";
         echo "</div>";
@@ -321,6 +324,7 @@ $stmt->close();
 
     <!-- don't reload the whole page -->
     <script>
+        //Ajax to load player search results
         $("form[name='player']").on('submit', function (e) {
 
             e.preventDefault();
@@ -336,6 +340,7 @@ $stmt->close();
 
         });
 
+        //Ajax to load team search results
         $("form[name='team']").on('submit', function (e) {
 
             e.preventDefault();
@@ -351,6 +356,7 @@ $stmt->close();
 
         });
 
+        //Ajax to allow paination links to move to switch pages in the player search results
         $(document).on('click', '.page', function (e) {
 
             e.preventDefault();
@@ -367,6 +373,7 @@ $stmt->close();
 
         });
 
+        //Ajax to allow user to jump to a specific page in the player search results
         $(document).on('submit', "form[name='goToPage']", function (e) {
 
             e.preventDefault();

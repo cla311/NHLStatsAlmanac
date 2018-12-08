@@ -3,19 +3,19 @@
 session_start();
 require('../required/functions.php');
 
-$record_per_page = 25;
+$record_per_page = 50; //Number of players to rerturn per page
 $page = '';
-if (isset($_GET["page"])) {
+if (isset($_GET["page"])) { //Get current page if set, else go to first page
     $page = $_GET["page"];
 } else {
     $page = 1;
 }
 
-$start_from = ($page - 1) * $record_per_page;
+$start_from = ($page - 1) * $record_per_page; //Get start index for the current page
 
 $query_str = "SELECT DISTINCT ";
 
-if (isset($_POST['team_name']) && $_POST ['team_name'] != "") {
+if (isset($_POST['team_name']) && $_POST ['team_name'] != "") { //
     $team = $_POST['team_name'];
     $query_teamID = "SELECT teamID FROM team WHERE team_name = '" . $team . "'";
 
@@ -28,28 +28,31 @@ if (isset($_POST['team_name']) && $_POST ['team_name'] != "") {
     echo "<br />";
     echo "Returning players belonging to the " . $team;
 
-// get name to display link, use teamID to find players in database
+    //Use teamID to find players in database
     $query_str .= "player.playerID, name FROM player LEFT JOIN team ON player.teamID = team.teamID LEFT JOIN stats ON player.playerID = stats.playerID LEFT JOIN goalie_stats ON goalie_stats.playerID = player.playerID WHERE team.teamID = $teamID";
 } else if (isset($_POST['city']) && $_POST ['city'] != "") {
     $city = $_POST['city'];
     echo "<br />";
     echo "Returning players belonging to the city of " . $city;
 
-// get name to display link, use city name to find players in database
+    //Use city name to find players in database
     $query_str .= "player.playerID, name FROM player LEFT JOIN team ON player.teamID = team.teamID LEFT JOIN stats ON player.playerID = stats.playerID LEFT JOIN goalie_stats ON goalie_stats.playerID = player.playerID WHERE team.city = '" . $city . "'";
 } else if (isset($_POST['name']) && $_POST ['name'] != "") {
     $name = $_POST['name'];
     echo "<br />";
     echo "Returning players with name containing: '" . $name . "'";
 
+    //Use name keyword to find players in the database
     $query_str .= "player.playerID, player.name FROM player LEFT JOIN team ON player.teamID = team.teamID LEFT JOIN stats ON player.playerID = stats.playerID LEFT JOIN goalie_stats ON goalie_stats.playerID = player.playerID WHERE name LIKE '%" . $name . "%'";
 } else {
     echo "<br />";
     echo "Returning all players";
 
+    //Show all players
     $query_str .= "player.playerID, player.name FROM player LEFT JOIN team ON player.teamID = team.teamID LEFT JOIN stats ON player.playerID = stats.playerID LEFT JOIN goalie_stats ON goalie_stats.playerID = player.playerID WHERE name LIKE '%%'";
 }
 
+//Secondary filters
 if (isset($_POST['goals'])) {
     if (empty($_POST['minGoalAmount'])) {
         $enteredGoals = 0;
@@ -125,12 +128,14 @@ if (isset($_POST['losses'])) {
 
 $query_str .= " ORDER BY name";
 
+//Show the set number of players from the start index
 $get_players = $query_str . " LIMIT $start_from, $record_per_page";
 
 $res_players = $db->query($get_players);
 
 echo "<br /><br />";
 echo "<ul>";
+//Get name to display link
 while ($row = $res_players->fetch_row()) {
     echo "<li>";
     format_name_as_link($row[0], $row[1], "details.php");
@@ -139,8 +144,8 @@ while ($row = $res_players->fetch_row()) {
 echo "</ul><br />";
 
 $res = $db->query($query_str);
-$rowCount = $res->num_rows;
-
+$rowCount = $res->num_rows; //Get total number of rows for the query
+//Show pagination links if
 if ($rowCount > $record_per_page) {
     $total_pages = ceil($rowCount / $record_per_page);
     $start_loop = $page;

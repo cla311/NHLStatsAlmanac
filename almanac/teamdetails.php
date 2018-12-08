@@ -26,6 +26,7 @@ $_SESSION['teamID'] = $id;
 
 echo "<br /><br />";
 
+//Get team stats from the API
 $url = $nhlAPI . '/api/v1/teams/' . $id . "?expand=team.stats";
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -50,6 +51,7 @@ foreach ($teamStats_array["teams"] as $stats) {
     $faceoff = $stats["teamStats"][0]["splits"][0]["stat"]["faceOffWinPercentage"];
 }
 
+//Prepared statement for updating team stats
 $query = "UPDATE team SET games_played=?, wins=?, losses=?, ot_losses=?, "
         . "points=?, goals_for_per_game=?, goals_against_per_game=?, "
         . "power_play_percent=?, penalty_kill_percent=?, shots_for_per_game=?, "
@@ -84,6 +86,7 @@ if ($stmt->fetch()) {
 }
 
 $stmt->free_result();
+$stmt->close();
 
 // get the posiion of each player on the team
 $query_pos = "SELECT position FROM player INNER JOIN team on player.teamID = team.teamID WHERE playerID = $id";
@@ -98,6 +101,7 @@ echo "<br /><br />";
 
 echo "<div class=\"show-team-stats\">";
 
+//Show add to favourites list button if not already in favourites, else show remove from favourites button
 if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
     $query_watchlist = "SELECT COUNT(1) FROM team_watchlist WHERE username='" . $_SESSION['username']
             . "' AND teamID='" . $_SESSION['teamID'] . "'";
@@ -158,6 +162,7 @@ echo "</tr>";
 echo "</table>";
 echo "</div>";
 $stmt->free_result();
+$stmt->close();
 
 // dispaly each player on the team roster
 $query = "SELECT player.playerID, player.name, player.position FROM player INNER JOIN team ON player.teamID = team.teamID WHERE player.teamID = $id ORDER BY player.name";

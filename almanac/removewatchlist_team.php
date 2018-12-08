@@ -3,8 +3,9 @@
 session_start();
 require('../required/nav.php');
 require('../required/functions.php');
-
 require_login();
+
+//Remove team to current user's team watchlist/favoutires
 $sql = "DELETE FROM team_watchlist WHERE ";
 $sql .= "username='" . $_SESSION['username'] . "' AND ";
 $sql .= "teamID='" . $_SESSION['teamID'] . "'";

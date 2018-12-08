@@ -30,7 +30,7 @@ if (!empty($_SESSION['playerID']) && !empty($_SESSION['name'])) {
     $playerName = $_SESSION['name'] = [];
 }
 ?>
-<?php // require_login(); // if not logged in, redirect to login page                ?>
+<?php // require_login(); // if not logged in, redirect to login page                 ?>
 
 <?php
 
@@ -61,9 +61,8 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
 
 if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty($_SESSION['username'])) {
     if ((strpos($_SESSION['username'], $team_title[1])) !== false) { // if fantasy belongs to the user
-        //plalyer removal
+        //player removal
         $current_link = "userteam.php?fantasyTeamID=" . $team_title[0] . "_" . $team_title[1]; // get current link
-
         // display fantasy team players
         $query = "SELECT $teamID.playerID, player.name, player.position FROM $teamID INNER JOIN player ON $teamID.playerID = player.playerID WHERE $teamID.playerID = player.playerID";
         $res = $db->query($query);

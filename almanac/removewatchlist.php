@@ -5,6 +5,8 @@ require('../required/nav.php');
 require('../required/functions.php');
 
 require_login();
+
+//Remove player to current user's player watchlist/favoutires
 $sql = "DELETE FROM watchlist WHERE ";
 $sql .= "username='" . $_SESSION['username'] . "' AND ";
 $sql .= "playerID='" . $_SESSION['playerID'] . "'";

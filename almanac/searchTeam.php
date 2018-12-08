@@ -17,14 +17,14 @@ if (isset($_POST['team_title']) && $_POST['team_title'] != "") {
     echo "<br />";
     echo "Returning teams belonging to '" . $team . "' ";
 
-// get name to display link, use teamID to find players in database
+//Use teamID to find teams in database
     $query_str .= "teamID, team_name FROM team WHERE teamID = $teamID";
 } else if (isset($_POST['team_city']) && $_POST['team_city'] != "") {
     $city = $_POST['team_city'];
     echo "<br />";
     echo "Returning players belonging to the city of " . $city;
 
-// get name to display link, use city name to find players in database
+//Use city name to find players in database
     $query_str .= "teamID, team_name FROM team WHERE team.city = '" . $city . "'";
 } else if (isset($_POST['team_name_title']) && $_POST['team_name_title'] != "") {
     $name = $_POST['team_name_title'];
@@ -36,9 +36,11 @@ if (isset($_POST['team_title']) && $_POST['team_title'] != "") {
     echo "<br />";
     echo "Returning all teams";
 
+    //Show all teams
     $query_str .= "teamID, team_name FROM team WHERE team_name LIKE '%%'";
 }
 
+//Secondary filters
 if (isset($_POST['team_wins'])) {
     if (empty($_POST['team_minWinAmount'])) {
         $enteredWins = 0;
@@ -117,6 +119,7 @@ $res = $db->query($query_str);
 echo mysqli_error($db);
 echo "<br /><br />";
 echo "<ul>";
+//Get name to display link
 while ($row = $res->fetch_row()) {
     echo "<li>";
     format_name_as_link_team($row[0], $row[1], "teamdetails.php");

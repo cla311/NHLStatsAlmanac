@@ -18,7 +18,7 @@ if (!empty($_SESSION['user_email']) && !empty($_SESSION['firstName']) && !empty(
 require_login();
 require_ssl(); // set to https
 $passwordError = array();
-if (isset($_POST['accountInfoUpdate'])) {
+if (isset($_POST['accountInfoUpdate'])) { // Update account info if user submits update form
     $user = array();
     $user['firstName'] = $_POST['firstName'] ?? '';
     $user['lastName'] = $_POST['lastName'] ?? '';
@@ -43,6 +43,7 @@ if (isset($_POST['accountInfoUpdate'])) {
         array_push($newInfo, "email='" . db_escape($db, $user['email']) . "'");
     }
 
+    // Update password if password and confirm password match, else show does not match error
     if (!empty($user['password']) && !empty($user['confirm_password'])) {
         if ($user['password'] != $user['confirm_password']) {
             array_push($passwordError, "Password and confirm password must match.");
@@ -54,6 +55,7 @@ if (isset($_POST['accountInfoUpdate'])) {
         array_push($passwordError, "Password and confirm password must match.");
     }
 
+    // Update account info if ther is new account info and no password match error
     if (!empty($newInfo) && empty($passwordError)) {
         $sql_update = "UPDATE members SET ";
         for ($i = 0; $i < count($newInfo); $i++) {
@@ -121,7 +123,7 @@ $userame = "";
 
         <!-- dispaly form for updating user information -->
         <div class="account-field">
-            <form action="account.php" method="post"> 
+            <form action="account.php" method="post">
                 <label>New Email: </label><input type="text" name="email" /><br /><br />
                 <label>New First Name: </label><input type="text" name="firstName" /><br />
                 <label>New Last Name: </label><input type="text" name="lastName" /><br /><br />

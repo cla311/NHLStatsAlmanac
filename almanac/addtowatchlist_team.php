@@ -3,8 +3,9 @@
 session_start();
 require('../required/nav.php');
 require('../required/functions.php');
-
 require_login();
+
+//Add team to current user's team watchlist/favoutires
 $sql = "INSERT INTO team_watchlist ";
 $sql .= "(username, teamID) ";
 $sql .= "VALUES (";
